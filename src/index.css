@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-lightest text-gray-darkest;
+  }
+
+  .init-view {
+    @apply w-auto relative min-h-full max-w-480 mx-auto bg-white shadow-md;
+  }
+}
