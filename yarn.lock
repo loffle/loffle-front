@@ -9599,16 +9599,16 @@
   "version" "0.8.3"
 
 "react-router-dom@^6.0.0-beta.2":
-  "integrity" "sha512-ZOauHu+clEYCRsW77F21/q6Ou5zmJvL6FvKsbmvO+J+4e7OXglh0VJy8yph8xoz20Ak5UYDExubE6n5+2QP1pw=="
-  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.0.0-beta.2.tgz"
-  "version" "6.0.0-beta.2"
+  "integrity" "sha512-F5HC/mEdZQvBNbxEFDfRfd1b+DPcNeHZgoreH98NJEJe3G1uonWatdtj+tVQ3VnUbg0TzCXa4mzKFZMey90v7A=="
+  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.0.0-beta.3.tgz"
+  "version" "6.0.0-beta.3"
   dependencies:
-    "react-router" "6.0.0-beta.2"
+    "react-router" "6.0.0-beta.3"
 
-"react-router@*", "react-router@6.0.0-beta.2":
-  "integrity" "sha512-oyVEfpVT9VbClWaZNNShfprq8HA5rSLfo/ZsXFT08/6mldM6onHzqr6Lc1ybBYEB7/c+rr1VOA99as7hEoAoXw=="
-  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.0.0-beta.2.tgz"
-  "version" "6.0.0-beta.2"
+"react-router@*", "react-router@6.0.0-beta.3":
+  "integrity" "sha512-5fSBKgb0VaUrMi1RJxeZZMyGkjGSd9HtoWtc2XIcBFc01l7y6jBg5mVkmifjhhdSlamE3y6E6RXpfzCWqEBPPA=="
+  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.0.0-beta.3.tgz"
+  "version" "6.0.0-beta.3"
 
 "react-scripts@^4.0.0", "react-scripts@4.0.3":
   "integrity" "sha512-S5eO4vjUzUisvkIPB7jVsKtuH2HhWcASREYWHAQ1FP5HyCv3xgn+wpILAEWkmy+A+tTNbSZClhxjT3qz6g4L1A=="

@@ -6,7 +6,7 @@ import like from "../../images/like_btn.svg";
 import comment from "../../images/comment_btn.svg";
 
 const Post = ({ post }) => (
-  <Link to={`/community/post/${post.id}`}>
+  <Link to={{ pathname: `/community/post/${post.id}` }}>
     <div className="h-30 p-5 border-b border-gray-light" key={post.id}>
       <h2 className="text-base truncate mb-1">{post.title}</h2>
       <p className="text-sm text-gray line-clamp-2 mb-1">{post.body}</p>
