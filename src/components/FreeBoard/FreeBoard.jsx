@@ -1,6 +1,5 @@
 import React from "react";
 import { usePostFetch } from "../../hooks/usePostFetch";
-import Header from "../Header";
 import Pagination from "../Pagination";
 import FreeBoardLists from "./FreeBoardLists";
 
@@ -23,7 +22,6 @@ const FreeBoard = (props) => {
 
   return (
     <>
-      <Header />
       <FreeBoardLists
         posts={currentPosts(posts)}
         loading={loading}

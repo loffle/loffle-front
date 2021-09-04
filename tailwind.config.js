@@ -3,8 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
-      primary: "#4481A0", //청록
+      primary: "#3C4875", //청록
       red: "#D0172D",
+      white: "#FFF",
       gray: {
         darkest: "#515151", //body글씨
         dark: "#3c4858",
@@ -12,7 +13,7 @@ module.exports = {
         light: "#bbbbbb", //
         lightest: "#f2f2f2", //body백그라운드
       },
-      white: "#FFF",
+      modal: "#00000080",
     },
     maxWidth: {
       480: "480px",

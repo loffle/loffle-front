@@ -1,38 +1,42 @@
-import React from "react";
-import likeBtn from "../../images/like_btn.svg";
-import commentBtn from "../../images/comment_btn.svg";
+import React, { useState } from "react";
+
 import Loading from "../Loading";
+import Post from "./Post";
+
+import search from "../../images/search_btn.svg";
+import Search from "../Search";
 
 const FreeBoardLists = ({ posts, loading }) => {
   //console.log(posts);
+  const [isSearchModalOn, setIsSearchModalOn] = useState(false);
+
+  const handleSearchModal = (e) => {
+    setIsSearchModalOn(!isSearchModalOn);
+  };
 
   return (
     <>
       {loading && <Loading />}
+      {isSearchModalOn && (
+        <Search icon={search} handleSearchModal={handleSearchModal} />
+      )}
       <div className="max-w-480 min-h-screen">
-        {posts.map((post) => (
-          <div className="h-30 p-5 border-b border-gray-light" key={post.id}>
-            <h2 className="text-base truncate mb-1">{post.title}</h2>
-            <p className="text-sm text-gray line-clamp-2 mb-1">{post.body}</p>
-            <div className="flex justify-between text-xs">
-              <div className="">
-                <span className="text-gray-light mr-1">00/00/00</span>
-                <span>{`유저 ${post.userId}`}</span>
-              </div>
-              <div className="flex">
-                {/* 좋아요 개수 */}
-                <img className="pr-1" src={likeBtn} alt="like-button" />
-                <span className="pr-2 text-red">
-                  {Math.floor(Math.random() * 11)}
-                </span>
-                {/* 댓글 개수 */}
-                <img className="pr-1" src={commentBtn} alt="comment-button" />
-                <span className="text-primary">
-                  {Math.floor(Math.random() * 11)}
-                </span>
-              </div>
-            </div>
+        <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-light">
+          <h1 className="text-xl font-bold">자유게시판</h1>
+          <div className="flex items-center">
+            <button onClick={() => handleSearchModal()}>
+              <img className="w-4 h-4" src={search} alt="search-button" />
+            </button>
+            <select className="text-gray h-5 ml-5 bg-white">
+              <option>최신순 </option>
+              <option>조회순 </option>
+              <option>추천순 </option>
+              <option>답변순 </option>
+            </select>
           </div>
+        </div>
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
         ))}
       </div>
     </>

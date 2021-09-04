@@ -1,17 +1,24 @@
 import React from "react";
-import searchIcon from "../images/search_btn.svg";
-import menuBtn from "../images/menu_btn.svg";
+import logo from "../images/loffle_logo.svg";
+import notification from "../images/notification.svg";
+import menu from "../images/menu_btn.svg";
 
-const Header = (props) => (
-  <header className="shadow-md w-full h-12 sticky top-0 l-0 r-0 z-50 bg-white px-5">
-    <div className="h-full flex items-center justify-between">
-      <h1 className="text-xl font-bold">자유게시판</h1>
-      <div className="flex">
-        <img className="w-5 h-5" src={searchIcon} alt="search-icon" />
-        <img className="w-5 h-5 ml-6" src={menuBtn} alt="search-icon" />
+const Header = () => {
+  return (
+    <header className="shadow-md w-full h-14 sticky top-0 l-0 r-0 z-50 bg-white px-5">
+      <div className="h-full flex items-center justify-between">
+        <img className="h-6" src={logo} alt="logo" />
+        <div className="flex">
+          <img
+            className="w-5 h-5"
+            src={notification}
+            alt="notification-button"
+          />
+          <img className="w-5 h-5 ml-6" src={menu} alt="menu-button" />
+        </div>
       </div>
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
 export default Header;
