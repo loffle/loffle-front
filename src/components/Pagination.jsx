@@ -27,7 +27,7 @@ const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }) => {
   }
 
   return (
-    <div className="sticky bottom-10 flex justify-center">
+    <div className="sticky bottom-6 flex justify-center">
       <nav className="flex justify-center w-80 h-14 bg-white rounded-2xl shadow-lg">
         <ul className="flex items-center w-full justify-evenly text-gray-light">
           {/* 첫페이지로 이동 */}
