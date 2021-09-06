@@ -21,7 +21,7 @@ const FreeBoardLists = ({ posts, loading }) => {
         <Search icon={search} handleSearchModal={handleSearchModal} />
       )}
       <div className="max-w-480 min-h-screen">
-        <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-light">
+        <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold">자유게시판</h1>
           <div className="flex items-center">
             <button onClick={() => handleSearchModal()}>

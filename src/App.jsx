@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //
 import FreeBoard from "./components/FreeBoard/FreeBoard.jsx";
 import PostDetail from "./components/FreeBoard/PostDetail";
+import PostCreate from "./components/FreeBoard/PostCreate";
 import NotFound from "./components/NotFound";
 
 const App = (props) => {
@@ -15,6 +16,7 @@ const App = (props) => {
         <Routes>
           <Route path="/community/post" element={<FreeBoard />} />
           <Route path="/community/post/:postId" element={<PostDetail />} />
+          <Route path="/community/post/create" element={<PostCreate />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>

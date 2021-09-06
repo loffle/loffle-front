@@ -3,7 +3,7 @@ import profile from "../../images/profile.svg";
 
 const Comment = ({ comment }) => {
   return (
-    <div className="p-5 border-b border-gray-light">
+    <div className="p-5 border-b border-gray-border">
       {/* 상단 */}
       <div className="flex justify-between mb-2">
         <div className="flex">

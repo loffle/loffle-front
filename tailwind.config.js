@@ -12,6 +12,7 @@ module.exports = {
         DEFAULT: "#A6A6A6", //자게-본문
         light: "#bbbbbb", //
         lightest: "#f2f2f2", //body백그라운드
+        border: "#e3e3e3",
       },
       modal: "#00000080",
     },
