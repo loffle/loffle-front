@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import doublePrevious from "../images/double_previous.svg";
 import doubleNext from "../images/double_next.svg";
-import pencil from "../images/pencil.svg";
-import { Link } from "react-router-dom";
 
-const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }) => {
+const Pagination = ({
+  children,
+  postsPerPage,
+  totalPosts,
+  currentPage,
+  paginate,
+}) => {
   const pageNumbers = [];
-
-  // for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-  //   pageNumbers.push(i);
-  // }
 
   const lastPageNumber = Math.ceil(totalPosts / postsPerPage);
 
@@ -55,12 +55,7 @@ const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }) => {
           </ul>
         </nav>
 
-        {/* 게시물 작성 버튼 */}
-        <Link to={{ pathname: "/community/post/create" }}>
-          <div className="flex items-center justify-center h-12 w-12 min-w-min ml-2 mt-1 bg-primary opacity-90 rounded-full shadow-xl">
-            <img className="w-5 h-5" src={pencil} alt="write-post-button" />
-          </div>
-        </Link>
+        {children}
       </div>
     </>
   );

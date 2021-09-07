@@ -11,8 +11,9 @@ import {
 } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const Share = ({ handleShareModal }) => {
-  const currentUrl = window.location.href;
+const Share = ({ handleShareModal, id = "" }) => {
+  const currentUrl = window.location.href + id;
+  //tempURL을 만들고 맨 뒷자리가 숫자면 그냥 사용 숫자가 아니면 게시물 id프롭스 활용
 
   return (
     <div

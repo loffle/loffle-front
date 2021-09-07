@@ -21,7 +21,9 @@ const Drawer = ({ logo, handleDrawerModal }) => {
           <Link to="/community/post/">
             <li>자유게시판</li>
           </Link>
-          <li>당첨후기</li>
+          <Link to="/community/review/">
+            <li>당첨 후기 게시판</li>
+          </Link>
           <li>공지사항</li>
           <li>QnA</li>
           <li>로그인 | 회원가입</li>

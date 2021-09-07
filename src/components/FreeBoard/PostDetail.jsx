@@ -9,8 +9,9 @@ import like from "../../images/like_btn.svg";
 import share from "../../images/share.svg";
 import commentIcon from "../../images/comment_btn.svg";
 import pencil from "../../images/pencil.svg";
+//
 import Loading from "../Loading";
-import Comment from "./Comment";
+import PostComment from "./PostComment";
 
 const PostDetail = (props) => {
   const { postId } = useParams();
@@ -73,11 +74,6 @@ const PostDetail = (props) => {
 
         <div className="flex items-center justify-between text-lg">
           <div className="flex opacity-80 gap-3">
-            {/* <img
-              className="w-5 h-5"
-              src={contentList}
-              alt="content-list-button"
-            /> */}
             <button onClick={() => handleShareModal()}>
               <img className="w-4 h-4" src={share} alt="shate-button" />
             </button>
@@ -97,7 +93,7 @@ const PostDetail = (props) => {
 
       {/* 댓글 */}
       {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} />
+        <PostComment key={comment.id} comment={comment} />
       ))}
 
       {/* 댓글 작성 */}
@@ -109,6 +105,7 @@ const PostDetail = (props) => {
             name="text"
             maxLength="300"
             placeholder="댓글을 입력하세요."
+            autoComplete="false"
           />
         </div>
         <div className="flex items-center justify-center h-12 w-12 min-w-min ml-2 mt-1 bg-primary opacity-90 rounded-full shadow-xl">

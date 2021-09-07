@@ -14,6 +14,8 @@ const FreeBoardLists = ({ posts, loading }) => {
     setIsSearchModalOn(!isSearchModalOn);
   };
 
+  console.log(posts);
+
   return (
     <>
       {loading && <Loading />}
