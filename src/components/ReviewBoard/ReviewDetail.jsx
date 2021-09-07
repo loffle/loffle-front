@@ -61,15 +61,28 @@ const ReviewDetail = ({ review, loading }) => {
             </div>
           </div>
           {/* image */}
-          <img src={review.url} alt="" />
+          <img src={review.url} alt="main" />
 
-          {/* title */}
-          <h1 className="text-2xl font-bold line-clamp-2 mb-4">
-            {review.Reacttitle}
-          </h1>
+          {/* related item */}
+          <div className="flex p-4 border-b border-gray-border">
+            <img
+              src={review.thumbnailUrl}
+              alt="thumbnail"
+              className="w-16 rounded-lg"
+            />
+            <div className="ml-2 text-sm">
+              <span className="line-clamp-2 pr-2">
+                [<strong>{Math.floor(Math.random() * 101)}회</strong> 당첨 제품]{" "}
+                {review.title}
+              </span>
+              <span>
+                <strong>1,{Math.floor(Math.random() * 1000)},000원</strong>
+              </span>
+            </div>
+          </div>
 
           {/* buttons */}
-          <div className=" opacity-80 flex items-center justify-between px-4 pb-4 text-lg">
+          <div className=" opacity-80 flex items-center justify-between mt-3 px-4 pb-4 text-lg">
             <div className="flex gap-4">
               {/* likes  */}
               <img className="pr-1 w-8" src={like} alt="like-button" />
