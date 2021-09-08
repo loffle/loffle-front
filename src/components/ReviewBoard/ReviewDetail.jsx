@@ -21,6 +21,8 @@ const ReviewDetail = ({ review, loading }) => {
     setIsCommentModalOn(!isCommentModalOn);
   };
 
+  //console.log(review); review 여러번 렌더링 및 undefined inssue
+
   return (
     <>
       {loading && <Loading />}
