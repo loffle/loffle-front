@@ -47,7 +47,7 @@ const ReviewComment = ({ review, handleCommentModal }) => (
     </div>
 
     {/* 댓글 작성 - sticky 충돌나서 fixed로 수정*/}
-    <div className="fixed bottom-4 left-0 right-0 flex items-center justify-between mx-3 z-50">
+    <div className="max-w-480 fixed bottom-4 left-0 right-0 flex items-center justify-between mx-6 z-50">
       <div className="flex justify-between px-3 py-1 w-10/12 h-14 bg-white rounded-2xl shadow-lg">
         <input
           className="w-full outline-none"
