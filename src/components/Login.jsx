@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 //API import 해야함.. ? 뭐 말하는 건지는 아직 모름
 import { Context } from "../context";
+//
+import { SESSION_ID, CSRF_TOKEN } from "../config";
 
 const Login = (props) => {
   const [username, setUsername] = useState("");
@@ -39,22 +41,12 @@ const Login = (props) => {
       //
       setUser({
         //임의로 hard coding 해버림
-        sessionId: "3shon67npij42ss64st4xzu3jnfscznr",
+        sessionId: SESSION_ID,
         username: "seller",
       });
 
-      setCookie(
-        "sessionid",
-        "3shon67npij42ss64st4xzu3jnfscznr",
-        "14",
-        "loffle.cf"
-      );
-      setCookie(
-        "csrftoken",
-        "4kSrQLZUeGnQjqVinW5y5b3daYteSPMNRwqvmRHsCvJGQyZ21jv79kgpgnUJy6sr",
-        "14",
-        "loffle.cf"
-      );
+      setCookie("sessionid", SESSION_ID, "14", "loffle.cf");
+      setCookie("csrftoken", CSRF_TOKEN, "14", "loffle.cf");
 
       navigate("/"); //login완료하면 index로 리다이렉트
     } catch (error) {
