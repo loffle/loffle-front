@@ -1,7 +1,14 @@
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+//
+import { Context } from "../context";
+//
+import profile from "../images/profile.svg";
 
 const Drawer = ({ logo, handleDrawerModal }) => {
+  const [user] = useContext(Context); //user만 사용하고 setUser 사용 안함
+
   return (
     <div
       className="max-w-480 mx-auto h-screen flex items-center justify-center fixed inset-0 bg-modal z-50"
@@ -26,7 +33,15 @@ const Drawer = ({ logo, handleDrawerModal }) => {
           </Link>
           <li>공지사항</li>
           <li>QnA</li>
-          <li>로그인 | 회원가입</li>
+          {user ? (
+            <li className="flex justify-center">
+              <img src={profile} alt="my-page-button" className="w-8" />
+            </li>
+          ) : (
+            <Link to="/login">
+              <li>로그인 | 회원가입</li>
+            </Link>
+          )}
           <img className="h-6" src={logo} alt="logo" />
         </ul>
       </div>
