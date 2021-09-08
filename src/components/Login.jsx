@@ -12,6 +12,19 @@ const Login = (props) => {
   const [_user, setUser] = useContext(Context);
   const navigate = useNavigate(); //Naviagte hook 사용
 
+  const setCookie = function setCookie_by_name_value_period_domain(
+    name,
+    value,
+    period,
+    domain
+  ) {
+    let date = new Date();
+    date.setDate(date.getDate() + period);
+    //let Cookie = `${name}=${value};Expires=${date.toUTCString()};Domain=${domain}`;
+    let Cookie = `${name}=${value};Expires=${date.toUTCString()};`;
+    document.cookie = Cookie;
+  };
+
   const handleSubmit = async () => {
     setError(false);
     try {
@@ -29,6 +42,20 @@ const Login = (props) => {
         sessionId: "3shon67npij42ss64st4xzu3jnfscznr",
         username: "seller",
       });
+
+      setCookie(
+        "sessionid",
+        "3shon67npij42ss64st4xzu3jnfscznr",
+        "14",
+        "loffle.cf"
+      );
+      setCookie(
+        "csrftoken",
+        "4kSrQLZUeGnQjqVinW5y5b3daYteSPMNRwqvmRHsCvJGQyZ21jv79kgpgnUJy6sr",
+        "14",
+        "loffle.cf"
+      );
+
       navigate("/"); //login완료하면 index로 리다이렉트
     } catch (error) {
       setError(true);
