@@ -21,10 +21,10 @@ const Post = ({ post }) => (
         <div className="flex">
           {/* 좋아요 개수 */}
           <img className="pr-1" src={like} alt="like-button" />
-          <span className="pr-2 text-red">{post.like.length}</span>
+          <span className="pr-2 text-red">{post.like_count}</span>
           {/* 댓글 개수 */}
           <img className="pr-1" src={comment} alt="comment-button" />
-          <span className="text-primary">{/* 만들어 줄 수 있나요? */}?</span>
+          <span className="text-primary">{post.comment_count}</span>
         </div>
       </div>
     </div>
