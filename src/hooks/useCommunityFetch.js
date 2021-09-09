@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 //
 import API from "../API";
 
-export const usePostFetch = (props) => {
-  const [searchTerm, setSearchTerm] = useState("");
+export const useCommunityFetch = (category) => {
+  const [order, setOrder] = useState("");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,16 +11,10 @@ export const usePostFetch = (props) => {
   //총 데이터를 postsPerPage 만큼 등분해서 보여줍니다.
   const [error, setError] = useState(null); // eslint-disable-line no-unused-vars
 
-  async function fetchData() {
+  async function fetchData(orderType = "") {
     try {
       setLoading(true);
-      //const response = await axios.get("/community/post.json");
-      const response = await API.fetchPost();
-
-      console.log(response);
-
-      //띄워주는거 일단 성공,
-
+      const response = await API.fetchCommunity(category, orderType);
       setPosts(response.results);
     } catch (e) {
       setError(e);
@@ -33,5 +26,24 @@ export const usePostFetch = (props) => {
     fetchData();
   }, []);
 
-  return { posts, loading, postsPerPage, currentPage, setCurrentPage };
+  useEffect(() => {
+    switch (order) {
+      case "최신순":
+        fetchData();
+        break;
+      case "과거순":
+        fetchData("/?ordering=created_at");
+        break;
+      default:
+    }
+  }, [order]);
+
+  return {
+    posts,
+    loading,
+    postsPerPage,
+    currentPage,
+    setCurrentPage,
+    setOrder,
+  };
 };

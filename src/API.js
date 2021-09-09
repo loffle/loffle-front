@@ -1,10 +1,7 @@
-import axios from "axios";
-
 const apiSettings = {
-  fetchPost: async () => {
-    const endpoint = "/community/post.json";
+  fetchCommunity: async (category, order = "") => {
+    const endpoint = `/community/${category}.json${order}`;
     return await (await fetch(endpoint)).json();
-    //return await axios.get(endpoint);
   },
 };
 

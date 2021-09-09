@@ -1,9 +1,11 @@
 import React from "react";
-import { usePostFetch } from "../../hooks/usePostFetch";
+import { useCommunityFetch } from "../../hooks/useCommunityFetch";
 import Pagination from "../Pagination";
 import FreeBoardLists from "./FreeBoardLists";
 import pencil from "../../images/pencil.svg";
 import { Link } from "react-router-dom";
+
+import Loading from "../Loading";
 
 const FreeBoard = (props) => {
   const {
@@ -12,7 +14,8 @@ const FreeBoard = (props) => {
     postsPerPage,
     currentPage,
     setCurrentPage,
-  } = usePostFetch();
+    setOrder,
+  } = useCommunityFetch("post");
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
@@ -24,9 +27,11 @@ const FreeBoard = (props) => {
 
   return (
     <>
+      {loading && <Loading />}
       <FreeBoardLists
         posts={currentPosts(posts)}
         loading={loading}
+        setOrder={setOrder}
       ></FreeBoardLists>
       {loading || (
         <Pagination
