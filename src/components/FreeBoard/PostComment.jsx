@@ -1,5 +1,6 @@
 import React from "react";
 import profile from "../../images/profile.svg";
+import { timeForToday } from "../helpers";
 
 const Comment = ({ comment }) => {
   return (
@@ -8,7 +9,7 @@ const Comment = ({ comment }) => {
       <div className="flex justify-between mb-2">
         <div className="flex">
           <img className="w-6 h-6" src={profile} alt="" />
-          <h3 className="text-sm pl-2 font-bold">{`유저 ${comment.id}`}</h3>
+          <h3 className="text-sm pl-2 font-bold">{comment.user}</h3>
         </div>
         <div className="text-sm">
           <span className="text-gray-light">수정</span>
@@ -22,10 +23,12 @@ const Comment = ({ comment }) => {
       </div>
 
       {/* 본문 */}
-      <p className="mb-1">{comment.body}</p>
+      <p className="mb-1">{comment.content}</p>
 
       {/* 작성일 */}
-      <span className="text-gray-light text-sm">00-00-00</span>
+      <span className="text-gray-light text-sm">
+        {timeForToday(comment.created_at)}
+      </span>
     </div>
   );
 };
