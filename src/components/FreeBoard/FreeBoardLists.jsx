@@ -3,9 +3,8 @@ import Post from "./Post";
 
 import search from "../../images/search_btn.svg";
 import Search from "../Search";
-import { useEffect } from "react";
 
-const FreeBoardLists = ({ posts, loading, setOrder }) => {
+const FreeBoardLists = ({ posts, setOrder, setSearchTerm }) => {
   const [isSearchModalOn, setIsSearchModalOn] = useState(false);
 
   const handleSearchModal = (e) => {
@@ -19,7 +18,11 @@ const FreeBoardLists = ({ posts, loading, setOrder }) => {
   return (
     <>
       {isSearchModalOn && (
-        <Search icon={search} handleSearchModal={handleSearchModal} />
+        <Search
+          icon={search}
+          setSearchTerm={setSearchTerm}
+          handleSearchModal={handleSearchModal}
+        />
       )}
       <div className="max-w-480 min-h-screen">
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">

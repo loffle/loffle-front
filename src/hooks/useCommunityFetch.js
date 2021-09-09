@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import API from "../API";
 
 export const useCommunityFetch = (category) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [order, setOrder] = useState("");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -11,10 +12,14 @@ export const useCommunityFetch = (category) => {
   //총 데이터를 postsPerPage 만큼 등분해서 보여줍니다.
   const [error, setError] = useState(null); // eslint-disable-line no-unused-vars
 
-  async function fetchData(orderType = "") {
+  async function fetchData(orderType = "", searchTerm = "") {
     try {
       setLoading(true);
-      const response = await API.fetchCommunity(category, orderType);
+      const response = await API.fetchCommunity(
+        category,
+        orderType,
+        searchTerm
+      );
       setPosts(response.results);
     } catch (e) {
       setError(e);
@@ -24,6 +29,7 @@ export const useCommunityFetch = (category) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -36,7 +42,13 @@ export const useCommunityFetch = (category) => {
         break;
       default:
     }
-  }, [order]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order]); //order가 바뀐 것을 감지하면 fetch 다시해주기
+
+  useEffect(() => {
+    fetchData("", `?search=${searchTerm}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
 
   return {
     posts,
@@ -45,5 +57,6 @@ export const useCommunityFetch = (category) => {
     currentPage,
     setCurrentPage,
     setOrder,
+    setSearchTerm,
   };
 };

@@ -15,6 +15,7 @@ const FreeBoard = (props) => {
     currentPage,
     setCurrentPage,
     setOrder,
+    setSearchTerm,
   } = useCommunityFetch("post");
 
   const indexOfLast = currentPage * postsPerPage;
@@ -32,6 +33,7 @@ const FreeBoard = (props) => {
         posts={currentPosts(posts)}
         loading={loading}
         setOrder={setOrder}
+        setSearchTerm={setSearchTerm}
       ></FreeBoardLists>
       {loading || (
         <Pagination

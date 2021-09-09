@@ -9,11 +9,11 @@ const Post = ({ post }) => (
   <Link to={{ pathname: `/community/post/${post.id}` }}>
     <div className="h-30 p-5 border-b border-gray-border" key={post.id}>
       <h2 className="text-base truncate mb-1">{post.title}</h2>
-      <p className="text-sm text-gray line-clamp-2 mb-1">{post.body}</p>
+      <p className="text-sm text-gray line-clamp-2 mb-1">{post.content}</p>
       <div className="flex justify-between text-xs">
         <div className="">
           <span className="text-gray-light mr-1">00/00/00</span>
-          <span>{`유저 ${post.userId}`}</span>
+          <span>{post.user}</span>
         </div>
         <div className="flex">
           {/* 좋아요 개수 */}

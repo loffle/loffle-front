@@ -1,6 +1,6 @@
 const apiSettings = {
-  fetchCommunity: async (category, order = "") => {
-    const endpoint = `/community/${category}.json${order}`;
+  fetchCommunity: async (category, order = "", searchTerm = "") => {
+    const endpoint = `/community/${category}.json${order}${searchTerm}`;
     return await (await fetch(endpoint)).json();
   },
 };
