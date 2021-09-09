@@ -11,7 +11,7 @@ const Login = (props) => {
   const [error, setError] = useState(false);
 
   //   setUser만 사용하기 때문에 user는 _표시를 해두었다 [객관적이지 않음]
-  const [_user, setUser] = useContext(Context);
+  const [user, setUser] = useContext(Context); // eslint-disable-line no-unused-vars
   const navigate = useNavigate(); //Naviagte hook 사용
 
   const setCookie = function setCookie_by_name_value_period_domain(

@@ -41,7 +41,7 @@ const PostDetail = (props) => {
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [postId]);
 
   return (
     <>

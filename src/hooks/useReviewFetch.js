@@ -5,7 +5,7 @@ export const useReviewFetch = (props) => {
   const [reviews, setreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [reviewsPerPage, setreviewsPerPage] = useState(1);
+  const [reviewsPerPage] = useState(1);
   //총 데이터를 reviewsPerPage 만큼 등분해서 보여줍니다.
 
   useEffect(() => {

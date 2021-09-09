@@ -1,26 +1,26 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 //
 import attachment from "../../images/attachment.svg";
 import pencil from "../../images/pencil.svg";
 
 const PostCreate = (props) => {
-  const [logoLoading, setLogoLoading] = useState(false);
-  const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
+  // const [logoLoading, setLogoLoading] = useState(false);
+  // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
 
   const attachmentInput = useRef();
 
   const onChange = (e) => {
-    //e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setFileUrl({
-        file: file,
-        previewURL: reader.result,
-      });
-    };
-    reader.readAsDataURL(file);
+    //   //e.preventDefault();
+    //   let reader = new FileReader();
+    //   let file = e.target.files[0];
+    //   reader.onloadend = () => {
+    //     setFileUrl({
+    //       file: file,
+    //       previewURL: reader.result,
+    //     });
+    //   };
+    //   reader.readAsDataURL(file);
   };
 
   return (
