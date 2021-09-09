@@ -14,8 +14,8 @@ const FreeBoard = (props) => {
     setCurrentPage,
   } = usePostFetch();
 
-  const indexOfLast = currentPage * postsPerPage; //10 = 1*10
-  const indexOfFirst = indexOfLast - postsPerPage; //0 = 10-10
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage;
   function currentPosts(tmp) {
     let currentPosts = 0;
     currentPosts = tmp.slice(indexOfFirst, indexOfLast);

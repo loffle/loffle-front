@@ -5,16 +5,24 @@ import Post from "./Post";
 
 import search from "../../images/search_btn.svg";
 import Search from "../Search";
+import { useEffect } from "react";
 
 const FreeBoardLists = ({ posts, loading }) => {
-  //console.log(posts);
   const [isSearchModalOn, setIsSearchModalOn] = useState(false);
+  const [selected, setSelected] = useState("");
 
   const handleSearchModal = (e) => {
     setIsSearchModalOn(!isSearchModalOn);
   };
 
-  console.log(posts);
+  const handleSelect = (e) => {
+    setSelected(e.target.value);
+    console.log(e.target);
+  };
+
+  useEffect(() => {
+    //console.log(selected);
+  }, [selected]);
 
   return (
     <>
@@ -29,7 +37,10 @@ const FreeBoardLists = ({ posts, loading }) => {
             <button onClick={() => handleSearchModal()}>
               <img className="w-4 h-4" src={search} alt="search-button" />
             </button>
-            <select className="text-gray h-5 ml-5 bg-white">
+            <select
+              onChange={handleSelect}
+              className="text-gray h-5 ml-5 bg-white"
+            >
               <option>최신순 </option>
               <option>조회순 </option>
               <option>추천순 </option>
