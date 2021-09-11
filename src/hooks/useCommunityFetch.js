@@ -20,6 +20,7 @@ export const useCommunityFetch = (category) => {
         orderType,
         searchTerm
       );
+      //console.log(response.results);
       setPosts(response.results);
     } catch (e) {
       setError(e);

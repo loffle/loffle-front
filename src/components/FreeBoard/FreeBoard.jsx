@@ -23,6 +23,7 @@ const FreeBoard = (props) => {
   function currentPosts(tmp) {
     let currentPosts = 0;
     currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    //console.log(currentPosts);
     return currentPosts;
   }
 

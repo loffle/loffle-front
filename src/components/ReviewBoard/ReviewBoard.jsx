@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useReviewFetch } from "../../hooks/useReviewFetch";
+import { useCommunityFetch } from "../../hooks/useCommunityFetch";
 import Pagination from "../Pagination";
 import pencil from "../../images/pencil.svg";
 import { Link } from "react-router-dom";
@@ -10,12 +10,14 @@ import search from "../../images/search_btn.svg";
 
 const ReviewBoard = (props) => {
   const {
-    reviews,
+    posts: reviews, //이거 때매 또 1시간 후... 빨간글씨면 의심하자
     loading,
-    reviewsPerPage,
+    //postsPerPage: reviewsPerPage, heardcoding -> 1
     currentPage,
     setCurrentPage,
-  } = useReviewFetch();
+    setOrder,
+    setSearchTerm,
+  } = useCommunityFetch("review");
 
   //Search Modal
   const [isSearchModalOn, setIsSearchModalOn] = useState(false);
@@ -24,13 +26,16 @@ const ReviewBoard = (props) => {
     setIsSearchModalOn(!isSearchModalOn);
   };
 
+  const handleSelect = (e) => {
+    setOrder(e.target.value);
+  };
+
   //Pagination
-  const indexOfLast = currentPage * reviewsPerPage;
-  const indexOfFirst = indexOfLast - reviewsPerPage;
+  const indexOfLast = currentPage * 1;
+  const indexOfFirst = indexOfLast - 1;
   function currentReviews(tmp) {
     let currentReviews = 0;
-    //배열에서 하나만 뽑아주기 위해서 pop추가로 작성
-    currentReviews = tmp.slice(indexOfFirst, indexOfLast).pop();
+    currentReviews = tmp.slice(indexOfFirst, indexOfLast).pop(); //배열에서 요소 1개
     return currentReviews;
   }
 
@@ -38,32 +43,39 @@ const ReviewBoard = (props) => {
     <>
       {loading && <Loading />}
       {isSearchModalOn && (
-        <Search icon={search} handleSearchModal={handleSearchModal} />
+        <Search
+          icon={search}
+          setSearchTerm={setSearchTerm}
+          handleSearchModal={handleSearchModal}
+        />
       )}
-      <div className="max-w-480 min-h-screen">
-        <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-          <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
-          <div className="flex items-center">
-            <button onClick={() => handleSearchModal()}>
-              <img className="w-4 h-4" src={search} alt="search-button" />
-            </button>
-            <select className="text-gray h-5 ml-5 bg-white">
-              <option>최신순 </option>
-              <option>조회순 </option>
-              <option>추천순 </option>
-              <option>답변순 </option>
-            </select>
+      {reviews && (
+        <div className="max-w-480 min-h-screen">
+          <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+            <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
+            <div className="flex items-center">
+              <button onClick={() => handleSearchModal()}>
+                <img className="w-4 h-4" src={search} alt="search-button" />
+              </button>
+              <select
+                onChange={handleSelect}
+                className="text-gray h-5 ml-5 bg-white"
+              >
+                <option>최신순 </option>
+                <option>과거순 </option>
+              </select>
+            </div>
           </div>
+          <ReviewDetail
+            review={currentReviews(reviews)}
+            loading={loading}
+          ></ReviewDetail>
         </div>
-        <ReviewDetail
-          review={currentReviews(reviews)}
-          loading={loading}
-        ></ReviewDetail>
-      </div>
+      )}
 
       {loading || (
         <Pagination
-          postsPerPage={reviewsPerPage}
+          postsPerPage={1}
           totalPosts={reviews.length}
           currentPage={currentPage}
           paginate={setCurrentPage}
