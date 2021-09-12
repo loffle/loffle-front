@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Loading from "../Loading";
+import React, { useEffect, useState } from "react";
 import Share from "../Share";
+import { timeForToday } from "../helpers";
 //
 import profile from "../../images/profile.svg";
 import like from "../../images/like_btn.svg";
@@ -8,7 +8,8 @@ import share from "../../images/share.svg";
 import commentIcon from "../../images/comment_btn.svg";
 import ReviewComment from "./ReviewComment";
 
-const ReviewDetail = ({ review, loading }) => {
+const ReviewDetail = ({ review }) => {
+  const [comments, setComments] = useState([]);
   //공유버튼 모달
   const [isShareModalOn, setIsShareModalOn] = useState(false);
   const handleShareModal = (e) => {
@@ -21,21 +22,31 @@ const ReviewDetail = ({ review, loading }) => {
     setIsCommentModalOn(!isCommentModalOn);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      const data = await (
+        await fetch(`/community/review/${review.id}/comment.json`)
+      ) //review.id 하드코딩 한 상태
+        .json();
+      await setComments(data.results);
+    }
+    if (review) fetchData(); //reiview undefined check
+  }, [review]);
+
   //console.log(review); review 여러번 렌더링 및 undefined inssue
 
   return (
     <>
-      {loading && <Loading />}
-
       {/* API 보고 Share 기능 어떻게 할지 생각! */}
       {/* review && - 즉, undefined 체크 안하면 오류 겁나뜸 ㅂㄷㅂㄷㅂㄷㅂ */}
       {review && isShareModalOn && (
         <Share id={review.id} handleShareModal={handleShareModal} />
       )}
 
-      {review && isCommentModalOn && (
+      {comments && review && isCommentModalOn && (
         <ReviewComment
           review={review}
+          comments={comments}
           handleCommentModal={handleCommentModal}
         />
       )}
@@ -48,8 +59,10 @@ const ReviewDetail = ({ review, loading }) => {
             <div className="flex">
               <img className="w-9 h-9" src={profile} alt="profile" />
               <div className="leading-3 pl-2">
-                <h3 className="text-sm font-bold">유저 {review.id}</h3>
-                <span className="text-xs text-gray-light">00-00-00</span>
+                <h3 className="text-sm font-bold">{review.user}</h3>
+                <span className="text-xs text-gray-light">
+                  {timeForToday(review.created_at)}
+                </span>
               </div>
             </div>
             <div className="text-sm">
@@ -74,11 +87,10 @@ const ReviewDetail = ({ review, loading }) => {
             />
             <div className="ml-2 text-sm">
               <span className="line-clamp-2 pr-2">
-                [<strong>{Math.floor(Math.random() * 101)}회</strong> 당첨 제품]{" "}
-                {review.title}
+                [<strong>? 회</strong> 당첨 제품] ?:제품명
               </span>
               <span>
-                <strong>1,{Math.floor(Math.random() * 1000)},000원</strong>
+                <strong>? 원</strong>
               </span>
             </div>
           </div>
@@ -107,20 +119,14 @@ const ReviewDetail = ({ review, loading }) => {
           <div className="px-4 pb-4 text-sm">
             <div className="flex justify-between">
               <span>
-                좋아요 <strong>{Math.floor(Math.random() * 101)}</strong>개
+                좋아요 <strong>{review.like_count}</strong>개
               </span>
               <span onClick={() => handleCommentModal()}>
-                댓글 <strong>{Math.floor(Math.random() * 101)}</strong>개
+                댓글 <strong>{review.comment_count}</strong>개
               </span>
             </div>
             {/* 내용 */}
-            <p className="text-base mt-4">
-              {review.title}
-              {review.title}
-              {review.title}
-              {review.title}
-              {review.title}
-            </p>
+            <p className="text-base mt-4">{review.content}</p>
           </div>
         </article>
       )}
