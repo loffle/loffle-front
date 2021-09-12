@@ -6,20 +6,20 @@ const Pagination = ({
   children,
   postsPerPage,
   totalPosts,
-  currentPage,
-  paginate,
+  pageNumber,
+  setPageNumber,
 }) => {
   const pageNumbers = [];
 
   const lastPageNumber = Math.ceil(totalPosts / postsPerPage);
 
-  //   개드립넷 페이지네이션 참조
-  if (currentPage <= 3) {
-    for (let i = 1; i <= 5; i++) {
+  // 9/12 아직 페이지 많을때 처리 안해놨음 수정 요망!
+  if (pageNumber <= 3) {
+    for (let i = 1; i <= lastPageNumber; i++) {
       pageNumbers.push(i);
     }
-  } else if (currentPage >= 4 && currentPage <= lastPageNumber - 3) {
-    for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+  } else if (pageNumber >= 4 && pageNumber <= lastPageNumber - 3) {
+    for (let i = pageNumber - 2; i <= pageNumber + 2; i++) {
       pageNumbers.push(i);
     }
   } else {
@@ -34,7 +34,7 @@ const Pagination = ({
         <nav className="flex justify-between w-10/12 h-14 bg-white rounded-2xl shadow-lg">
           <ul className="flex items-center w-full justify-evenly text-gray-light">
             {/* 첫페이지로 이동 */}
-            <button onClick={() => paginate(1)}>
+            <button onClick={() => setPageNumber(1)}>
               <img className="opacity-70" src={doublePrevious} alt="" />
             </button>
             {/* 페이지 번호 보여주기 */}
@@ -42,14 +42,17 @@ const Pagination = ({
               <li key={number} className="page-item">
                 <button
                   className="focus:text-gray-dark"
-                  onClick={() => paginate(number)}
+                  onClick={() => {
+                    console.log(number);
+                    setPageNumber(number);
+                  }}
                 >
                   {number}
                 </button>
               </li>
             ))}
             {/* 마지막 페이지로 이동 */}
-            <button onClick={() => paginate(lastPageNumber)}>
+            <button onClick={() => setPageNumber(lastPageNumber)}>
               <img className="opacity-70" src={doubleNext} alt="" />
             </button>
           </ul>

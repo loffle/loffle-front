@@ -1,5 +1,5 @@
-import React from "react";
-import { useCommunityFetch } from "../../hooks/useCommunityFetch";
+import React, { useState } from "react";
+import { useCommunityFetch } from "../../hooks/useCommunityFetch2";
 import Pagination from "../Pagination";
 import FreeBoardLists from "./FreeBoardLists";
 import pencil from "../../images/pencil.svg";
@@ -8,29 +8,22 @@ import { Link } from "react-router-dom";
 import Loading from "../Loading";
 
 const FreeBoard = (props) => {
-  const {
-    posts,
-    loading,
-    postsPerPage,
-    currentPage,
-    setCurrentPage,
-    setOrder,
-    setSearchTerm,
-  } = useCommunityFetch("post");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [order, setOrder] = useState("");
 
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage;
-  function currentPosts(tmp) {
-    let currentPosts = 0;
-    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
-    return currentPosts;
-  }
+  const { posts, loading, postsPerPage, totalPosts } = useCommunityFetch(
+    "post",
+    pageNumber,
+    order,
+    searchTerm
+  );
 
   return (
     <>
       {loading && <Loading />}
       <FreeBoardLists
-        posts={currentPosts(posts)}
+        posts={posts}
         loading={loading}
         setOrder={setOrder}
         setSearchTerm={setSearchTerm}
@@ -38,9 +31,9 @@ const FreeBoard = (props) => {
       {loading || (
         <Pagination
           postsPerPage={postsPerPage}
-          totalPosts={posts.length}
-          currentPage={currentPage}
-          paginate={setCurrentPage}
+          totalPosts={totalPosts}
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
         >
           {/* 게시물 작성 버튼 */}
           <Link to="/community/post/create">
