@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useCommunityFetch } from "../../hooks/useCommunityFetch";
-import Pagination from "../Pagination";
+import { useReviewFetch } from "../../hooks/useReviewFetch";
 import pencil from "../../images/pencil.svg";
 import { Link } from "react-router-dom";
 import ReviewDetail from "./ReviewDetail";
@@ -9,15 +8,15 @@ import Loading from "../Loading";
 import search from "../../images/search_btn.svg";
 
 const ReviewBoard = (props) => {
+  const [pageNumber, setPageNumber] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [order, setOrder] = useState("");
+
   const {
     posts: reviews, //이거 때매 또 1시간 후... 빨간글씨면 의심하자
     loading,
-    //postsPerPage: reviewsPerPage, heardcoding -> 1
-    currentPage,
-    setCurrentPage,
-    setOrder,
-    setSearchTerm,
-  } = useCommunityFetch("review");
+    totalPosts,
+  } = useReviewFetch("review", pageNumber, order, searchTerm);
 
   //Search Modal
   const [isSearchModalOn, setIsSearchModalOn] = useState(false);
@@ -29,15 +28,6 @@ const ReviewBoard = (props) => {
   const handleSelect = (e) => {
     setOrder(e.target.value);
   };
-
-  //Pagination
-  const indexOfLast = currentPage * 1;
-  const indexOfFirst = indexOfLast - 1;
-  function currentReviews(tmp) {
-    let currentReviews = 0;
-    currentReviews = tmp.slice(indexOfFirst, indexOfLast).pop(); //배열에서 요소 1개
-    return currentReviews;
-  }
 
   return (
     <>
@@ -66,27 +56,25 @@ const ReviewBoard = (props) => {
               </select>
             </div>
           </div>
-          <ReviewDetail
-            review={currentReviews(reviews)}
-            loading={loading}
-          ></ReviewDetail>
+
+          {reviews.map((review) => (
+            <ReviewDetail
+              key={review.id}
+              review={review}
+              loading={loading}
+            ></ReviewDetail>
+          ))}
         </div>
       )}
 
       {loading || (
-        <Pagination
-          postsPerPage={1}
-          totalPosts={reviews.length}
-          currentPage={currentPage}
-          paginate={setCurrentPage}
-        >
-          {/* 게시물 작성 버튼 */}
+        <div className="sticky bottom-4 flex justify-end items-center mx-4">
           <Link to="/community/post/create">
             <div className="flex items-center justify-center h-12 w-12 min-w-min ml-2 mt-1 bg-primary opacity-90 rounded-full shadow-xl">
               <img className="w-5 h-5" src={pencil} alt="write-post-button" />
             </div>
           </Link>
-        </Pagination>
+        </div>
       )}
     </>
   );

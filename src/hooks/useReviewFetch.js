@@ -1,24 +1,58 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-export const useReviewFetch = (props) => {
-  const [reviews, setreviews] = useState([]);
+export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [reviewsPerPage] = useState(1);
-  //총 데이터를 reviewsPerPage 만큼 등분해서 보여줍니다.
+  const [postsPerPage] = useState(5);
+  const [totalPosts, setTotalPosts] = useState(0);
+  const [error, setError] = useState(null); // eslint-disable-line no-unused-vars
+
+  async function fetchData(orderType = "", searchTerm = "") {
+    setLoading(true);
+    axios({
+      method: "GET",
+      url: `/community/${category}.json`,
+      params: { ordering: orderType, search: searchTerm, page: pageNumber },
+    })
+      .then((response) => {
+        //console.log(response);
+        setPosts(response.data.results);
+        setTotalPosts(response.data.count);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setError(true);
+      });
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/photos"
-      );
-      setreviews(response.data);
-      setLoading(false);
-    }
     fetchData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageNumber]);
 
-  return { reviews, loading, reviewsPerPage, currentPage, setCurrentPage };
+  useEffect(() => {
+    switch (order) {
+      case "최신순":
+        fetchData();
+        break;
+      case "과거순":
+        fetchData("created_at");
+        break;
+      default:
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order]); //order가 바뀐 것을 감지하면 fetch 다시해주기
+
+  useEffect(() => {
+    fetchData("", searchTerm);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
+
+  return {
+    posts,
+    loading,
+    postsPerPage,
+    totalPosts,
+  };
 };
