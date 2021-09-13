@@ -28,12 +28,15 @@ const PostDetail = (props) => {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
+      const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
-      const post = await (await fetch(`/community/post/${postId}.json`)).json();
+      const post = await (
+        await fetch(`${PROXY}/community/post/${postId}.json`)
+      ).json();
       setPost(post);
 
       const comments = await (
-        await fetch(`/community/post/${postId}/comment.json`)
+        await fetch(`${PROXY}/community/post/${postId}/comment.json`)
       ).json();
       setComments(comments.results);
 
