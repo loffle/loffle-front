@@ -11,10 +11,11 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
   async function fetchData(orderType = "", searchTerm = "") {
     setLoading(true);
     setError(false);
+    const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
     let cancel;
     axios({
       method: "GET",
-      url: `/community/${category}.json`,
+      url: `${PROXY}/community/${category}.json`,
       params: { ordering: orderType, search: searchTerm, page: pageNumber },
       cancelToken: new axios.CancelToken((c) => (cancel = c)), //취소 토큰(cancel token)을 사용하여 요청을 취소 할 수 있습니다.
     })

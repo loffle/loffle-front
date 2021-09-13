@@ -14,8 +14,9 @@ const Question = ({ question, lastQuestionElementRef }) => {
 
   useEffect(() => {
     async function fetchData() {
+      const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
       const data = await (
-        await fetch(`/community/question/${question.id}/answer.json`)
+        await fetch(`${PROXY}/community/question/${question.id}/answer.json`)
       ).json();
       await setAnswers(data.results);
     }

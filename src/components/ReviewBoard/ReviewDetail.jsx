@@ -24,8 +24,9 @@ const ReviewDetail = ({ review }) => {
 
   useEffect(() => {
     async function fetchData() {
+      const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
       const data = await (
-        await fetch(`/community/review/${review.id}/comment.json`)
+        await fetch(`${PROXY}/community/review/${review.id}/comment.json`)
       ) //review.id 하드코딩 한 상태
         .json();
       await setComments(data.results);
