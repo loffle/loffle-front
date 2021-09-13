@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 //API import 해야함.. ? 뭐 말하는 건지는 아직 모름
 import { Context } from "../context";
 //
-import { SESSION_ID, CSRF_TOKEN } from "../config";
+//import { SESSION_ID, CSRF_TOKEN } from "../config";
 import axios from "axios";
 
 const Login = (props) => {
