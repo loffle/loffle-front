@@ -22,3 +22,12 @@ export const timeForToday = (value) => {
 
   return `${Math.floor(betweenTimeDay / 365)}년전`;
 };
+
+export const timeWithHyphen = (value) => {
+  const timeValue = new Date(value);
+
+  const str =
+    timeValue.getFullYear + "-" + timeValue.getMonth + "-" + timeValue.getDate;
+
+  return str;
+};

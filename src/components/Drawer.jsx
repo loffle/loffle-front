@@ -32,7 +32,9 @@ const Drawer = ({ logo, handleDrawerModal }) => {
             <li>당첨 후기 게시판</li>
           </Link>
           <li>공지사항</li>
-          <li>QnA</li>
+          <Link to="/community/question/">
+            <li>QnA</li>
+          </Link>
           {user ? (
             <li className="flex justify-center">
               <img src={profile} alt="my-page-button" className="w-8" />
