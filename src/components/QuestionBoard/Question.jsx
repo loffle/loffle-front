@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 //
-import { timeForToday } from "../helpers";
+import { timeWithHyphen } from "../helpers";
 import QuestionAnswer from "./QuestionAnswer";
 
 const Question = ({ question, lastQuestionElementRef }) => {
@@ -35,7 +35,6 @@ const Question = ({ question, lastQuestionElementRef }) => {
 
       <div
         className="h-30 m-5 rounded-lg shadow-lg"
-        key={question.id}
         ref={lastQuestionElementRef}
         onClick={() => handleAnswerModal()}
       >
@@ -56,7 +55,7 @@ const Question = ({ question, lastQuestionElementRef }) => {
               >
                 <span>수정</span>
                 <span
-                  className=" pl-3"
+                  className="ml-3"
                   onClick={() => alert("정말 삭제하시겠습니까?")}
                 >
                   삭제
@@ -76,7 +75,7 @@ const Question = ({ question, lastQuestionElementRef }) => {
             <div className="flex justify-between text-xs">
               <div className="">
                 <span className="text-gray-light mr-1">
-                  {timeForToday(question.created_at)}
+                  {timeWithHyphen(question.created_at)}
                 </span>
               </div>
             </div>

@@ -1,19 +1,19 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useReviewFetch } from "../../hooks/useReviewFetch";
 import Loading from "../Loading";
-import Question from "./Question";
+import Notice from "./Notice";
 import CreateButton from "../CreateButton";
 
-const QuestionBoard = (props) => {
+const NoticeBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { posts: questions, loading, hasMore } = useReviewFetch(
-    "question",
+  const { posts: notices, loading, hasMore } = useReviewFetch(
+    "notice",
     pageNumber
   );
 
   const observer = useRef();
-  const lastQuestionElementRef = useCallback(
+  const lastNoticeElementRef = useCallback(
     //useCallback: 이 함수를 호출한 node를 가져온다
     (node) => {
       if (loading) return; //로딩중에는 무시처리
@@ -34,25 +34,23 @@ const QuestionBoard = (props) => {
   return (
     <>
       {loading && <Loading />}
-      {questions && (
+      {notices && (
         <div className="max-w-480 min-h-screen">
           <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-            <h1 className="text-xl font-bold">QnA</h1>
+            <h1 className="text-xl font-bold">공지사항</h1>
           </div>
 
-          {questions.map((question, index) => {
-            if (questions.length === index + 1) {
+          {notices.map((notice, index) => {
+            if (notices.length === index + 1) {
               return (
-                <Question
-                  key={question.id}
-                  question={question}
-                  lastQuestionElementRef={lastQuestionElementRef}
-                ></Question>
+                <Notice
+                  key={notice.id}
+                  notice={notice}
+                  lastNoticeElementRef={lastNoticeElementRef}
+                ></Notice>
               );
             } else {
-              return (
-                <Question key={question.id} question={question}></Question>
-              );
+              return <Notice key={notice.id} notice={notice}></Notice>;
             }
           })}
 
@@ -70,4 +68,4 @@ const QuestionBoard = (props) => {
   );
 };
 
-export default QuestionBoard;
+export default NoticeBoard;
