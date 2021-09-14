@@ -1,9 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useReviewFetch } from "../../hooks/useReviewFetch";
-import pencil from "../../images/pencil.svg";
-import { Link } from "react-router-dom";
 import Loading from "../Loading";
 import Question from "./Question";
+import CreateButton from "../CreateButton";
 
 const QuestionBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -66,15 +65,7 @@ const QuestionBoard = (props) => {
         </div>
       )}
 
-      {loading || (
-        <div className="sticky bottom-4 flex justify-end items-center mx-4">
-          <Link to="/community/post/create">
-            <div className="flex items-center justify-center h-12 w-12 min-w-min ml-2 mt-1 bg-primary opacity-90 rounded-full shadow-xl">
-              <img className="w-5 h-5" src={pencil} alt="write-post-button" />
-            </div>
-          </Link>
-        </div>
-      )}
+      {loading || <CreateButton to={"/community/post/create"} />}
     </>
   );
 };

@@ -27,7 +27,11 @@ export const timeWithHyphen = (value) => {
   const timeValue = new Date(value);
 
   const str =
-    timeValue.getFullYear + "-" + timeValue.getMonth + "-" + timeValue.getDate;
+    timeValue.getFullYear() +
+    "-" +
+    timeValue.getMonth() +
+    "-" +
+    timeValue.getDate();
 
   return str;
 };

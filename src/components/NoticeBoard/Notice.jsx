@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 //
-import { timeForToday } from "../helpers";
+import { timeWithHyphen } from "../helpers";
 //
 import arrowDown from "../../images/arrow_down.svg";
 import arrowUp from "../../images/arrow_up.svg";
@@ -14,19 +14,24 @@ const Notice = ({ notice, lastNoticeElementRef }) => {
   return (
     <>
       <div
-        className="h-30 p-5 border-b border-gray-border"
+        className="h-30 px-5 py-3 border-b border-gray-border"
         ref={lastNoticeElementRef}
         onClick={() => handleContentShow()}
       >
         <div className="flex justify-between">
           <div className="text-sm">
-            <span className="font-bold">{notice.title}</span>
-            <span className="text-gray-light mr-1">
-              {timeForToday(notice.created_at)}
-            </span>
+            <div className="font-bold mb-1">{notice.title}</div>
+            <div className="text-gray-light">
+              {timeWithHyphen(notice.created_at)}
+            </div>
           </div>
-          <img src="" alt="" />
+          <img src={isContentShow ? arrowUp : arrowDown} alt="content-toggle" />
         </div>
+        {isContentShow && (
+          <div className="border-t border-gray-dark mt-3 py-3 text-sm">
+            {notice.content}
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 //
-import { timeForToday } from "../helpers";
+import { timeWithHyphen } from "../helpers";
 import QuestionAnswer from "./QuestionAnswer";
 
 const Question = ({ question, lastQuestionElementRef }) => {
@@ -75,7 +75,7 @@ const Question = ({ question, lastQuestionElementRef }) => {
             <div className="flex justify-between text-xs">
               <div className="">
                 <span className="text-gray-light mr-1">
-                  {timeForToday(question.created_at)}
+                  {timeWithHyphen(question.created_at)}
                 </span>
               </div>
             </div>
