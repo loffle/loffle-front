@@ -25,14 +25,16 @@ const Drawer = ({ logo, handleDrawerModal }) => {
         >
           <li>소개</li>
           <li>응모하기</li>
-          <Link to="/community/post/">
+          <Link to="/community/post">
             <li>자유게시판</li>
           </Link>
-          <Link to="/community/review/">
+          <Link to="/community/review">
             <li>당첨 후기 게시판</li>
           </Link>
-          <li>공지사항</li>
-          <Link to="/community/question/">
+          <Link to="/community/notice">
+            <li>공지사항</li>
+          </Link>
+          <Link to="/community/question">
             <li>QnA</li>
           </Link>
           {user ? (

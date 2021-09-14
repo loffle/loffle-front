@@ -45,12 +45,15 @@ const QuestionBoard = (props) => {
             if (questions.length === index + 1) {
               return (
                 <Question
+                  key={question.id}
                   question={question}
                   lastQuestionElementRef={lastQuestionElementRef}
                 ></Question>
               );
             } else {
-              return <Question question={question}></Question>;
+              return (
+                <Question key={question.id} question={question}></Question>
+              );
             }
           })}
 

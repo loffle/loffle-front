@@ -2,24 +2,19 @@ import React, { useCallback, useRef, useState } from "react";
 import { useReviewFetch } from "../../hooks/useReviewFetch";
 import pencil from "../../images/pencil.svg";
 import { Link } from "react-router-dom";
-import ReviewDetail from "./ReviewDetail";
-import Search from "../Search";
 import Loading from "../Loading";
-import search from "../../images/search_btn.svg";
+import Notice from "./Notice";
 
-const ReviewBoard = (props) => {
+const NoticeBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [order, setOrder] = useState("");
 
-  const {
-    posts: reviews, //이거 때매 또 1시간 후... 빨간글씨면 의심하자
-    loading,
-    hasMore,
-  } = useReviewFetch("review", pageNumber, order, searchTerm);
+  const { posts: notices, loading, hasMore } = useReviewFetch(
+    "notice",
+    pageNumber
+  );
 
   const observer = useRef();
-  const lastReviewElementRef = useCallback(
+  const lastNoticeElementRef = useCallback(
     //useCallback: 이 함수를 호출한 node를 가져온다
     (node) => {
       if (loading) return; //로딩중에는 무시처리
@@ -37,64 +32,26 @@ const ReviewBoard = (props) => {
     [loading, hasMore]
   );
 
-  //Search Modal
-  const [isSearchModalOn, setIsSearchModalOn] = useState(false);
-
-  const handleSearchModal = (e) => {
-    setIsSearchModalOn(!isSearchModalOn);
-  };
-
-  const handleSelect = (e) => {
-    setOrder(e.target.value);
-  };
-
   return (
     <>
       {loading && <Loading />}
-      {isSearchModalOn && (
-        <Search
-          setPageNumber={setPageNumber}
-          setSearchTerm={setSearchTerm}
-          handleSearchModal={handleSearchModal}
-        />
-      )}
-      {reviews && (
+      {notices && (
         <div className="max-w-480 min-h-screen">
           <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-            <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
-            <div className="flex items-center">
-              <button onClick={() => handleSearchModal()}>
-                <img className="w-4 h-4" src={search} alt="search-button" />
-              </button>
-              <select
-                onChange={handleSelect}
-                className="text-gray h-5 ml-5 bg-white"
-              >
-                <option>최신순 </option>
-                <option>과거순 </option>
-              </select>
-            </div>
+            <h1 className="text-xl font-bold">공지사항</h1>
           </div>
 
-          {reviews.map((review, index) => {
-            if (reviews.length === index + 1) {
+          {notices.map((notice, index) => {
+            if (notices.length === index + 1) {
               return (
-                <div key={review.id} ref={lastReviewElementRef}>
-                  <ReviewDetail
-                    review={review}
-                    loading={loading}
-                  ></ReviewDetail>
-                </div>
+                <Notice
+                  key={notice.id}
+                  notice={notice}
+                  lastNoticeElementRef={lastNoticeElementRef}
+                ></Notice>
               );
             } else {
-              return (
-                <div key={review.id}>
-                  <ReviewDetail
-                    review={review}
-                    loading={loading}
-                  ></ReviewDetail>
-                </div>
-              );
+              return <Notice key={notice.id} notice={notice}></Notice>;
             }
           })}
 
@@ -120,4 +77,4 @@ const ReviewBoard = (props) => {
   );
 };
 
-export default ReviewBoard;
+export default NoticeBoard;

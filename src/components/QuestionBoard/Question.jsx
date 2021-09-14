@@ -35,7 +35,6 @@ const Question = ({ question, lastQuestionElementRef }) => {
 
       <div
         className="h-30 m-5 rounded-lg shadow-lg"
-        key={question.id}
         ref={lastQuestionElementRef}
         onClick={() => handleAnswerModal()}
       >
@@ -56,7 +55,7 @@ const Question = ({ question, lastQuestionElementRef }) => {
               >
                 <span>수정</span>
                 <span
-                  className=" pl-3"
+                  className="ml-3"
                   onClick={() => alert("정말 삭제하시겠습니까?")}
                 >
                   삭제
