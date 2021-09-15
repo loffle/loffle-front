@@ -33,9 +33,6 @@ const Login = (props) => {
     if (cookie.load("csrftoken")) {
       cookie.remove("csrftoken", { path: "/" });
     }
-    if (cookie.load("sessionid")) {
-      cookie.remove("sessionid", { path: "/" });
-    }
 
     try {
       axios
