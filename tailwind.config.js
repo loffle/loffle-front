@@ -13,6 +13,8 @@ module.exports = {
         light: "#bbbbbb", //
         lightest: "#f2f2f2", //body백그라운드
         border: "#e3e3e3",
+        input: "#e5e7eb",
+        social: "#737373",
       },
       modal: "#00000080",
     },
