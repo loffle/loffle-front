@@ -1,13 +1,34 @@
 import React from "react";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //
 import { Context } from "../context";
 //
 import profile from "../images/profile.svg";
+//
+import cookie from "react-cookies";
+import axios from "axios";
 
 const Drawer = ({ logo, handleDrawerModal }) => {
-  const [user] = useContext(Context); //user만 사용하고 setUser 사용 안함
+  const [user, setUser] = useContext(Context); //user만 사용하고 setUser 사용 안함
+  const navigate = useNavigate();
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+
+  const handleLogout = () => {
+    try {
+      axios
+        .get(`${PROXY}/api-auth/logout/`)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch();
+    } catch (error) {
+      console.log(error);
+    }
+
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <div
@@ -38,8 +59,9 @@ const Drawer = ({ logo, handleDrawerModal }) => {
             <li>QnA</li>
           </Link>
           {user ? (
-            <li className="flex justify-center">
-              <img src={profile} alt="my-page-button" className="w-8" />
+            <li onClick={handleLogout} className="flex justify-center">
+              {/* <img src={profile} alt="my-page-button" className="w-8" /> */}
+              {user.username}님 | 로그아웃
             </li>
           ) : (
             <Link to="/login">
