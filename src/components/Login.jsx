@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //API import 해야함.. ? 뭐 말하는 건지는 아직 모름
@@ -12,7 +13,8 @@ import Warning from "../Warning";
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
+  const [csrftoken, setCsrftoken] = useState("");
+  const [tokenAuth, setTokenAuth] = useState("");
   const [error, setError] = useState(false);
 
   //   setUser만 사용하기 때문에 user는 _표시를 해두었다 [객관적이지 않음]
@@ -38,20 +40,54 @@ const Login = (props) => {
       axios
         .get(`${PROXY}/api-auth/login/`)
         .then((res) => {
-          setToken(cookie.load("csrftoken"));
+          setCsrftoken(cookie.load("csrftoken"));
         })
         .catch();
     } catch (error) {
       setError(true);
     }
+
+    fetchToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const fetchToken = async () => {
+    try {
+      var myHeaders = new Headers();
+      myHeaders.append("Cookie", `csrftoken=${csrftoken}`);
+
+      var formdata = new FormData();
+      formdata.append("username", "seller@b.com");
+      formdata.append("password", "qlalfqjsgh");
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: formdata,
+        redirect: "follow",
+      };
+
+      await fetch(`${PROXY}/api-token-auth`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(`token = ${result.token}`);
+          setTokenAuth(() => result.token);
+          localStorage.setItem("access_token", result.token); //localStorage token 생성
+        })
+        .catch((error) => console.log("error", error));
+    } catch (error) {
+      setError(true);
+    }
+  };
+
   const onSubmit = (data) => {
+    console.log(`tokenAuth = ${tokenAuth}`);
+
     try {
       var urlencoded = new URLSearchParams();
       urlencoded.append("username", "seller@b.com");
       urlencoded.append("password", "qlalfqjsgh");
-      urlencoded.append("csrfmiddlewaretoken", `${token}`);
+      urlencoded.append("csrfmiddlewaretoken", `${csrftoken}`);
       urlencoded.append("next", "/");
 
       var requestOptions = {
@@ -63,12 +99,11 @@ const Login = (props) => {
       fetch(`${PROXY}/api-auth/login/`, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log(token);
           console.log("로그인 결과!");
           console.log(result);
-
           setUser({
             username: "seller",
+            token: tokenAuth,
           });
 
           navigate("/"); //login완료하면 index로 리다이렉트

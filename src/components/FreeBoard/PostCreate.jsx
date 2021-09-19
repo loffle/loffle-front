@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Context } from "../../context";
 import cookie from "react-cookies";
 //
 import attachment from "../../images/attachment.svg";
@@ -9,6 +10,8 @@ import pencil from "../../images/pencil.svg";
 const PostCreate = (props) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
+  //
+  const [user] = useContext(Context); //user만 사용하고 setUser 사용 안함
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const navigate = useNavigate(); //Naviagte hook 사용
 
@@ -40,28 +43,37 @@ const PostCreate = (props) => {
     });
   };
 
-  const token = cookie.load("csrftoken");
+  //const token = cookie.load("csrftoken");
 
   const handleCreate = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
+    myHeaders.append("Cookie", `${cookie.load("sessionid")}`);
+
     var formdata = new FormData();
     formdata.append("title", title);
     formdata.append("content", content);
-    formdata.append("csrfmiddlewaretoken", token);
+    //formdata.append("csrfmiddlewaretoken", token);
 
     var requestOptions = {
       method: "POST",
+      headers: myHeaders,
       body: formdata,
       redirect: "follow",
     };
 
-    fetch(`${PROXY}/community/post/`, requestOptions)
+    fetch(`${PROXY}/community/post`, requestOptions)
       .then((response) => response.json())
-      .then((result) => navigate(`/community/post/${result.id}`))
+      .then((result) => console.log(result))
+      .then((result) => navigate(`${PROXY}/community/post`))
+      //게시물 작성 성공, 성공시 postdetail 보내주기 실패
+      //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));
       .catch((error) => console.log("error", error));
   };
 
   return (
     <>
+      {user && console.log(user)}
       <div className="min-h-screen">
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">

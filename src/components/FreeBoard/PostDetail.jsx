@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { timeForToday } from "../helpers";
 //
 import Share from "../Share";
@@ -18,6 +18,8 @@ const PostDetail = (props) => {
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
+  const navigate = useNavigate(); //Naviagte hook 사용
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
   //공유버튼 모달
   const [isShareModalOn, setIsShareModalOn] = useState(false);
@@ -28,7 +30,6 @@ const PostDetail = (props) => {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
       const post = await (
         await fetch(`${PROXY}/community/post/${postId}.json`)
@@ -43,7 +44,28 @@ const PostDetail = (props) => {
       setLoading(false);
     }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
+
+  const handleUpdate = () => {};
+
+  const handleDelete = () => {
+    if (
+      window.confirm(
+        "해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다."
+      )
+    ) {
+      fetch(`${PROXY}/community/post/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${localStorage.access_token}`,
+        },
+      }).then((response) => {
+        alert("게시물이 삭제되었습니다.");
+        navigate(`${PROXY}/community/post`);
+      });
+    }
+  };
 
   return (
     <>
@@ -61,11 +83,10 @@ const PostDetail = (props) => {
             </div>
           </div>
           <div>
-            <span className="text-gray-light">수정</span>
-            <span
-              className="text-gray-light pl-4"
-              onClick={() => alert("정말 삭제하시겠습니까?")}
-            >
+            <span className="text-gray-light" onClick={handleUpdate}>
+              수정
+            </span>
+            <span className="text-gray-light pl-4" onClick={handleDelete}>
               삭제
             </span>
           </div>
@@ -88,7 +109,9 @@ const PostDetail = (props) => {
             <span className="pr-3 text-red">{post.like_count}</span>
             {/* 댓글 개수 */}
             <img className="pr-1" src={commentIcon} alt="comment-button" />
-            <span className="text-primary">{comments.length}</span>
+            <span className="text-primary">
+              {comments ? comments.length : 0}
+            </span>
           </div>
         </div>
       </article>
