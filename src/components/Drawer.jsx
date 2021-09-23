@@ -19,6 +19,7 @@ const Drawer = ({ logo, handleDrawerModal }) => {
         .then(() => {
           setUser(null);
           localStorage.removeItem("access_token"); //localStorage token 제거
+          //localStorage.removeItem("access_nickname"); //localStorage token 제거
           console.log(user);
           alert("로그아웃 되었습니다.");
         })

@@ -68,11 +68,14 @@ const Login = (props) => {
       };
 
       await fetch(`${PROXY}/api-token-auth`, requestOptions)
+        //await fetch(`${PROXY}/account/login`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           console.log(`token = ${result.token}`);
           setTokenAuth(() => result.token);
           localStorage.setItem("access_token", result.token); //localStorage token 생성
+          //localStorage.setItem("access_nickname", result.nickname); //localStorage token 생성
+          alert("로그인에 성공하였습니다.");
         })
         .catch((error) => console.log("error", error));
     } catch (error) {
@@ -113,34 +116,6 @@ const Login = (props) => {
       setError(true);
     }
   };
-
-  // const handleSubmit = async () => {
-  //   setError(false);
-  //   try {
-  //     axios
-  //       .post("/api-auth/login", null, {
-  //         params: {
-  //           username: username,
-  //           password: password,
-  //           submit: "Log in",
-  //         },
-  //       })
-  //       .then((res) => console.log(res.data))
-  //       .catch();
-
-  //     setUser({
-  //       //임의로 hard coding 해버림
-  //       username: "seller",
-  //     });
-
-  //     navigate("/"); //login완료하면 index로 리다이렉트
-
-  //     // setCookie("sessionid", SESSION_ID, "14", "loffle.cf");
-  //     // setCookie("csrftoken", CSRF_TOKEN, "14", "loffle.cf");
-  //   } catch (error) {
-  //     setError(true);
-  //   }
-  // };
 
   const handleInput = (e) => {
     const name = e.currentTarget.name;
