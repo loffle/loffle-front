@@ -5,12 +5,12 @@ import profile from "../../images/profile.svg";
 import like from "../../images/like_btn.svg";
 import share from "../../images/share.svg";
 import commentIcon from "../../images/comment_btn.svg";
-import pencil from "../../images/pencil.svg";
 //
 import Comment from "./Comment/Comment";
 import Share from "../Share";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import CommentCreate from "./Comment/CommentCreate";
 
 const PostDetailContent = ({
   loading,
@@ -97,27 +97,11 @@ const PostDetailContent = ({
 
       {/* 댓글 */}
       {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} />
+        <Comment key={comment.id} comment={comment} postId={postId} />
       ))}
 
       {/* 댓글 작성 */}
-      {loading || (
-        <div className="sticky bottom-3 flex items-center justify-between mx-3">
-          <div className="flex justify-between px-3 py-1 w-10/12 h-14 bg-white rounded-2xl shadow-lg">
-            <textarea
-              className="w-full outline-none resize-none mt-4"
-              type="text"
-              name="text"
-              maxLength="300"
-              placeholder="댓글을 입력하세요."
-              autoComplete="false"
-            />
-          </div>
-          <div className="flex items-center justify-center h-12 w-12 min-w-min ml-2 mt-1 bg-primary opacity-90 rounded-full shadow-xl">
-            <img className="w-5 h-5" src={pencil} alt="write-comment-button" />
-          </div>
-        </div>
-      )}
+      {loading || <CommentCreate postId={postId} />}
     </>
   );
 };

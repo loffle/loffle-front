@@ -111,14 +111,16 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
                 alt=""
               />
             </button>
-            <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
-              <img
-                onClick={handlePut}
-                className="w-5 h-5"
-                src={pencil}
-                alt="write-post-button"
-              />
-            </div>
+            <button>
+              <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
+                <img
+                  onClick={handlePut}
+                  className="w-5 h-5"
+                  src={pencil}
+                  alt="write-post-button"
+                />
+              </div>
+            </button>
           </div>
         </form>
       </div>

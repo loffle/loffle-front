@@ -46,6 +46,11 @@ const PostCreate = (props) => {
   //const token = cookie.load("csrftoken");
 
   const handleCreate = () => {
+    if (!title || !content) {
+      alert("제목 또는 내용을 입력해주세요");
+      return;
+    }
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
     myHeaders.append("Cookie", `${cookie.load("sessionid")}`);
@@ -126,14 +131,16 @@ const PostCreate = (props) => {
                 alt=""
               />
             </button>
-            <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
-              <img
-                onClick={handleCreate}
-                className="w-5 h-5"
-                src={pencil}
-                alt="write-post-button"
-              />
-            </div>
+            <button>
+              <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
+                <img
+                  onClick={handleCreate}
+                  className="w-5 h-5"
+                  src={pencil}
+                  alt="write-post-button"
+                />
+              </div>
+            </button>
           </div>
         </form>
       </div>

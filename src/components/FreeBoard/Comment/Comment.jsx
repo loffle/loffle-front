@@ -1,8 +1,24 @@
 import React from "react";
-import profile from "../../../images/pencil.svg";
+import profile from "../../../images/profile.svg";
 import { timeForToday } from "../../helpers";
+import { PROXY } from "../../../config";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, postId }) => {
+  const handleDelete = () => {
+    if (window.confirm("해당 댓글을 삭제하시겠습니까?")) {
+      fetch(`${PROXY}/community/post/${postId}/comment/${comment.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${localStorage.access_token}`,
+        },
+      }).then((response) => {
+        console.log(response);
+        alert("댓글이 삭제되었습니다.");
+        window.location.reload();
+      });
+    }
+  };
+
   return (
     <div className="p-5 border-b border-gray-border">
       {/* 상단 */}
@@ -12,11 +28,7 @@ const Comment = ({ comment }) => {
           <h3 className="text-sm pl-2 font-bold">{comment.user}</h3>
         </div>
         <div className="text-sm">
-          <span className="text-gray-light">수정</span>
-          <span
-            className="text-gray-light pl-4"
-            onClick={() => alert("정말 삭제하시겠습니까?")}
-          >
+          <span className="text-gray-light ml-4" onClick={handleDelete}>
             삭제
           </span>
         </div>
