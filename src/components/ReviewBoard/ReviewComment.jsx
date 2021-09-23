@@ -1,7 +1,7 @@
 import React from "react";
 import { timeForToday } from "../helpers";
 //
-import PostComment from "../FreeBoard/PostComment";
+import Comment from "../FreeBoard/Comment/Comment";
 //
 import back from "../../images/back.svg";
 import profile from "../../images/profile.svg";
@@ -45,7 +45,7 @@ const ReviewComment = ({ review, comments, handleCommentModal }) => {
           </article>
           {comments &&
             comments.map((comment) => (
-              <PostComment key={comment.id} comment={comment} />
+              <Comment key={comment.id} comment={comment} />
             ))}
         </div>
       </div>

@@ -7,8 +7,8 @@ import share from "../../images/share.svg";
 import commentIcon from "../../images/comment_btn.svg";
 import pencil from "../../images/pencil.svg";
 //
+import Comment from "./Comment/Comment";
 import Share from "../Share";
-import PostComment from "./PostComment";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -97,7 +97,7 @@ const PostDetailContent = ({
 
       {/* 댓글 */}
       {comments.map((comment) => (
-        <PostComment key={comment.id} comment={comment} />
+        <Comment key={comment.id} comment={comment} />
       ))}
 
       {/* 댓글 작성 */}

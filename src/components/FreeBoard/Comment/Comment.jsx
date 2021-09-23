@@ -1,6 +1,6 @@
 import React from "react";
-import profile from "../../images/profile.svg";
-import { timeForToday } from "../helpers";
+import profile from "../../../images/pencil.svg";
+import { timeForToday } from "../../helpers";
 
 const Comment = ({ comment }) => {
   return (
