@@ -1,7 +1,7 @@
 import React from "react";
 import profile from "../../../images/profile.svg";
 import { timeForToday } from "../../helpers";
-import { PROXY } from "../../../config";
+import { PROXY } from "../../../config.js";
 
 const Comment = ({ comment, postId, lastCommentElementRef }) => {
   const handleDelete = () => {
