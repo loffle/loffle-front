@@ -9,7 +9,7 @@ import commentIcon from "../../images/comment_btn.svg";
 //
 import Comment from "./Comment/Comment";
 import Share from "../Share";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import CommentCreate from "./Comment/CommentCreate";
 import { useCommentFetch } from "../../hooks/useCommentFetch";
 
