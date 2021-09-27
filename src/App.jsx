@@ -13,6 +13,8 @@ import Login from "./components/Login";
 //
 import UserProvider from "./context";
 import QuestionBoard from "./components/QuestionBoard/QuestionBoard";
+import NoticeBoard from "./components/NoticeBoard/NoticeBoard";
+import Join from "./components/Join";
 
 const App = (props) => {
   return (
@@ -21,12 +23,14 @@ const App = (props) => {
         <UserProvider>
           <Header />
           <Routes>
+            <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
             <Route path="/community/post" element={<FreeBoard />} />
             <Route path="/community/post/:postId" element={<PostDetail />} />
             <Route path="/community/post/create" element={<PostCreate />} />
             <Route path="/community/review" element={<ReviewBoard />} />
             <Route path="/community/question" element={<QuestionBoard />} />
+            <Route path="/community/notice" element={<NoticeBoard />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </UserProvider>
