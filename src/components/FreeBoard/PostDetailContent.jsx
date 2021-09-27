@@ -3,6 +3,7 @@ import { timeForToday } from "../helpers";
 //
 import profile from "../../images/profile.svg";
 import like from "../../images/like_btn.svg";
+import likeActive from "../../images/like_active_btn.svg";
 import share from "../../images/share.svg";
 import commentIcon from "../../images/comment_btn.svg";
 //
@@ -28,7 +29,6 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          console.log("Visible"); // 대충 마지막 element가 보이면 여기를 출력한다. 휴.. 뭔 개소리일까..
           setPageNumber((prevPageNumber) => prevPageNumber + 1); //다음 페이지를 가져오라고 한다
         }
       });
@@ -108,6 +108,15 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   return (
     <>
       {isShareModalOn && <Share handleShareModal={handleShareModal} />}
+      <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+        <h1 className="text-xl font-bold">자유게시판</h1>
+        <button
+          className="text-gray-light"
+          onClick={() => navigate(`${PROXY}/community/post`)}
+        >
+          목록으로
+        </button>
+      </div>
       <article className="p-4 border-b border-gray-light">
         <div className="flex justify-between mb-4">
           <div className="flex">
@@ -142,7 +151,15 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
           </div>
           <div className="flex">
             {/* 좋아요 개수 */}
-            <img className="pr-1" src={like} alt="like-button" />
+            {likeToggle ? (
+              <img
+                className="pr-1 w-5"
+                src={likeActive}
+                alt="like-active-button"
+              />
+            ) : (
+              <img className="pr-1 w-5" src={like} alt="like-button" />
+            )}
             <span className="pr-3 text-red" onClick={handleLike}>
               {likeCount === undefined ? post.like_count : likeCount}
               {/* 처음에 state가 undefined라 없으면 props에 있는거 보여주기 */}

@@ -54,7 +54,7 @@ const CommentCreate = ({ postId }) => {
   };
 
   return (
-    <div className="sticky bottom-3 flex items-center justify-between mx-3">
+    <div className="sticky bottom-3 flex items-center justify-between mx-3 my-3 pb-3">
       <div className="flex justify-between px-3 py-1 w-10/12 h-14 bg-white rounded-2xl shadow-lg">
         <textarea
           className="w-full outline-none resize-none mt-4"
