@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useRef } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import cookie from "react-cookies";
 //
 import attachment from "../../images/attachment.svg";

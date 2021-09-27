@@ -70,7 +70,7 @@ const PostCreate = (props) => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        navigate(`${PROXY}/community/post/${result.id}`);
+        navigate(`/community/post/${result.id}`);
       })
       //게시물 작성 성공, 성공시 postdetail 보내주기 실패
       //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));

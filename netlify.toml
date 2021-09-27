@@ -1,5 +1,12 @@
+# api redirect.
 [[redirects]]
   from = "/proxy/*"
   to = "http://loffle.cf/:splat"
   status = 200
   force = true
+
+# SPA router support.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
