@@ -11,12 +11,14 @@ import Share from "../Share";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import CommentCreate from "./Comment/CommentCreate";
+import { useEffect } from "react";
 
 const PostDetailContent = ({
   loading,
   postId,
   post,
   comments,
+  commentCount,
   handleUpdate,
 }) => {
   const navigate = useNavigate(); //Naviagte hook 사용
@@ -27,6 +29,16 @@ const PostDetailContent = ({
   const handleShareModal = (e) => {
     setIsShareModalOn(!isShareModalOn);
   };
+
+  //좋아요
+  const [likeCount, setLikeCount] = useState(post.like_count); //좋아요 개수
+  const [likeToggle, setLikeToggle] = useState(post.like_or_not); //좋아요 여부
+
+  useEffect(() => {
+    //props에서 불러온 값 세팅
+    setLikeCount(post.like_count);
+    setLikeToggle(post.like_or_not);
+  }, [post.like_count, post.like_or_not]);
 
   const handleDelete = () => {
     if (
@@ -46,10 +58,40 @@ const PostDetailContent = ({
     }
   };
 
+  const handleLike = () => {
+    if (likeToggle === false) {
+      fetch(`${PROXY}/community/post/${postId}/add-like`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${localStorage.access_token}`,
+        },
+      })
+        .then((response) => {
+          //공감 요청
+          setLikeToggle(true);
+          setLikeCount(likeCount + 1);
+        })
+        .catch((error) => console.log("error", error));
+    }
+    if (likeToggle === true) {
+      fetch(`${PROXY}/community/post/${postId}/add-like`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${localStorage.access_token}`,
+        },
+      })
+        .then((response) => {
+          //공감 취소 요청
+          setLikeToggle(false);
+          setLikeCount(likeCount - 1);
+        })
+        .catch((error) => console.log("error", error));
+    }
+  };
+
   return (
     <>
       {isShareModalOn && <Share handleShareModal={handleShareModal} />}
-
       <article className="p-4 border-b border-gray-light">
         <div className="flex justify-between mb-4">
           <div className="flex">
@@ -85,11 +127,14 @@ const PostDetailContent = ({
           <div className="flex">
             {/* 좋아요 개수 */}
             <img className="pr-1" src={like} alt="like-button" />
-            <span className="pr-3 text-red">{post.like_count}</span>
+            <span className="pr-3 text-red" onClick={handleLike}>
+              {likeCount === undefined ? post.like_count : likeCount}
+              {/* 처음에 state가 undefined라 없으면 props에 있는거 보여주기 */}
+            </span>
             {/* 댓글 개수 */}
             <img className="pr-1" src={commentIcon} alt="comment-button" />
             <span className="text-primary">
-              {comments ? comments.length : 0}
+              {commentCount ? commentCount : 0}
             </span>
           </div>
         </div>

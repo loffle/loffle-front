@@ -15,7 +15,7 @@ const Drawer = ({ logo, handleDrawerModal }) => {
   const handleLogout = () => {
     try {
       axios
-        .get(`${PROXY}/api-auth/logout/`)
+        .get(`${PROXY}/api-auth/logout`)
         .then(() => {
           setUser(null);
           localStorage.removeItem("access_token"); //localStorage token 제거

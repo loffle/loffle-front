@@ -68,8 +68,10 @@ const PostCreate = (props) => {
 
     fetch(`${PROXY}/community/post`, requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
-      .then((result) => navigate(`${PROXY}/community/post`))
+      .then((result) => {
+        console.log(result);
+        navigate(`${PROXY}/community/post`);
+      })
       //게시물 작성 성공, 성공시 postdetail 보내주기 실패
       //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));
       .catch((error) => console.log("error", error));
@@ -96,6 +98,7 @@ const PostCreate = (props) => {
               onChange={onChange}
               ref={titleInput}
               placeholder="글 제목"
+              autoComplete="off"
             />
           </p>
           {/* desc */}
@@ -131,14 +134,14 @@ const PostCreate = (props) => {
                 alt=""
               />
             </button>
-            <button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleCreate();
+              }}
+            >
               <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
-                <img
-                  onClick={handleCreate}
-                  className="w-5 h-5"
-                  src={pencil}
-                  alt="write-post-button"
-                />
+                <img className="w-5 h-5" src={pencil} alt="write-post-button" />
               </div>
             </button>
           </div>

@@ -32,7 +32,6 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
   const handlePut = () => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
-    myHeaders.append("Cookie", `${cookie.load("sessionid")}`);
 
     var formdata = new FormData();
     formdata.append("title", title);
@@ -47,8 +46,10 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
 
     fetch(`${PROXY}/community/post/${postId}`, requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
-      .then((result) => navigate(`${PROXY}/community/post`))
+      .then((result) => {
+        console.log(result);
+        window.location.reload();
+      })
       //게시물 작성 성공, 성공시 postdetail 보내주기 실패
       //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));
       .catch((error) => console.log("error", error));
@@ -76,6 +77,7 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
               onChange={onChange}
               ref={titleInput}
               placeholder="글 제목"
+              autoComplete="off"
             />
           </p>
           {/* desc */}
@@ -111,14 +113,14 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
                 alt=""
               />
             </button>
-            <button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handlePut();
+              }}
+            >
               <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
-                <img
-                  onClick={handlePut}
-                  className="w-5 h-5"
-                  src={pencil}
-                  alt="write-post-button"
-                />
+                <img className="w-5 h-5" src={pencil} alt="write-post-button" />
               </div>
             </button>
           </div>

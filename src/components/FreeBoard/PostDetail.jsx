@@ -11,6 +11,7 @@ const PostDetail = (props) => {
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
+  const [commentCount, setCommentCount] = useState(0);
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
   //수정 토글 버튼
@@ -24,14 +25,20 @@ const PostDetail = (props) => {
       setLoading(true);
 
       const post = await (
-        await fetch(`${PROXY}/community/post/${postId}.json`)
+        await fetch(`${PROXY}/community/post/${postId}.json`, {
+          headers: { Authorization: `Token ${localStorage.access_token}` },
+          //header에 token을 실어 보내야 like_or_not 확인이 가능하다
+        })
       ).json();
       setPost(post);
 
       const comments = await (
-        await fetch(`${PROXY}/community/post/${postId}/comment.json`)
+        await fetch(`${PROXY}/community/post/${postId}/comment.json`, {
+          headers: { Authorization: `Token ${localStorage.access_token}` },
+        })
       ).json();
       setComments(comments.results);
+      setCommentCount(comments.count);
 
       setLoading(false);
     }
@@ -42,7 +49,7 @@ const PostDetail = (props) => {
   return (
     <>
       {loading && <Loading />}
-      {isUpdateOn ? (
+      {loading || isUpdateOn ? (
         <PostDetailUpdate
           postId={postId}
           post={post}
@@ -54,6 +61,7 @@ const PostDetail = (props) => {
           postId={postId}
           post={post}
           comments={comments}
+          commentCount={commentCount}
           handleUpdate={handleUpdate}
         />
       )}
