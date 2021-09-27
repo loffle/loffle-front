@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import { timeForToday } from "../helpers";
 //
 import profile from "../../images/profile.svg";
@@ -8,19 +8,35 @@ import commentIcon from "../../images/comment_btn.svg";
 //
 import Comment from "./Comment/Comment";
 import Share from "../Share";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 import CommentCreate from "./Comment/CommentCreate";
-import { useEffect } from "react";
+import { useCommentFetch } from "../../hooks/useCommentFetch";
 
-const PostDetailContent = ({
-  loading,
-  postId,
-  post,
-  comments,
-  commentCount,
-  handleUpdate,
-}) => {
+const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
+  const [pageNumber, setPageNumber] = useState(1); //댓글 pageNumber
+  const { comments, commentCount, commentLoading, hasMore } = useCommentFetch(
+    "post",
+    pageNumber,
+    postId
+  );
+
+  const observer = useRef();
+  const lastCommentElementRef = useCallback(
+    //useCallback: 이 함수를 호출한 node를 가져온다
+    (node) => {
+      if (commentLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          console.log("Visible"); // 대충 마지막 element가 보이면 여기를 출력한다. 휴.. 뭔 개소리일까..
+          setPageNumber((prevPageNumber) => prevPageNumber + 1); //다음 페이지를 가져오라고 한다
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [commentLoading, hasMore]
+  );
+
   const navigate = useNavigate(); //Naviagte hook 사용
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
@@ -141,9 +157,26 @@ const PostDetailContent = ({
       </article>
 
       {/* 댓글 */}
-      {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} postId={postId} />
-      ))}
+      {comments.map((comment, index) => {
+        if (comments.length === index + 1) {
+          return (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              postId={postId}
+              lastCommentElementRef={lastCommentElementRef}
+            ></Comment>
+          );
+        } else {
+          return (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              postId={postId}
+            ></Comment>
+          );
+        }
+      })}
 
       {/* 댓글 작성 */}
       {loading || <CommentCreate postId={postId} />}

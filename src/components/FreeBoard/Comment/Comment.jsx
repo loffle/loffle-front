@@ -3,7 +3,7 @@ import profile from "../../../images/profile.svg";
 import { timeForToday } from "../../helpers";
 import { PROXY } from "../../../config";
 
-const Comment = ({ comment, postId }) => {
+const Comment = ({ comment, postId, lastCommentElementRef }) => {
   const handleDelete = () => {
     if (window.confirm("해당 댓글을 삭제하시겠습니까?")) {
       fetch(`${PROXY}/community/post/${postId}/comment/${comment.id}`, {
@@ -20,7 +20,10 @@ const Comment = ({ comment, postId }) => {
   };
 
   return (
-    <div className="p-5 border-b border-gray-border">
+    <div
+      className="p-5 border-b border-gray-border"
+      ref={lastCommentElementRef}
+    >
       {/* 상단 */}
       <div className="flex justify-between mb-2">
         <div className="flex">

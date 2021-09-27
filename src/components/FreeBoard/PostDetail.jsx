@@ -10,8 +10,6 @@ const PostDetail = (props) => {
   const { postId } = useParams();
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [commentCount, setCommentCount] = useState(0);
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
   //수정 토글 버튼
@@ -31,14 +29,6 @@ const PostDetail = (props) => {
         })
       ).json();
       setPost(post);
-
-      const comments = await (
-        await fetch(`${PROXY}/community/post/${postId}/comment.json`, {
-          headers: { Authorization: `Token ${localStorage.access_token}` },
-        })
-      ).json();
-      setComments(comments.results);
-      setCommentCount(comments.count);
 
       setLoading(false);
     }
@@ -60,8 +50,6 @@ const PostDetail = (props) => {
           loading={loading}
           postId={postId}
           post={post}
-          comments={comments}
-          commentCount={commentCount}
           handleUpdate={handleUpdate}
         />
       )}
