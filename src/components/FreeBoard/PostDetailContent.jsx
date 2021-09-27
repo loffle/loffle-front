@@ -69,7 +69,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         },
       }).then((response) => {
         alert("게시물이 삭제되었습니다.");
-        navigate(`${PROXY}/community/post`);
+        navigate(`/community/post`);
       });
     }
   };
@@ -112,7 +112,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         <h1 className="text-xl font-bold">자유게시판</h1>
         <button
           className="text-gray-light"
-          onClick={() => navigate(`${PROXY}/community/post`)}
+          onClick={() => navigate(`/community/post`)}
         >
           목록으로
         </button>
