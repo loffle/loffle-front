@@ -11,6 +11,7 @@ export const useCommunityFetch = (category, pageNumber, order, searchTerm) => {
   async function fetchData(orderType = "", searchTerm = "") {
     setLoading(true);
     const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+
     axios({
       method: "GET",
       url: `${PROXY}/community/${category}.json`,
