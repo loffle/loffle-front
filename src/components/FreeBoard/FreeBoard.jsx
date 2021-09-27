@@ -42,16 +42,4 @@ const FreeBoard = (props) => {
   );
 };
 
-// {loading || (
-//   <Pagination2
-//     postsPerPage={postsPerPage}
-//     totalPosts={totalPosts}
-//     pageNumber={pageNumber}
-//     setPageNumber={setPageNumber}
-//   >
-//     {/* 게시물 작성 버튼 */}
-//     <CreateButton to={"/community/post/create"} />
-//   </Pagination2>
-// )}
-
 export default FreeBoard;

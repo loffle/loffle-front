@@ -20,11 +20,12 @@ ul.pagination li {
 }
 ul.pagination li a {
   text-decoration: none;
-  color: #777;
+  color: #888;
   font-size: 1.3rem;
 }
 ul.pagination li.active a {
   color: black;
+  font-weight: 500;
 }
 ul.pagination li.active {
   font-size: 1.4rem;
