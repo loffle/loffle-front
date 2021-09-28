@@ -25,18 +25,27 @@ const ReviewDetail = ({ review }) => {
   const [isShareModalOn, setIsShareModalOn] = useState(false);
   const handleShareModal = (e) => {
     setIsShareModalOn(!isShareModalOn);
+    isShareModalOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = "unset")
+      : (document.body.style.overflow = "hidden");
   };
 
   //댓글 모달
   const [isCommentModalOn, setIsCommentModalOn] = useState(false);
   const handleCommentModal = (e) => {
     setIsCommentModalOn(!isCommentModalOn);
+    isCommentModalOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = "unset")
+      : (document.body.style.overflow = "hidden");
   };
 
   //수정 토글 버튼
   const [isUpdateOn, setIsUpdateOn] = useState(false);
   const handleUpdate = (e) => {
     setIsUpdateOn(!isUpdateOn);
+    isUpdateOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = "unset")
+      : (document.body.style.overflow = "hidden");
   };
 
   //좋아요

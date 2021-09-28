@@ -10,6 +10,7 @@ import pencil from "../../images/pencil.svg";
 const PostCreate = (props) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
+  window.scrollTo(0, 0);
   //
   const [user] = useContext(Context); //user만 사용하고 setUser 사용 안함
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";

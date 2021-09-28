@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useCommunityFetch } from "../../hooks/useCommunityFetch2";
-import Pagination2 from "../Pagination2";
 import NewPagination from "../NewPagination";
 import FreeBoardLists from "./FreeBoardLists";
 

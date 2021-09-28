@@ -9,6 +9,8 @@ import pencil from "../../images/pencil.svg";
 const ReviewCreate = (props) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
+  window.scrollTo(0, 0);
+
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const navigate = useNavigate(); //Naviagte hook 사용
 

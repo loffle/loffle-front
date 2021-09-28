@@ -44,6 +44,9 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   const [isShareModalOn, setIsShareModalOn] = useState(false);
   const handleShareModal = (e) => {
     setIsShareModalOn(!isShareModalOn);
+    isShareModalOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = "unset")
+      : (document.body.style.overflow = "hidden");
   };
 
   //좋아요

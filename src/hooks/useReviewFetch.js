@@ -21,11 +21,9 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
       const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
       let cancel;
 
-      var myHeaders = new Headers();
-      if (localStorage.access_token) {
-        //토큰이 있을때만 header 첨부
-        myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
-      }
+      const myHeaders = localStorage.access_token
+        ? { Authorization: `Token ${localStorage.access_token}` }
+        : {}; //토큰이 있으면 넣어주고 없으면 안넣음
 
       axios({
         method: "GET",
