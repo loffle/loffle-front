@@ -1,17 +1,14 @@
 import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Context } from "../../context";
 import cookie from "react-cookies";
 //
 import attachment from "../../images/attachment.svg";
 import pencil from "../../images/pencil.svg";
 
-const PostCreate = (props) => {
+const ReviewCreate = (props) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
-  //
-  const [user] = useContext(Context); //user만 사용하고 setUser 사용 안함
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const navigate = useNavigate(); //Naviagte hook 사용
 
@@ -43,8 +40,6 @@ const PostCreate = (props) => {
     });
   };
 
-  //const token = cookie.load("csrftoken");
-
   const handleCreate = () => {
     if (!title || !content) {
       alert("제목 또는 내용을 입력해주세요");
@@ -66,11 +61,11 @@ const PostCreate = (props) => {
       redirect: "follow",
     };
 
-    fetch(`${PROXY}/community/post`, requestOptions)
+    fetch(`${PROXY}/community/review`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        navigate(`/community/post/${result.id}`);
+        navigate(`/community/review`);
       })
       .catch((error) => console.log("error", error));
   };
@@ -80,8 +75,8 @@ const PostCreate = (props) => {
       <div className="min-h-screen">
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-          <h1 className="text-xl font-bold">자유게시판 &gt; 글 작성</h1>
-          <Link to={{ pathname: "/community/post" }}>
+          <h1 className="text-xl font-bold">당첨 후기 게시판 &gt; 글 작성</h1>
+          <Link to={{ pathname: "/community/review" }}>
             <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
           </Link>
         </div>
@@ -139,7 +134,11 @@ const PostCreate = (props) => {
               }}
             >
               <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
-                <img className="w-5 h-5" src={pencil} alt="write-post-button" />
+                <img
+                  className="w-5 h-5"
+                  src={pencil}
+                  alt="write-review-button"
+                />
               </div>
             </button>
           </div>
@@ -150,4 +149,4 @@ const PostCreate = (props) => {
   );
 };
 
-export default PostCreate;
+export default ReviewCreate;

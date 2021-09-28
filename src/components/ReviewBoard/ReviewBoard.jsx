@@ -106,7 +106,7 @@ const ReviewBoard = (props) => {
         </div>
       )}
 
-      {loading || <CreateButton to={"/community/post/create"} />}
+      {loading || <CreateButton to={"/community/review/create"} />}
     </>
   );
 };

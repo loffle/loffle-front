@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Share from "../Share";
+import Loading from "../Loading";
 import { timeForToday } from "../helpers";
 //
 import profile from "../../images/profile.svg";
@@ -7,9 +8,15 @@ import like from "../../images/like_btn.svg";
 import share from "../../images/share.svg";
 import commentIcon from "../../images/comment_btn.svg";
 import ReviewComment from "./ReviewComment";
+import { PROXY } from "../../config";
+import { useParams } from "react-router";
 
 const ReviewDetail = ({ review }) => {
+  const { reviewId } = useParams();
+  const [reviewDetail, setReviewDetail] = useState(review); //review/{reviewId} 보여주기 위해서 새로 선언
+  const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
+
   //공유버튼 모달
   const [isShareModalOn, setIsShareModalOn] = useState(false);
   const handleShareModal = (e) => {
@@ -23,46 +30,68 @@ const ReviewDetail = ({ review }) => {
   };
 
   useEffect(() => {
+    setReviewDetail(review); //review가 있거나 없거나 reviewDetail에 set
+
     async function fetchData() {
-      const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+      //review가 없는 상태(param으로 접근) fetch
+      setLoading(true);
+
+      const review = await (
+        await fetch(`${PROXY}/community/review/${reviewId}.json`, {
+          headers: { Authorization: `Token ${localStorage.access_token}` },
+          //header에 token을 실어 보내야 like_or_not 확인이 가능하다
+        })
+      ).json();
+      setReviewDetail(review);
+
+      setLoading(false);
+    }
+
+    if (review === undefined) fetchData();
+  }, [review]);
+
+  useEffect(() => {
+    async function fetchData() {
       const data = await (
-        await fetch(`${PROXY}/community/review/${review.id}/comment.json`)
-      ) //review.id 하드코딩 한 상태
+        await fetch(`${PROXY}/community/review/${reviewDetail.id}/comment.json`)
+      ) //reviewDetail.id 하드코딩 한 상태
         .json();
       await setComments(data.results);
     }
-    if (review) fetchData(); //reiview undefined check
-  }, [review]);
+    if (reviewDetail) fetchData(); //reiview undefined check
+  }, [reviewDetail]);
 
   //console.log(review); review 여러번 렌더링 및 undefined inssue
 
   return (
     <>
+      {loading && <Loading />}
+
       {/* API 보고 Share 기능 어떻게 할지 생각! */}
       {/* review && - 즉, undefined 체크 안하면 오류 겁나뜸 ㅂㄷㅂㄷㅂㄷㅂ */}
-      {review && isShareModalOn && (
-        <Share id={review.id} handleShareModal={handleShareModal} />
+      {reviewDetail && isShareModalOn && (
+        <Share id={`/${reviewDetail.id}`} handleShareModal={handleShareModal} />
       )}
 
-      {comments && review && isCommentModalOn && (
+      {comments && reviewDetail && isCommentModalOn && (
         <ReviewComment
-          review={review}
+          review={reviewDetail}
           comments={comments}
           handleCommentModal={handleCommentModal}
         />
       )}
 
       {/* 로딩 전에 부르면 오류남... 이거 때매 undifined 1시간 고생 ㅜㅜ */}
-      {review && (
+      {reviewDetail && (
         <article className="border-b border-gray-border">
           {/* header */}
           <div className="flex justify-between p-4">
             <div className="flex">
               <img className="w-9 h-9" src={profile} alt="profile" />
               <div className="leading-3 pl-2">
-                <h3 className="text-sm font-bold">{review.user}</h3>
+                <h3 className="text-sm font-bold">{reviewDetail.user}</h3>
                 <span className="text-xs text-gray-light">
-                  {timeForToday(review.created_at)}
+                  {timeForToday(reviewDetail.created_at)}
                 </span>
               </div>
             </div>
@@ -77,12 +106,15 @@ const ReviewDetail = ({ review }) => {
             </div>
           </div>
           {/* image */}
-          <img src={review.url} alt="main" />
+          <img
+            src="http://benzol4.com/wp-content/uploads/2018/11/blog-ph-1.jpg"
+            alt="main"
+          />
 
           {/* related item */}
           <div className="flex p-4 border-b border-gray-border">
             <img
-              src={review.thumbnailUrl}
+              src="http://benzol4.com/wp-content/uploads/2018/11/blog-ph-1.jpg"
               alt="thumbnail"
               className="w-16 rounded-lg"
             />
@@ -120,14 +152,14 @@ const ReviewDetail = ({ review }) => {
           <div className="px-4 pb-4 text-sm">
             <div className="flex justify-between">
               <span>
-                좋아요 <strong>{review.like_count}</strong>개
+                좋아요 <strong>{reviewDetail.like_count}</strong>개
               </span>
               <span onClick={() => handleCommentModal()}>
-                댓글 <strong>{review.comment_count}</strong>개
+                댓글 <strong>{reviewDetail.comment_count}</strong>개
               </span>
             </div>
             {/* 내용 */}
-            <p className="text-base mt-4">{review.content}</p>
+            <p className="text-base mt-4">{reviewDetail.content}</p>
           </div>
         </article>
       )}
