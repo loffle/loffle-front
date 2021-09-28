@@ -59,7 +59,7 @@ const ReviewBoard = (props) => {
       )}
       {reviews && (
         <div className="max-w-480 min-h-screen">
-          <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+          <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
             <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
             <div className="flex items-center">
               <button onClick={() => handleSearchModal()}>
@@ -73,7 +73,7 @@ const ReviewBoard = (props) => {
                 <option>과거순 </option>
               </select>
             </div>
-          </div>
+          </header>
 
           {reviews.map((review, index) => {
             if (reviews.length === index + 1) {

@@ -108,7 +108,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   return (
     <>
       {isShareModalOn && <Share handleShareModal={handleShareModal} />}
-      <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+      <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
         <h1 className="text-xl font-bold">자유게시판</h1>
         <button
           className="text-gray-light"
@@ -116,7 +116,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         >
           목록으로
         </button>
-      </div>
+      </header>
       <article className="p-4 border-b border-gray-light">
         <div className="flex justify-between mb-4">
           <div className="flex">

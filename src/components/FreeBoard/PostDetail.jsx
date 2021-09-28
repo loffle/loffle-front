@@ -22,9 +22,16 @@ const PostDetail = (props) => {
     async function fetchData() {
       setLoading(true);
 
+      var myHeaders = new Headers();
+      if (localStorage.access_token) {
+        //토큰이 있을때만 header 첨부
+        myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
+      }
+
       const post = await (
         await fetch(`${PROXY}/community/post/${postId}.json`, {
-          headers: { Authorization: `Token ${localStorage.access_token}` },
+          method: "GET",
+          headers: myHeaders,
           //header에 token을 실어 보내야 like_or_not 확인이 가능하다
         })
       ).json();
