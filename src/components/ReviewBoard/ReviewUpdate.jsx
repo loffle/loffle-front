@@ -62,7 +62,7 @@ const ReviewUpdate = ({ reviewId, review, handleUpdate }) => {
         <div
           className="absolute bottom-0 p-1 w-full rounded-t-xl bg-white"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: "91.5%" }}
+          style={{ height: "92%" }}
         >
           <header className="flex justify-between p-3">
             <img src={back} alt="back-button" onClick={handleUpdate} />

@@ -49,7 +49,7 @@ const ReviewComment = ({ review, postId, handleCommentModal }) => {
         <div
           className="absolute bottom-0 px-5 pt-4 pb-20 w-full rounded-t-xl bg-white overflow-scroll"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: "100%" }}
+          style={{ height: "92%" }}
           ref={scrollBox}
         >
           <header className="flex justify-between">

@@ -43,8 +43,8 @@ const ReviewCreate = (props) => {
   };
 
   const handleCreate = () => {
-    if (!title || !content) {
-      alert("제목 또는 내용을 입력해주세요");
+    if (!content) {
+      alert("내용을 입력해주세요");
       return;
     }
 
@@ -92,7 +92,7 @@ const ReviewCreate = (props) => {
               value={title}
               onChange={onChange}
               ref={titleInput}
-              placeholder="글 제목"
+              placeholder="글 제목은 작성안하셔도 됩니다 ><"
               autoComplete="off"
             />
           </p>

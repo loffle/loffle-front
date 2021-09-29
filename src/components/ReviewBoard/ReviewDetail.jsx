@@ -138,9 +138,16 @@ const ReviewDetail = ({ review }) => {
       {loading && <Loading />}
 
       {/* review && - 즉, undefined 체크 안하면 오류 겁나뜸 ㅂㄷㅂㄷㅂㄷㅂ */}
-      {reviewDetail && isShareModalOn && (
-        <Share id={`/${reviewDetail.id}`} handleShareModal={handleShareModal} />
-      )}
+      {reviewDetail &&
+        isShareModalOn &&
+        (review ? (
+          <Share
+            id={`/${reviewDetail.id}`}
+            handleShareModal={handleShareModal}
+          />
+        ) : (
+          <Share handleShareModal={handleShareModal} />
+        ))}
 
       {reviewDetail && isUpdateOn && (
         <ReviewUpdate

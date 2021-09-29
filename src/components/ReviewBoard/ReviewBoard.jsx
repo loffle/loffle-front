@@ -62,9 +62,10 @@ const ReviewBoard = (props) => {
           <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
             <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
             <div className="flex items-center">
-              <button onClick={() => handleSearchModal()}>
+              {/* <button onClick={() => handleSearchModal()}>
                 <img className="w-4 h-4" src={search} alt="search-button" />
-              </button>
+              </button> */}
+              {/* Review 검색기능 비활성화! - 09/29 */}
               <select
                 onChange={handleSelect}
                 className="text-gray h-5 ml-5 bg-white"

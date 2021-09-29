@@ -69,7 +69,7 @@ const ModalComentCreate = ({
           onChange={onChange}
           maxLength="300"
           placeholder="댓글을 입력하세요."
-          autoComplete="false"
+          autoComplete="off"
         />
       </div>
       <div
