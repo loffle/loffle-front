@@ -17,7 +17,6 @@ const ReviewDetail = ({ review }) => {
   const { reviewId } = useParams();
   const [reviewDetail, setReviewDetail] = useState(review); //review/{reviewId} 보여주기 위해서 새로 선언
   const [loading, setLoading] = useState(false);
-  const [comments, setComments] = useState([]);
 
   const navigate = useNavigate(); //Naviagte hook 사용
 
@@ -82,16 +81,6 @@ const ReviewDetail = ({ review }) => {
 
     if (review === undefined) fetchData();
   }, [review, reviewId]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await (
-        await fetch(`${PROXY}/community/review/${reviewDetail.id}/comment.json`)
-      ).json();
-      await setComments(data.results);
-    }
-    if (reviewDetail) fetchData(); //reiview undefined check
-  }, [reviewDetail]);
 
   const handleDelete = () => {
     if (
@@ -161,10 +150,10 @@ const ReviewDetail = ({ review }) => {
         />
       )}
 
-      {comments && reviewDetail && isCommentModalOn && (
+      {reviewDetail && isCommentModalOn && (
         <ReviewComment
           review={reviewDetail}
-          comments={comments}
+          postId={reviewDetail.id}
           handleCommentModal={handleCommentModal}
         />
       )}

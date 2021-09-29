@@ -15,11 +15,13 @@ import { useCommentFetch } from "../../hooks/useCommentFetch";
 
 const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   const [pageNumber, setPageNumber] = useState(1); //댓글 pageNumber
-  const { comments, commentCount, commentLoading, hasMore } = useCommentFetch(
-    "post",
-    pageNumber,
-    postId
-  );
+  const {
+    comments,
+    setComments,
+    commentCount,
+    commentLoading,
+    hasMore,
+  } = useCommentFetch("post", pageNumber, postId);
 
   const observer = useRef();
   const lastCommentElementRef = useCallback(
@@ -181,8 +183,11 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         if (comments.length === index + 1) {
           return (
             <Comment
+              category={"post"}
               key={comment.id}
               comment={comment}
+              comments={comments}
+              setComments={setComments}
               postId={postId}
               lastCommentElementRef={lastCommentElementRef}
             ></Comment>
@@ -190,8 +195,11 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         } else {
           return (
             <Comment
+              category={"post"}
               key={comment.id}
               comment={comment}
+              comments={comments}
+              setComments={setComments}
               postId={postId}
             ></Comment>
           );
@@ -199,7 +207,13 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
       })}
 
       {/* 댓글 작성 */}
-      {loading || <CommentCreate postId={postId} />}
+      {loading || (
+        <CommentCreate
+          postId={postId}
+          comments={comments}
+          setComments={setComments}
+        />
+      )}
     </>
   );
 };

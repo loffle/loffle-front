@@ -42,6 +42,7 @@ export const useCommentFetch = (category, pageNumber, postId) => {
 
   return {
     comments,
+    setComments,
     commentCount,
     commentLoading,
     hasMore,
