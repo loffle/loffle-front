@@ -1,7 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Context } from "../../context";
 import cookie from "react-cookies";
 //
 import attachment from "../../images/attachment.svg";
@@ -10,8 +9,7 @@ import pencil from "../../images/pencil.svg";
 const PostCreate = (props) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
-  //
-  const [user] = useContext(Context); //user만 사용하고 setUser 사용 안함
+  window.scrollTo(0, 0);
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const navigate = useNavigate(); //Naviagte hook 사용
 
@@ -72,8 +70,6 @@ const PostCreate = (props) => {
         console.log(result);
         navigate(`/community/post/${result.id}`);
       })
-      //게시물 작성 성공, 성공시 postdetail 보내주기 실패
-      //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));
       .catch((error) => console.log("error", error));
   };
 

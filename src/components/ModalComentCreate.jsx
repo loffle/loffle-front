@@ -1,9 +1,14 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 //
-import pencil from "../../../images/pencil.svg";
+import pencil from "../images/pencil.svg";
 
-const CommentCreate = ({ postId, comments, setComments }) => {
+const ModalComentCreate = ({
+  postId,
+  comments,
+  setComments,
+  scrollToBottom,
+  hasMore,
+}) => {
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
   const [inputs, setInputs] = useState({
@@ -40,11 +45,13 @@ const CommentCreate = ({ postId, comments, setComments }) => {
       redirect: "follow",
     };
 
-    fetch(`${PROXY}/community/post/${postId}/comment`, requestOptions)
+    fetch(`${PROXY}/community/review/${postId}/comment`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         setComments(comments.concat(result)); //새로운 댓글 setState
+        hasMore ? alert("댓글이 하단에 추가되었습니다.") : scrollToBottom();
+        //댓글이 전부 로딩되지 않았으면 alert, 맨아래면 댓글 바로 확인 가능
         setInputs({
           content: "",
         });
@@ -53,16 +60,16 @@ const CommentCreate = ({ postId, comments, setComments }) => {
   };
 
   return (
-    <div className="sticky bottom-3 flex items-center justify-between mx-3 my-3 pb-3">
+    <div className="max-w-480 fixed bottom-4 w-full flex items-center justify-between px-6 z-50">
       <div className="flex justify-between px-3 py-1 w-10/12 h-14 bg-white rounded-2xl shadow-lg">
-        <textarea
-          className="w-full outline-none resize-none mt-4"
+        <input
+          className="w-full outline-none"
           name="content"
           value={content}
           onChange={onChange}
           maxLength="300"
           placeholder="댓글을 입력하세요."
-          autoComplete="false"
+          autoComplete="off"
         />
       </div>
       <div
@@ -75,4 +82,4 @@ const CommentCreate = ({ postId, comments, setComments }) => {
   );
 };
 
-export default CommentCreate;
+export default ModalComentCreate;

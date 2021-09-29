@@ -8,6 +8,8 @@ import PostDetail from "./components/FreeBoard/PostDetail";
 import PostCreate from "./components/FreeBoard/PostCreate";
 //
 import ReviewBoard from "./components/ReviewBoard/ReviewBoard.jsx";
+import ReviewDetail from "./components/ReviewBoard/ReviewDetail.jsx";
+import ReviewCreate from "./components/ReviewBoard/ReviewCreate.jsx";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
 //
@@ -29,6 +31,11 @@ const App = (props) => {
             <Route path="/community/post/:postId" element={<PostDetail />} />
             <Route path="/community/post/create" element={<PostCreate />} />
             <Route path="/community/review" element={<ReviewBoard />} />
+            <Route
+              path="/community/review/:reviewId"
+              element={<ReviewDetail />}
+            />
+            <Route path="/community/review/create" element={<ReviewCreate />} />
             <Route path="/community/question" element={<QuestionBoard />} />
             <Route path="/community/notice" element={<NoticeBoard />} />
             <Route path="/*" element={<NotFound />} />

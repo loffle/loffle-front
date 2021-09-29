@@ -3,7 +3,6 @@ import { useReviewFetch } from "../../hooks/useReviewFetch";
 import ReviewDetail from "./ReviewDetail";
 import Search from "../Search";
 import Loading from "../Loading";
-import search from "../../images/search_btn.svg";
 import CreateButton from "../CreateButton";
 
 const ReviewBoard = (props) => {
@@ -59,12 +58,13 @@ const ReviewBoard = (props) => {
       )}
       {reviews && (
         <div className="max-w-480 min-h-screen">
-          <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+          <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
             <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
             <div className="flex items-center">
-              <button onClick={() => handleSearchModal()}>
+              {/* <button onClick={() => handleSearchModal()}>
                 <img className="w-4 h-4" src={search} alt="search-button" />
-              </button>
+              </button> */}
+              {/* Review 검색기능 비활성화! - 09/29 */}
               <select
                 onChange={handleSelect}
                 className="text-gray h-5 ml-5 bg-white"
@@ -73,7 +73,7 @@ const ReviewBoard = (props) => {
                 <option>과거순 </option>
               </select>
             </div>
-          </div>
+          </header>
 
           {reviews.map((review, index) => {
             if (reviews.length === index + 1) {
@@ -106,7 +106,7 @@ const ReviewBoard = (props) => {
         </div>
       )}
 
-      {loading || <CreateButton to={"/community/post/create"} />}
+      {loading || <CreateButton to={"/community/review/create"} />}
     </>
   );
 };
