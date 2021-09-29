@@ -43,29 +43,29 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
   }
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNumber]);
-
-  useEffect(() => {
-    setPosts([]);
-    switch (order) {
-      case "최신순":
-        fetchData();
-        break;
-      case "과거순":
-        fetchData("created_at");
-        break;
-      default:
+    if (order) {
+      setPosts([]);
+      switch (order) {
+        case "최신순":
+          fetchData();
+          break;
+        case "과거순":
+          fetchData("created_at");
+          break;
+        default:
+      }
+    } else {
+      //order가 없으면
+      fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order]); //order가 바뀐 것을 감지하면 fetch 다시해주기
+  }, [pageNumber, order]); //order가 바뀐 것을 감지하면 fetch 다시해주기
 
-  useEffect(() => {
-    setPosts([]);
-    fetchData("", searchTerm);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   setPosts([]);
+  //   //fetchData("", searchTerm);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [searchTerm]);
 
   return {
     posts,

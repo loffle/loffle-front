@@ -3,7 +3,6 @@ import { useReviewFetch } from "../../hooks/useReviewFetch";
 import ReviewDetail from "./ReviewDetail";
 import Search from "../Search";
 import Loading from "../Loading";
-import search from "../../images/search_btn.svg";
 import CreateButton from "../CreateButton";
 
 const ReviewBoard = (props) => {

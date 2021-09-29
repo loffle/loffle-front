@@ -1,7 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Context } from "../../context";
 import cookie from "react-cookies";
 //
 import attachment from "../../images/attachment.svg";
@@ -11,8 +10,6 @@ const PostCreate = (props) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
   window.scrollTo(0, 0);
-  //
-  const [user] = useContext(Context); //user만 사용하고 setUser 사용 안함
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const navigate = useNavigate(); //Naviagte hook 사용
 
