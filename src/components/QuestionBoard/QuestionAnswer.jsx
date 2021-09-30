@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useRef } from "react";
 import { timeForToday } from "../helpers";
 //
 import Comment from "../FreeBoard/Comment/Comment";
+import ModalComentCreate from "../ModalComentCreate";
 //
 import back from "../../images/back.svg";
 import profile from "../../images/profile.svg";
-import pencil from "../../images/pencil.svg";
 
-const QuestionAnswer = ({ question, answers, handleAnswerModal }) => {
+const QuestionAnswer = ({
+  question,
+  answers,
+  setAnswers,
+  handleAnswerModal,
+}) => {
+  const scrollBox = useRef(null);
+
+  const scrollToBottom = () => {
+    const { scrollHeight, clientHeight } = scrollBox.current;
+
+    scrollBox.current.scrollTop = scrollHeight - clientHeight;
+  };
+
   return (
     <>
       <div
@@ -17,7 +30,8 @@ const QuestionAnswer = ({ question, answers, handleAnswerModal }) => {
         <div
           className="absolute bottom-0 px-5 py-4 w-full rounded-t-xl bg-white"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: "91.5%" }}
+          style={{ height: "92%" }}
+          ref={scrollBox}
         >
           <header className="flex justify-between">
             <img src={back} alt="back-button" onClick={handleAnswerModal} />
@@ -25,6 +39,7 @@ const QuestionAnswer = ({ question, answers, handleAnswerModal }) => {
             <div></div>
           </header>
 
+          <h1 className="text-2xl mt-8">Q : </h1>
           <article className="mt-4 pb-4 border-b border-gray-border">
             <div className="flex items-start">
               <img src={profile} alt="profile" className="w-8" />
@@ -33,39 +48,41 @@ const QuestionAnswer = ({ question, answers, handleAnswerModal }) => {
                 <p className="text-base mt-2">{question.title}</p>
                 <div className="text-xs text-gray-light mt-1">
                   <span>{timeForToday(question.created_at)}</span>
-                  <span> • </span>
-                  <span>
-                    좋아요 <strong>{question.like_count}</strong>개
-                  </span>
                 </div>
               </div>
             </div>
           </article>
+
+          {answers.length !== 0 ? (
+            <h1 className="text-2xl mt-6">A : </h1>
+          ) : (
+            <h1 className="text-l mt-6 w-full text-center text-gray">
+              답변이 아직 등록되지않았습니다.
+            </h1>
+          )}
+          {/* 답변 */}
           {answers &&
             answers.map((answer) => (
-              <Comment key={answer.id} comment={answer} />
+              <Comment
+                category={"question"}
+                key={answer.id}
+                comment={answer}
+                comments={answers}
+                setComments={setAnswers}
+                postId={question.id}
+              />
             ))}
         </div>
       </div>
 
-      {/* 댓글 */}
-
-      {/* 댓글 작성 - sticky 충돌나서 fixed로 수정*/}
-      <div className="max-w-480 fixed bottom-4 left-0 right-0 flex items-center justify-between mx-6 z-50">
-        <div className="flex justify-between px-3 py-1 w-10/12 h-14 bg-white rounded-2xl shadow-lg">
-          <input
-            className="w-full outline-none"
-            type="text"
-            name="text"
-            maxLength="300"
-            placeholder="댓글을 입력하세요."
-            autoComplete="false"
-          />
-        </div>
-        <div className="flex items-center justify-center h-12 w-12 min-w-min ml-2 mt-1 bg-primary opacity-90 rounded-full shadow-xl">
-          <img className="w-5 h-5" src={pencil} alt="write-comment-button" />
-        </div>
-      </div>
+      {/* 답변 작성 - sticky 충돌나서 fixed로 수정*/}
+      <ModalComentCreate
+        category={"question"}
+        postId={question.id}
+        comments={answers}
+        setComments={setAnswers}
+        scrollToBottom={scrollToBottom}
+      />
     </>
   );
 };

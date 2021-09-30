@@ -56,6 +56,13 @@ const QuestionBoard = (props) => {
             }
           })}
 
+          {loading ||
+            (questions.length === 0 && (
+              <div className="flex justify-center pt-96">
+                <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
+              </div>
+            ))}
+
           {hasMore && loading && (
             <div
               className="border-4 border-gray-light rounded-full w-12 h-12 animate-spin my-5 mx-auto"
@@ -65,7 +72,7 @@ const QuestionBoard = (props) => {
         </div>
       )}
 
-      {loading || <CreateButton to={"/community/post/create"} />}
+      {loading || <CreateButton to={"/community/question/create"} />}
     </>
   );
 };

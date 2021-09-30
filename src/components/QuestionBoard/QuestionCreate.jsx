@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 import attachment from "../../images/attachment.svg";
 import pencil from "../../images/pencil.svg";
 
-const ReviewCreate = (props) => {
-  // const [logoLoading, setLogoLoading] = useState(false);
-  // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
+const QuestionCreate = (props) => {
   window.scrollTo(0, 0);
 
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
@@ -30,7 +28,7 @@ const ReviewCreate = (props) => {
     //   reader.onloadend = () => {
     //     setFileUrl({
     //       file: file,
-    //       previewURL: reader.result,
+    //       /questionURL: reader.result,
     //     });
     //   };
     //   reader.readAsDataURL(file);
@@ -61,27 +59,40 @@ const ReviewCreate = (props) => {
       redirect: "follow",
     };
 
-    fetch(`${PROXY}/community/review`, requestOptions)
+    fetch(`${PROXY}/community/question`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        navigate(`/community/review`);
+        navigate(`/community/question`);
       })
       .catch((error) => console.log("error", error));
   };
-
   return (
-    <>
-      <div className="min-h-screen">
-        {/* header */}
-        <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-          <h1 className="text-xl font-bold">당첨 후기 게시판 &gt; 글 작성</h1>
-          <Link to={{ pathname: "/community/review" }}>
-            <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
-          </Link>
-        </div>
-        {/* form */}
-        <form className="m-1 border-2 border-gray-border shadow-lg rounded-lg">
+    <div className="min-h-screen">
+      {/* header */}
+      <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+        <h1 className="text-xl font-bold"> QnA &gt; 글 작성</h1>
+        <Link to={{ pathname: "/community/question" }}>
+          <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
+        </Link>
+      </div>
+
+      {/* form */}
+      <form className="p-1">
+        <select
+          name="type"
+          //onChange={handleSelect}
+          className="text-gray w-full h-12 p-2 bg-white border-2 border-gray-border rounded-lg outline-none"
+        >
+          <option value="" disabled selected>
+            문의 유형을 선택해주세요.
+          </option>
+          <option>응모</option>
+          <option>응모권/결제</option>
+          <option>기타</option>
+        </select>
+
+        <div className="mt-1 border-2 border-gray-border shadow-lg rounded-lg">
           {/* title */}
           <p className="p-4 border-b border-gray-border">
             <input
@@ -90,7 +101,7 @@ const ReviewCreate = (props) => {
               value={title}
               onChange={onChange}
               ref={titleInput}
-              placeholder="글 제목은 작성안하셔도 됩니다 ><"
+              placeholder="글 제목을 작성해주세요."
               autoComplete="off"
             />
           </p>
@@ -137,16 +148,15 @@ const ReviewCreate = (props) => {
                 <img
                   className="w-5 h-5"
                   src={pencil}
-                  alt="write-review-button"
+                  alt="write/question-button"
                 />
               </div>
             </button>
           </div>
-        </form>
-      </div>
-      {/* {fileUrl ?? <img src={fileUrl.previewURL} alt="test"></img>} */}
-    </>
+        </div>
+      </form>
+    </div>
   );
 };
 
-export default ReviewCreate;
+export default QuestionCreate;
