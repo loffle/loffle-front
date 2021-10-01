@@ -3,12 +3,17 @@ import { useEffect, useState } from "react";
 
 export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
   const [posts, setPosts] = useState([]);
+  const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [postsPerPage] = useState(5);
   const [error, setError] = useState(null); // eslint-disable-line no-unused-vars
   const [hasMore, setHasMore] = useState(false); //리스트의 끝까지 가면 더이상 요청하지 않아야 함
 
   async function fetchData(orderType = "", searchTerm = "") {
+    if (posts.length === 0) {
+      console.log("hi");
+      setFirstLoading(true);
+    }
     setLoading(true);
     setError(false);
     const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
@@ -28,11 +33,10 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
       .then((response) => {
         setPosts((prevPosts) => {
           //추가로 새로 불러온 res의 book을 추가한다
-          //Set을 사용하면 중복된 결과를 거를 수 있다
-          //return [...new Set([...prevPosts, ...response.data.results])];
           return [...prevPosts, ...response.data.results];
         });
         setHasMore(response.data.next); //다음페이지가 없다면 hasMore = false
+        setFirstLoading(false);
         setLoading(false);
       })
       .catch((e) => {
@@ -69,6 +73,7 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
 
   return {
     posts,
+    firstLoading,
     loading,
     postsPerPage,
     hasMore,

@@ -1,19 +1,14 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//API import 해야함.. ? 뭐 말하는 건지는 아직 모름
 import { Context } from "../context";
 import { useForm } from "react-hook-form";
-import cookie from "react-cookies";
+import { PROXY } from "../config";
 //
-//import { SESSION_ID, CSRF_TOKEN } from "../config";
-import axios from "axios";
 import Warning from "../Warning";
 
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [csrftoken, setCsrftoken] = useState("");
   const [tokenAuth, setTokenAuth] = useState("");
   const [error, setError] = useState(false);
 
@@ -28,8 +23,6 @@ const Login = (props) => {
     handleSubmit,
   } = useForm();
   //console.log(watch("email"));
-
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
   useEffect(() => {
     // if (cookie.load("csrftoken")) {
@@ -75,6 +68,7 @@ const Login = (props) => {
           localStorage.setItem("access_token", result.token); //localStorage token 생성
           localStorage.setItem("access_nickname", result.nickname); //localStorage token 생성
           alert("로그인에 성공하였습니다.");
+          navigate("/");
         })
         .catch((error) => console.log("error", error));
     } catch (error) {
@@ -89,7 +83,6 @@ const Login = (props) => {
       var urlencoded = new URLSearchParams();
       urlencoded.append("username", "seller@b.com");
       urlencoded.append("password", "qlalfqjsgh");
-      urlencoded.append("csrfmiddlewaretoken", `${csrftoken}`);
       urlencoded.append("next", "/");
 
       var requestOptions = {

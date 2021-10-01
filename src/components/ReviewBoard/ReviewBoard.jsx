@@ -12,6 +12,7 @@ const ReviewBoard = (props) => {
 
   const {
     posts: reviews, //이거 때매 또 1시간 후... 빨간글씨면 의심하자
+    firstLoading,
     loading,
     hasMore,
   } = useReviewFetch("review", pageNumber, order, searchTerm);
@@ -48,7 +49,7 @@ const ReviewBoard = (props) => {
 
   return (
     <>
-      {loading && <Loading />}
+      {firstLoading && <Loading />}
       {isSearchModalOn && (
         <Search
           setPageNumber={setPageNumber}
@@ -56,55 +57,56 @@ const ReviewBoard = (props) => {
           handleSearchModal={handleSearchModal}
         />
       )}
-      {reviews && (
-        <div className="max-w-480 min-h-screen">
-          <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-            <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
-            <div className="flex items-center">
-              {/* <button onClick={() => handleSearchModal()}>
+      {firstLoading ||
+        (reviews && (
+          <div className="max-w-480 min-h-screen">
+            <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+              <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
+              <div className="flex items-center">
+                {/* <button onClick={() => handleSearchModal()}>
                 <img className="w-4 h-4" src={search} alt="search-button" />
               </button> */}
-              {/* Review 검색기능 비활성화! - 09/29 */}
-              <select
-                onChange={handleSelect}
-                className="text-gray h-5 ml-5 bg-white"
-              >
-                <option>최신순 </option>
-                <option>과거순 </option>
-              </select>
-            </div>
-          </header>
+                {/* Review 검색기능 비활성화! - 09/29 */}
+                <select
+                  onChange={handleSelect}
+                  className="text-gray h-5 ml-5 bg-white"
+                >
+                  <option>최신순 </option>
+                  <option>과거순 </option>
+                </select>
+              </div>
+            </header>
 
-          {reviews.map((review, index) => {
-            if (reviews.length === index + 1) {
-              return (
-                <div key={review.id} ref={lastReviewElementRef}>
-                  <ReviewDetail
-                    review={review}
-                    loading={loading}
-                  ></ReviewDetail>
-                </div>
-              );
-            } else {
-              return (
-                <div key={review.id}>
-                  <ReviewDetail
-                    review={review}
-                    loading={loading}
-                  ></ReviewDetail>
-                </div>
-              );
-            }
-          })}
+            {reviews.map((review, index) => {
+              if (reviews.length === index + 1) {
+                return (
+                  <div key={review.id} ref={lastReviewElementRef}>
+                    <ReviewDetail
+                      review={review}
+                      loading={loading}
+                    ></ReviewDetail>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={review.id}>
+                    <ReviewDetail
+                      review={review}
+                      loading={loading}
+                    ></ReviewDetail>
+                  </div>
+                );
+              }
+            })}
 
-          {hasMore && loading && (
-            <div
-              className="border-4 border-gray-light rounded-full w-12 h-12 animate-spin my-5 mx-auto"
-              style={{ borderTop: `5px solid #353535` }}
-            ></div>
-          )}
-        </div>
-      )}
+            {hasMore && loading && (
+              <div
+                className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-5 mx-auto"
+                style={{ borderTop: `5px solid #353535` }}
+              ></div>
+            )}
+          </div>
+        ))}
 
       {loading || <CreateButton to={"/community/review/create"} />}
     </>

@@ -1,33 +1,25 @@
 import React from "react";
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//
-import { Context } from "../context";
-//
-//
-import axios from "axios";
+import { PROXY } from "../config";
 
 const Drawer = ({ logo, handleDrawerModal }) => {
   const navigate = useNavigate();
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
   const handleLogout = () => {
-    // try {
-    //   axios
-    //     .get(`${PROXY}/api-auth/logout`)
-    //     .then(() => {
-    //       localStorage.removeItem("access_token"); //localStorage token 제거
-    //       localStorage.removeItem("access_nickname"); //localStorage token 제거
-    //       alert("로그아웃 되었습니다.");
-    //     })
-    //     .catch();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    var requestOptions = {
+      method: "GET",
+      headers: { Authorization: `Token ${localStorage.access_token}` },
+    };
 
-    localStorage.removeItem("access_token"); //localStorage token 제거
-    localStorage.removeItem("access_nickname"); //localStorage token 제거
-    alert("로그아웃 되었습니다.");
+    fetch(`${PROXY}/account/logout`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        localStorage.removeItem("access_token"); //localStorage token 제거
+        localStorage.removeItem("access_nickname"); //localStorage token 제거
+        alert(result.detail);
+      })
+      .catch((error) => console.log("error", error));
 
     navigate("/");
   };

@@ -7,7 +7,7 @@ import CreateButton from "../CreateButton";
 const QuestionBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { posts: questions, loading, hasMore } = useReviewFetch(
+  const { posts: questions, firstLoading, loading, hasMore } = useReviewFetch(
     "question",
     pageNumber
   );
@@ -33,44 +33,45 @@ const QuestionBoard = (props) => {
 
   return (
     <>
-      {loading && <Loading />}
-      {questions && (
-        <div className="max-w-480 min-h-screen">
-          <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-            <h1 className="text-xl font-bold">QnA</h1>
+      {firstLoading && <Loading />}
+      {firstLoading ||
+        (questions && (
+          <div className="max-w-480 min-h-screen">
+            <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+              <h1 className="text-xl font-bold">QnA</h1>
+            </div>
+
+            {questions.map((question, index) => {
+              if (questions.length === index + 1) {
+                return (
+                  <Question
+                    key={question.id}
+                    question={question}
+                    lastQuestionElementRef={lastQuestionElementRef}
+                  ></Question>
+                );
+              } else {
+                return (
+                  <Question key={question.id} question={question}></Question>
+                );
+              }
+            })}
+
+            {firstLoading ||
+              (questions.length === 0 && (
+                <div className="flex justify-center pt-96">
+                  <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
+                </div>
+              ))}
+
+            {hasMore && loading && (
+              <div
+                className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-10 mx-auto"
+                style={{ borderTop: `5px solid #353535` }}
+              ></div>
+            )}
           </div>
-
-          {questions.map((question, index) => {
-            if (questions.length === index + 1) {
-              return (
-                <Question
-                  key={question.id}
-                  question={question}
-                  lastQuestionElementRef={lastQuestionElementRef}
-                ></Question>
-              );
-            } else {
-              return (
-                <Question key={question.id} question={question}></Question>
-              );
-            }
-          })}
-
-          {loading ||
-            (questions.length === 0 && (
-              <div className="flex justify-center pt-96">
-                <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
-              </div>
-            ))}
-
-          {hasMore && loading && (
-            <div
-              className="border-4 border-gray-light rounded-full w-12 h-12 animate-spin my-5 mx-auto"
-              style={{ borderTop: `5px solid #353535` }}
-            ></div>
-          )}
-        </div>
-      )}
+        ))}
 
       {loading || <CreateButton to={"/community/question/create"} />}
     </>
