@@ -1,9 +1,12 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useReviewFetch } from "../../hooks/useReviewFetch";
+//
 import ReviewDetail from "./ReviewDetail";
 import Search from "../Search";
 import Loading from "../Loading";
 import CreateButton from "../CreateButton";
+//
+import search from "../../images/search_btn.svg";
 
 const ReviewBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -63,10 +66,9 @@ const ReviewBoard = (props) => {
             <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
               <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
               <div className="flex items-center">
-                {/* <button onClick={() => handleSearchModal()}>
-                <img className="w-4 h-4" src={search} alt="search-button" />
-              </button> */}
-                {/* Review 검색기능 비활성화! - 09/29 */}
+                <button onClick={() => handleSearchModal()}>
+                  <img className="w-4 h-4" src={search} alt="search-button" />
+                </button>
                 <select
                   onChange={handleSelect}
                   className="text-gray h-5 ml-5 bg-white"
@@ -98,6 +100,13 @@ const ReviewBoard = (props) => {
                 );
               }
             })}
+
+            {firstLoading ||
+              (reviews.length === 0 && (
+                <div className="flex justify-center pt-80">
+                  <h1 className="text-lg">검색 내역 혹은 게시글이 없습니다.</h1>
+                </div>
+              ))}
 
             {hasMore && loading && (
               <div

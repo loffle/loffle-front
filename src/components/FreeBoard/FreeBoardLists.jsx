@@ -4,7 +4,13 @@ import Post from "./Post";
 import search from "../../images/search_btn.svg";
 import Search from "../Search";
 
-const FreeBoardLists = ({ posts, setOrder, setSearchTerm }) => {
+const FreeBoardLists = ({
+  posts,
+  loading,
+  setOrder,
+  setPageNumber,
+  setSearchTerm,
+}) => {
   const [isSearchModalOn, setIsSearchModalOn] = useState(false);
 
   const handleSearchModal = (e) => {
@@ -20,6 +26,7 @@ const FreeBoardLists = ({ posts, setOrder, setSearchTerm }) => {
       {isSearchModalOn && (
         <Search
           icon={search}
+          setPageNumber={setPageNumber}
           setSearchTerm={setSearchTerm}
           handleSearchModal={handleSearchModal}
         />
@@ -43,6 +50,13 @@ const FreeBoardLists = ({ posts, setOrder, setSearchTerm }) => {
         {posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}
+
+        {loading ||
+          (posts.length === 0 && (
+            <div className="flex justify-center pt-80">
+              <h1 className="text-lg">검색 내역 혹은 게시글이 없습니다.</h1>
+            </div>
+          ))}
       </div>
     </>
   );

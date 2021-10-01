@@ -59,7 +59,7 @@ const QuestionBoard = (props) => {
 
             {firstLoading ||
               (questions.length === 0 && (
-                <div className="flex justify-center pt-96">
+                <div className="flex justify-center pt-80">
                   <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
                 </div>
               ))}
