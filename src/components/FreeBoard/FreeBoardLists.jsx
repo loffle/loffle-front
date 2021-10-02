@@ -12,6 +12,8 @@ const FreeBoardLists = ({
   setSearchTerm,
 }) => {
   const [isSearchModalOn, setIsSearchModalOn] = useState(false);
+  //검색어 기록 및 불러오기
+  const [lastSearchTerm, setLastSearchTerm] = useState("");
 
   const handleSearchModal = (e) => {
     setIsSearchModalOn(!isSearchModalOn);
@@ -28,6 +30,8 @@ const FreeBoardLists = ({
           icon={search}
           setPageNumber={setPageNumber}
           setSearchTerm={setSearchTerm}
+          lastSearchTerm={lastSearchTerm}
+          setLastSearchTerm={setLastSearchTerm}
           handleSearchModal={handleSearchModal}
         />
       )}

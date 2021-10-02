@@ -66,7 +66,12 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
           break;
         default:
       }
+    } else if (searchTerm && pageNumber > 1) {
+      //조건이 더 많을 수록 더 위에 작성해서 걸러준다 - 10/3
+      //검색한 결과가 2페이지를 넘어갈떄
+      fetchData("", searchTerm);
     } else if (searchTerm) {
+      console.log("그냥 여기로 가진다고?");
       setSearchToggle(true);
       setPosts([]);
       fetchData("", searchTerm);
