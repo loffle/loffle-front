@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //
 import attachment from "../../images/attachment.svg";
@@ -15,10 +15,13 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
   const [inputs, setInputs] = useState({
     title: question.title, //기존 값을 불러옴
     content: question.content, //기존 값을 불러옴
+    questionType: question.question_type, //기존 값을 불러옴, usEffect도 참고
   });
   const titleInput = useRef();
 
-  const { title, content } = inputs;
+  const { title, content, questionType } = inputs;
+
+  console.log(questionType);
 
   const onChange = (e) => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
@@ -28,13 +31,21 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
     });
   };
 
+  const [questionTypes, setQuestionTypes] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const handlePut = () => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
 
+    const question_type = questionTypes.filter(
+      (type) => type.name === questionType
+    ); //name -> id 변환 작업
+
     var formdata = new FormData();
     formdata.append("title", title);
     formdata.append("content", content);
+    formdata.append("question_type", question_type[0].id);
 
     var requestOptions = {
       method: "PUT",
@@ -52,6 +63,21 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
       })
       .catch((error) => console.log("error", error));
   };
+
+  useEffect(() => {
+    setLoading(true);
+
+    fetch(`${PROXY}/community/questiontype`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        setQuestionTypes(result);
+        setLoading(false);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
   return (
     <div
       className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-20"
@@ -71,16 +97,18 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
         {/* form */}
         <form className="p-1">
           <select
-            name="type"
-            //onChange={handleSelect}
+            name="questionType"
+            value={questionType}
+            onChange={onChange}
             className="text-gray w-full h-12 p-2 bg-white border-2 border-gray-border rounded-lg outline-none"
           >
-            <option value="" disabled selected>
+            <option disabled selected>
               문의 유형을 선택해주세요.
             </option>
-            <option>응모</option>
-            <option>응모권/결제</option>
-            <option>기타</option>
+            {loading ||
+              questionTypes.map((questionType) => (
+                <option key={questionType.id}>{questionType.name}</option>
+              ))}
           </select>
 
           <div className="mt-1 border-2 border-gray-border shadow-lg rounded-lg">
