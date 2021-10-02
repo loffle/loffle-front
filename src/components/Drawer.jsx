@@ -1,32 +1,26 @@
 import React from "react";
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//
-import { Context } from "../context";
-//
-//
-import axios from "axios";
+import { PROXY } from "../config";
 
 const Drawer = ({ logo, handleDrawerModal }) => {
-  const [user, setUser] = useContext(Context); //user만 사용하고 setUser 사용 안함
   const navigate = useNavigate();
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
   const handleLogout = () => {
-    try {
-      axios
-        .get(`${PROXY}/api-auth/logout`)
-        .then(() => {
-          setUser(null);
-          localStorage.removeItem("access_token"); //localStorage token 제거
-          //localStorage.removeItem("access_nickname"); //localStorage token 제거
-          console.log(user);
-          alert("로그아웃 되었습니다.");
-        })
-        .catch();
-    } catch (error) {
-      console.log(error);
-    }
+    var requestOptions = {
+      method: "GET",
+      headers: { Authorization: `Token ${localStorage.access_token}` },
+    };
+
+    fetch(`${PROXY}/account/logout`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        localStorage.removeItem("access_token"); //localStorage token 제거
+        localStorage.removeItem("access_nickname"); //localStorage token 제거
+        alert(result.detail);
+      })
+      .catch((error) => console.log("error", error));
+
     navigate("/");
   };
 
@@ -63,7 +57,7 @@ const Drawer = ({ logo, handleDrawerModal }) => {
               <li onClick={handleLogout} className="flex justify-center">
                 {/* <img src={profile} alt="my-page-button" className="w-8" /> */}
                 {/* {user.username}님 | 로그아웃 */}
-                {localStorage.access_token}님 | 로그아웃
+                {localStorage.access_nickname}님 | 로그아웃
               </li>
             ) : (
               <Link to="/login">

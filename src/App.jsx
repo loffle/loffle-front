@@ -15,6 +15,7 @@ import Login from "./components/Login";
 //
 import UserProvider from "./context";
 import QuestionBoard from "./components/QuestionBoard/QuestionBoard";
+import QuestionCreate from "./components/QuestionBoard/QuestionCreate";
 import NoticeBoard from "./components/NoticeBoard/NoticeBoard";
 import Join from "./components/Join";
 
@@ -37,6 +38,10 @@ const App = (props) => {
             />
             <Route path="/community/review/create" element={<ReviewCreate />} />
             <Route path="/community/question" element={<QuestionBoard />} />
+            <Route
+              path="/community/question/create"
+              element={<QuestionCreate />}
+            />
             <Route path="/community/notice" element={<NoticeBoard />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>

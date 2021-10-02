@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import search from "../images/search_btn.svg";
 
-const Search = ({ handleSearchModal, setSearchTerm }) => {
+const Search = ({ setPageNumber, handleSearchModal, setSearchTerm }) => {
   const [state, setState] = useState("");
   const initial = useRef(true);
 
@@ -15,6 +15,7 @@ const Search = ({ handleSearchModal, setSearchTerm }) => {
     }
 
     const timer = setTimeout(() => {
+      setPageNumber(1);
       setSearchTerm(state);
     }, 500);
     return () => clearTimeout(timer);

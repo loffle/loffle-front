@@ -105,6 +105,7 @@ const ReviewComment = ({ review, postId, handleCommentModal }) => {
 
       {/* 댓글 작성 - sticky 충돌나서 fixed로 수정*/}
       <ModalComentCreate
+        category={"review"}
         postId={postId}
         comments={comments}
         setComments={setComments}

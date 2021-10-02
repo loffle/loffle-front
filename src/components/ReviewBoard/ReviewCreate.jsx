@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import cookie from "react-cookies";
 //
 import attachment from "../../images/attachment.svg";
 import pencil from "../../images/pencil.svg";
@@ -50,7 +49,6 @@ const ReviewCreate = (props) => {
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
-    myHeaders.append("Cookie", `${cookie.load("sessionid")}`);
 
     var formdata = new FormData();
     formdata.append("title", title);

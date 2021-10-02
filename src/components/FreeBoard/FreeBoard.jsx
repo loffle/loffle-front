@@ -25,6 +25,7 @@ const FreeBoard = (props) => {
         posts={posts}
         loading={loading}
         setOrder={setOrder}
+        setPageNumber={setPageNumber}
         setSearchTerm={setSearchTerm}
       ></FreeBoardLists>
       {loading || (

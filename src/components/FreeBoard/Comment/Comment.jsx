@@ -13,12 +13,17 @@ const Comment = ({
 }) => {
   const handleDelete = () => {
     if (window.confirm("해당 댓글을 삭제하시겠습니까?")) {
-      fetch(`${PROXY}/community/${category}/${postId}/comment/${comment.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      }).then((response) => {
+      fetch(
+        `${PROXY}/community/${category}/${postId}/${
+          category === "question" ? "answer" : "comment"
+        }/${comment.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Token ${localStorage.access_token}`,
+          },
+        }
+      ).then((response) => {
         console.log(response);
         setComments(
           comments.filter(

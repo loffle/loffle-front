@@ -1,13 +1,13 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useReviewFetch } from "../../hooks/useReviewFetch";
+//
 import Loading from "../Loading";
 import Notice from "./Notice";
-import CreateButton from "../CreateButton";
 
 const NoticeBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { posts: notices, loading, hasMore } = useReviewFetch(
+  const { posts: notices, firstLoading, loading, hasMore } = useReviewFetch(
     "notice",
     pageNumber
   );
@@ -33,37 +33,36 @@ const NoticeBoard = (props) => {
 
   return (
     <>
-      {loading && <Loading />}
-      {notices && (
-        <div className="max-w-480 min-h-screen">
-          <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-            <h1 className="text-xl font-bold">공지사항</h1>
+      {firstLoading && <Loading />}
+      {firstLoading ||
+        (notices && (
+          <div className="max-w-480 min-h-screen">
+            <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+              <h1 className="text-xl font-bold">공지사항</h1>
+            </div>
+
+            {notices.map((notice, index) => {
+              if (notices.length === index + 1) {
+                return (
+                  <Notice
+                    key={notice.id}
+                    notice={notice}
+                    lastNoticeElementRef={lastNoticeElementRef}
+                  ></Notice>
+                );
+              } else {
+                return <Notice key={notice.id} notice={notice}></Notice>;
+              }
+            })}
+
+            {hasMore && loading && (
+              <div
+                className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-5 mx-auto"
+                style={{ borderTop: `5px solid #353535` }}
+              ></div>
+            )}
           </div>
-
-          {notices.map((notice, index) => {
-            if (notices.length === index + 1) {
-              return (
-                <Notice
-                  key={notice.id}
-                  notice={notice}
-                  lastNoticeElementRef={lastNoticeElementRef}
-                ></Notice>
-              );
-            } else {
-              return <Notice key={notice.id} notice={notice}></Notice>;
-            }
-          })}
-
-          {hasMore && loading && (
-            <div
-              className="border-4 border-gray-light rounded-full w-12 h-12 animate-spin my-5 mx-auto"
-              style={{ borderTop: `5px solid #353535` }}
-            ></div>
-          )}
-        </div>
-      )}
-
-      {loading || <CreateButton to={"/community/post/create"} />}
+        ))}
     </>
   );
 };

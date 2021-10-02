@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import pencil from "../images/pencil.svg";
 
 const ModalComentCreate = ({
+  category,
   postId,
   comments,
   setComments,
@@ -36,6 +37,9 @@ const ModalComentCreate = ({
     myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
 
     var formdata = new FormData();
+    if (category === "question") {
+      formdata.append("title", content);
+    }
     formdata.append("content", content);
 
     var requestOptions = {
@@ -45,7 +49,12 @@ const ModalComentCreate = ({
       redirect: "follow",
     };
 
-    fetch(`${PROXY}/community/review/${postId}/comment`, requestOptions)
+    fetch(
+      `${PROXY}/community/${category}/${postId}/${
+        category === "question" ? "answer" : "comment"
+      }`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
