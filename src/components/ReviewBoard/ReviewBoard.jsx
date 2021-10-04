@@ -41,7 +41,6 @@ const ReviewBoard = (props) => {
 
   //Search Modal
   const [isSearchModalOn, setIsSearchModalOn] = useState(false);
-
   const handleSearchModal = (e) => {
     setIsSearchModalOn(!isSearchModalOn);
   };
@@ -50,6 +49,9 @@ const ReviewBoard = (props) => {
     setOrder(e.target.value);
   };
 
+  //검색어 기록 및 불러오기
+  const [lastSearchTerm, setLastSearchTerm] = useState("");
+
   return (
     <>
       {firstLoading && <Loading />}
@@ -57,6 +59,8 @@ const ReviewBoard = (props) => {
         <Search
           setPageNumber={setPageNumber}
           setSearchTerm={setSearchTerm}
+          lastSearchTerm={lastSearchTerm}
+          setLastSearchTerm={setLastSearchTerm}
           handleSearchModal={handleSearchModal}
         />
       )}
@@ -117,7 +121,7 @@ const ReviewBoard = (props) => {
           </div>
         ))}
 
-      {loading || <CreateButton to={"/community/review/create"} />}
+      {firstLoading || <CreateButton to={"/community/review/create"} />}
     </>
   );
 };

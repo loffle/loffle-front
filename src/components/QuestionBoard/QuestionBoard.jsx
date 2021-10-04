@@ -73,7 +73,7 @@ const QuestionBoard = (props) => {
           </div>
         ))}
 
-      {loading || <CreateButton to={"/community/question/create"} />}
+      {firstLoading || <CreateButton to={"/community/question/create"} />}
     </>
   );
 };
