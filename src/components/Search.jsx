@@ -1,8 +1,7 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
-import search from "../images/search_btn.svg";
+import React from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+import search from '../images/search_btn.svg';
 
 const Search = ({
   setPageNumber,
@@ -11,7 +10,6 @@ const Search = ({
   lastSearchTerm,
   setLastSearchTerm,
 }) => {
-  //const [state, setState] = useState("");
   const initial = useRef(true);
 
   useEffect(() => {
@@ -45,7 +43,6 @@ const Search = ({
           placeholder="검색어를 입력하세요."
           value={lastSearchTerm}
           onChange={(event) => {
-            //setState(event.currentTarget.value);
             setLastSearchTerm(event.currentTarget.value);
           }}
         ></input>

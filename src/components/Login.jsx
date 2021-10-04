@@ -1,19 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Context } from "../context";
-import { useForm } from "react-hook-form";
-import { PROXY } from "../config";
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { PROXY } from '../config';
 //
-import Warning from "../Warning";
+import Warning from '../Warning';
 
 const Login = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [tokenAuth, setTokenAuth] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [tokenAuth, setTokenAuth] = useState('');
   const [error, setError] = useState(false);
-
-  //   setUser만 사용하기 때문에 user는 _표시를 해두었다 [객관적이지 않음]
-  const [user, setUser] = useContext(Context); // eslint-disable-line no-unused-vars
   const navigate = useNavigate(); //Naviagte hook 사용
 
   //
@@ -22,42 +18,17 @@ const Login = (props) => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  //console.log(watch("email"));
-
-  useEffect(() => {
-    // if (cookie.load("csrftoken")) {
-    //   cookie.remove("csrftoken", { path: "/" });
-    // }
-
-    // try {
-    //   axios
-    //     .get(`${PROXY}/api-auth/login/`)
-    //     .then((res) => {
-    //       setCsrftoken(cookie.load("csrftoken"));
-    //     })
-    //     .catch();
-    // } catch (error) {
-    //   setError(true);
-    // }
-
-    fetchToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const fetchToken = async () => {
     try {
-      var myHeaders = new Headers();
-      //myHeaders.append("Cookie", `csrftoken=${csrftoken}`);
-
       var formdata = new FormData();
-      formdata.append("username", "seller@b.com");
-      formdata.append("password", "qlalfqjsgh");
+      formdata.append('username', 'seller@b.com');
+      formdata.append('password', 'qlalfqjsgh');
 
       var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
+        method: 'POST',
         body: formdata,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
       await fetch(`${PROXY}/account/login`, requestOptions)
@@ -65,45 +36,46 @@ const Login = (props) => {
         .then((result) => {
           console.log(`token = ${result.token}`);
           setTokenAuth(() => result.token);
-          localStorage.setItem("access_token", result.token); //localStorage token 생성
-          localStorage.setItem("access_nickname", result.nickname); //localStorage token 생성
-          alert("로그인에 성공하였습니다.");
-          navigate("/");
+          localStorage.setItem('access_token', result.token); //localStorage token 생성
+          localStorage.setItem('access_nickname', result.nickname); //localStorage token 생성
+          alert('로그인에 성공하였습니다.');
+          navigate('/');
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     } catch (error) {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    fetchToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmit = (data) => {
     console.log(`tokenAuth = ${tokenAuth}`);
 
     try {
       var urlencoded = new URLSearchParams();
-      urlencoded.append("username", "seller@b.com");
-      urlencoded.append("password", "qlalfqjsgh");
-      urlencoded.append("next", "/");
+      urlencoded.append('username', 'seller@b.com');
+      urlencoded.append('password', 'qlalfqjsgh');
+      urlencoded.append('next', '/');
 
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         body: urlencoded,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
       fetch(`${PROXY}/api-auth/login/`, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log("로그인 결과!");
+          console.log('로그인 결과!');
           console.log(result);
-          setUser({
-            username: "seller",
-            token: tokenAuth,
-          });
 
-          navigate("/"); //login완료하면 index로 리다이렉트
+          navigate('/'); //login완료하면 index로 리다이렉트
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     } catch (error) {
       setError(true);
     }
@@ -113,8 +85,8 @@ const Login = (props) => {
     const name = e.currentTarget.name;
     const value = e.currentTarget.value;
 
-    if (name === "username") setUsername(value);
-    if (name === "password") setPassword(value);
+    if (name === 'username') setUsername(value);
+    if (name === 'password') setPassword(value);
   };
 
   return (
@@ -149,7 +121,7 @@ const Login = (props) => {
               <label className="block text-gray-darkest">이메일</label>
               <input
                 name="email"
-                {...register("email", {
+                {...register('email', {
                   required: true,
                   pattern: /^\S+@\S+$/i,
                 })}
@@ -157,10 +129,10 @@ const Login = (props) => {
                 className="w-full px-4 py-3 rounded-lg mt-2 border border-gray-border focus:border-primary focus:bg-white focus:outline-none"
                 autoFocus
               />
-              {errors.email && errors.email.type === "required" && (
+              {errors.email && errors.email.type === 'required' && (
                 <Warning>이메일을 입력해주세요.</Warning>
               )}
-              {errors.email && errors.email.type === "pattern" && (
+              {errors.email && errors.email.type === 'pattern' && (
                 <Warning>이메일 형식에 맞지 않습니다.</Warning>
               )}
             </div>
@@ -178,7 +150,7 @@ const Login = (props) => {
                   <rect width="17.2" height="14" x="3.4" y="5" rx="3"></rect>
                   <path d="M3.2 5.6L12 12l8.8-6.4"></path>
                 </g>
-              </svg>{" "}
+              </svg>{' '}
               <span className="ml-2">이메일로 시작하기</span>
             </button>
           </form>

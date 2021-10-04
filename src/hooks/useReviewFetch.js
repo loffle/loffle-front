@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
   const [posts, setPosts] = useState([]);
@@ -10,14 +10,13 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
   const [hasMore, setHasMore] = useState(false); //리스트의 끝까지 가면 더이상 요청하지 않아야 함
   const [searchToggle, setSearchToggle] = useState(false);
 
-  async function fetchData(orderType = "", searchTerm = "") {
+  async function fetchData(orderType = '', searchTerm = '') {
     if (posts.length === 0) {
-      console.log("hi");
       setFirstLoading(true);
     }
     setLoading(true);
     setError(false);
-    const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+    const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
     let cancel;
 
     const myHeaders = localStorage.access_token
@@ -25,7 +24,7 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
       : {}; //토큰이 있으면 넣어주고 없으면 안넣음
 
     axios({
-      method: "GET",
+      method: 'GET',
       url: `${PROXY}/community/${category}.json`,
       headers: myHeaders,
       params: { ordering: orderType, search: searchTerm, page: pageNumber },
@@ -58,23 +57,22 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
     if (order) {
       setPosts([]);
       switch (order) {
-        case "최신순":
+        case '최신순':
           fetchData();
           break;
-        case "과거순":
-          fetchData("created_at");
+        case '과거순':
+          fetchData('created_at');
           break;
         default:
       }
     } else if (searchTerm && pageNumber > 1) {
       //조건이 더 많을 수록 더 위에 작성해서 걸러준다 - 10/3
       //검색한 결과가 2페이지를 넘어갈떄
-      fetchData("", searchTerm);
+      fetchData('', searchTerm);
     } else if (searchTerm) {
-      console.log("그냥 여기로 가진다고?");
       setSearchToggle(true);
       setPosts([]);
-      fetchData("", searchTerm);
+      fetchData('', searchTerm);
     } else {
       if (searchToggle) setPosts([]); //searchTerm이 ""으로 돌아갈때 검색창을 켠적이 있으면 posts리스트 초기화
       fetchData();
