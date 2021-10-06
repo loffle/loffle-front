@@ -18,6 +18,7 @@ import QuestionBoard from './components/QuestionBoard/QuestionBoard';
 import QuestionCreate from './components/QuestionBoard/QuestionCreate';
 import NoticeBoard from './components/NoticeBoard/NoticeBoard';
 import Join from './components/Join';
+import RaffleList from './components/Raffle/RaffleList';
 
 const App = (props) => {
   return (
@@ -28,6 +29,7 @@ const App = (props) => {
           <Routes>
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/raffle" element={<RaffleList />} />
             <Route path="/community/post" element={<FreeBoard />} />
             <Route path="/community/post/:postId" element={<PostDetail />} />
             <Route path="/community/post/create" element={<PostCreate />} />

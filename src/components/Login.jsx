@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 //
 import { PROXY } from '../config';
@@ -7,6 +7,7 @@ import Loading from '../components/Loading';
 import Warning from '../Warning';
 import Join from './Join';
 import Password from './Password';
+import { useLocation } from 'react-router';
 
 const Login = (props) => {
   const [loading, setLoading] = useState(false);
@@ -19,6 +20,12 @@ const Login = (props) => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const onSubmit = (data) => {
     //이메일 체크

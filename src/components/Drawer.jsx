@@ -1,13 +1,13 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { PROXY } from "../config";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { PROXY } from '../config';
 
 const Drawer = ({ logo, handleDrawerModal }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     var requestOptions = {
-      method: "GET",
+      method: 'GET',
       headers: { Authorization: `Token ${localStorage.access_token}` },
     };
 
@@ -15,13 +15,13 @@ const Drawer = ({ logo, handleDrawerModal }) => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        localStorage.removeItem("access_token"); //localStorage token 제거
-        localStorage.removeItem("access_nickname"); //localStorage token 제거
+        localStorage.removeItem('access_token'); //localStorage token 제거
+        localStorage.removeItem('access_nickname'); //localStorage token 제거
         alert(result.detail);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
 
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -40,7 +40,9 @@ const Drawer = ({ logo, handleDrawerModal }) => {
             className="flex flex-col justify-center text-xl font-bold gap-14 py-10 text-center"
           >
             <li>소개</li>
-            <li>응모하기</li>
+            <Link to="/raffle">
+              <li>응모하기</li>
+            </Link>
             <Link to="/community/post">
               <li>자유게시판</li>
             </Link>
