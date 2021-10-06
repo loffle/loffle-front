@@ -50,9 +50,9 @@ const Login = (props) => {
       {loading && <Loading />}
       {loading || emailChecked ? (
         showPasswordInput ? (
-          <Password email={email} />
+          loading || <Password email={email} />
         ) : (
-          <Join email={email} />
+          loading || <Join email={email} />
         ) //email check가 false, 입력한 email 존재
       ) : (
         <section className="flex h-screen items-center pt-10">
