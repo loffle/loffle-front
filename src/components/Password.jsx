@@ -58,7 +58,7 @@ const Password = ({ email }) => {
       <div className="bg-white w-full h-screen px-6 flex items-center justify-center">
         <div className="w-full h-full">
           <div className="flex justify-center flex-col">
-            <span className="text-xl font-bold leading-tight mt-12">
+            <span className="text-xl font-bold leading-tight mt-10">
               비밀번호를 입력해주세요.
             </span>
           </div>

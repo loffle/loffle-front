@@ -59,8 +59,8 @@ const Login = (props) => {
           <div className="bg-white w-full h-screen px-6 flex items-center justify-center">
             <div className="w-full h-full">
               <div className="flex justify-center flex-col">
-                <span className="text-xl font-bold leading-tight mt-12">
-                  로그인을 해주세요.
+                <span className="text-xl font-bold leading-tight mt-10">
+                  로그인, 회원가입을 진행해주세요.
                 </span>
               </div>
               <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
