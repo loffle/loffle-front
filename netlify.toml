@@ -1,7 +1,7 @@
 # api redirect.
 [[redirects]]
   from = "/proxy/*"
-  to = "http://loffle.cf/:splat"
+  to = "https://loffle.cf/:splat"
   status = 200
   force = true
 

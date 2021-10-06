@@ -1,7 +1,7 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { PROXY } from '../config';
-import { useNavigate } from 'react-router-dom';
 
 import Warning from '../Warning';
 
@@ -14,6 +14,11 @@ const Password = ({ email }) => {
   } = useForm();
 
   const navigate = useNavigate(); //Naviagte hook 사용
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const onSubmit = (data) => {
     var formdata = new FormData();
@@ -53,7 +58,7 @@ const Password = ({ email }) => {
       <div className="bg-white w-full h-screen px-6 flex items-center justify-center">
         <div className="w-full h-full">
           <div className="flex justify-center flex-col">
-            <span className="text-xl font-bold leading-tight mt-12">
+            <span className="text-xl font-bold leading-tight mt-10">
               비밀번호를 입력해주세요.
             </span>
           </div>

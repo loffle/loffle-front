@@ -50,17 +50,17 @@ const Login = (props) => {
       {loading && <Loading />}
       {loading || emailChecked ? (
         showPasswordInput ? (
-          <Password email={email} />
+          loading || <Password email={email} />
         ) : (
-          <Join email={email} />
+          loading || <Join email={email} />
         ) //email check가 false, 입력한 email 존재
       ) : (
         <section className="flex h-screen items-center pt-10">
           <div className="bg-white w-full h-screen px-6 flex items-center justify-center">
             <div className="w-full h-full">
               <div className="flex justify-center flex-col">
-                <span className="text-xl font-bold leading-tight mt-12">
-                  로그인을 해주세요.
+                <span className="text-xl font-bold leading-tight mt-10">
+                  로그인, 회원가입을 진행해주세요.
                 </span>
               </div>
               <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
