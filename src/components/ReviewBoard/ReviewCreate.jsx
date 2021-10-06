@@ -1,25 +1,39 @@
-import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 //
 import attachment from "../../images/attachment.svg";
 import pencil from "../../images/pencil.svg";
 
-const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+const ReviewCreate = (props) => {
+  // const [logoLoading, setLogoLoading] = useState(false);
+  // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
+  window.scrollTo(0, 0);
 
-  // eslint-disable-next-line no-unused-vars
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const navigate = useNavigate(); //Naviagte hook 사용
+
   const attachmentInput = useRef();
 
   const [inputs, setInputs] = useState({
-    title: post.title, //기존 값을 불러옴
-    content: post.content, //기존 값을 불러옴
+    title: "",
+    content: "",
   });
   const titleInput = useRef();
 
   const { title, content } = inputs;
 
   const onChange = (e) => {
+    //   //e.preventDefault();
+    //   let reader = new FileReader();
+    //   let file = e.target.files[0];
+    //   reader.onloadend = () => {
+    //     setFileUrl({
+    //       file: file,
+    //       previewURL: reader.result,
+    //     });
+    //   };
+    //   reader.readAsDataURL(file);
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setInputs({
       ...inputs, // 기존의 input 객체를 복사한 뒤
@@ -27,7 +41,12 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
     });
   };
 
-  const handlePut = () => {
+  const handleCreate = () => {
+    if (!content) {
+      alert("내용을 입력해주세요");
+      return;
+    }
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
 
@@ -36,20 +55,18 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
     formdata.append("content", content);
 
     var requestOptions = {
-      method: "PUT",
+      method: "POST",
       headers: myHeaders,
       body: formdata,
       redirect: "follow",
     };
 
-    fetch(`${PROXY}/community/post/${postId}`, requestOptions)
+    fetch(`${PROXY}/community/review`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        window.location.reload();
+        navigate(`/community/review`);
       })
-      //게시물 작성 성공, 성공시 postdetail 보내주기 실패
-      //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));
       .catch((error) => console.log("error", error));
   };
 
@@ -58,11 +75,10 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
       <div className="min-h-screen">
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-          <h1 className="text-xl font-bold">자유게시판 &gt; 글 수정</h1>
-          <span className="text-gray h-5 ml-5 bg-white" onClick={handleUpdate}>
-            뒤로가기
-          </span>
-          {/* handleUpdate 토글 버튼사용 */}
+          <h1 className="text-xl font-bold">당첨 후기 게시판 &gt; 글 작성</h1>
+          <Link to={{ pathname: "/community/review" }}>
+            <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
+          </Link>
         </div>
         {/* form */}
         <form className="m-1 border-2 border-gray-border shadow-lg rounded-lg">
@@ -74,7 +90,7 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
               value={title}
               onChange={onChange}
               ref={titleInput}
-              placeholder="글 제목"
+              placeholder="글 제목은 작성안하셔도 됩니다 ><"
               autoComplete="off"
             />
           </p>
@@ -92,17 +108,17 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
           <div className="flex justify-between items-center bg-gray-border bg-opacity-20">
             {/* attachment */}
             <input
-              //ref={attachmentInput}
+              ref={attachmentInput}
               type="file"
               accept="image/jpg,impge/png,image/jpeg,image/gif"
               className="hidden"
               name="file"
-              //onChange={onChange}
+              onChange={onChange}
             />
             <button
               onClick={(e) => {
                 e.preventDefault();
-                //attachmentInput.current.click();
+                attachmentInput.current.click();
               }}
             >
               <img
@@ -114,11 +130,15 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                handlePut();
+                handleCreate();
               }}
             >
               <div className="flex items-center justify-center w-12 h-12 bg-primary opacity-90 rounded-br-lg hover:bg-opacity-80 cursor-pointer">
-                <img className="w-5 h-5" src={pencil} alt="write-post-button" />
+                <img
+                  className="w-5 h-5"
+                  src={pencil}
+                  alt="write-review-button"
+                />
               </div>
             </button>
           </div>
@@ -129,4 +149,4 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
   );
 };
 
-export default PostDetailUpdate;
+export default ReviewCreate;

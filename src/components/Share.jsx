@@ -28,9 +28,16 @@ const Share = ({ handleShareModal, id = "" }) => {
         {/* 링크 버튼 */}
         <CopyToClipboard
           text={currentUrl}
-          className="w-12 h-12 text-white rounded-full border-0 font-bold text-lg cursor-pointer bg-primary "
+          className="w-12 h-12 text-white rounded-full border-0 font-bold text-lg cursor-pointer bg-primary"
         >
-          <button>URL</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              alert("링크가 복사되었습니다.");
+            }}
+          >
+            URL
+          </button>
         </CopyToClipboard>
         {/* 이메일 버튼 */}
         <EmailShareButton url={currentUrl}>

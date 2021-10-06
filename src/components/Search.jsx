@@ -1,11 +1,15 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
-import search from "../images/search_btn.svg";
+import React from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+import search from '../images/search_btn.svg';
 
-const Search = ({ handleSearchModal, setSearchTerm }) => {
-  const [state, setState] = useState("");
+const Search = ({
+  setPageNumber,
+  handleSearchModal,
+  setSearchTerm,
+  lastSearchTerm,
+  setLastSearchTerm,
+}) => {
   const initial = useRef(true);
 
   useEffect(() => {
@@ -13,28 +17,34 @@ const Search = ({ handleSearchModal, setSearchTerm }) => {
       initial.current = false;
       return;
     }
-
     const timer = setTimeout(() => {
-      setSearchTerm(state);
+      setPageNumber(1);
+      setSearchTerm(lastSearchTerm);
     }, 500);
-    return () => clearTimeout(timer);
-  }, [setSearchTerm, state]);
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setSearchTerm, lastSearchTerm]);
 
   return (
     <div
-      className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-50"
+      className="max-w-480 mx-auto fixed top-0 left-0 right-0 bottom-0 bg-modal bg-opacity-80 z-50 px-1 py-1"
       onClick={handleSearchModal}
     >
       <div
-        className="flex items-center px-5 py-4 w-10/12 h-16 rounded-lg bg-white"
+        className="flex items-center w-full mt-14 px-5 py-2 h-14 rounded-lg shadow-lg bg-white"
         onClick={(e) => e.stopPropagation()}
       >
-        <img className="w-8 h-16" src={search} alt="search-button" />
+        <img className="w-5" src={search} alt="search-button" />
 
         <input
           className="w-full h-full ml-5 outline-none"
           placeholder="검색어를 입력하세요."
-          onChange={(event) => setState(event.currentTarget.value)}
+          value={lastSearchTerm}
+          onChange={(event) => {
+            setLastSearchTerm(event.currentTarget.value);
+          }}
         ></input>
       </div>
     </div>

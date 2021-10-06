@@ -3,18 +3,34 @@ import profile from "../../../images/profile.svg";
 import { timeForToday } from "../../helpers";
 import { PROXY } from "../../../config.js";
 
-const Comment = ({ comment, postId, lastCommentElementRef }) => {
+const Comment = ({
+  category,
+  comment,
+  comments,
+  setComments,
+  postId,
+  lastCommentElementRef,
+}) => {
   const handleDelete = () => {
     if (window.confirm("해당 댓글을 삭제하시겠습니까?")) {
-      fetch(`${PROXY}/community/post/${postId}/comment/${comment.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      }).then((response) => {
+      fetch(
+        `${PROXY}/community/${category}/${postId}/${
+          category === "question" ? "answer" : "comment"
+        }/${comment.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Token ${localStorage.access_token}`,
+          },
+        }
+      ).then((response) => {
         console.log(response);
+        setComments(
+          comments.filter(
+            (originalComment) => originalComment.id !== comment.id
+          )
+        );
         alert("댓글이 삭제되었습니다.");
-        window.location.reload();
       });
     }
   };

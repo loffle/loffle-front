@@ -1,14 +1,44 @@
-import React from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { timeForToday } from "../helpers";
 //
 import Comment from "../FreeBoard/Comment/Comment";
 //
 import back from "../../images/back.svg";
 import profile from "../../images/profile.svg";
-import pencil from "../../images/pencil.svg";
+import { useCommentFetch } from "../../hooks/useCommentFetch";
+import ModalComentCreate from "../ModalComentCreate";
 
-const ReviewComment = ({ review, comments, handleCommentModal }) => {
-  //console.log(comments);
+const ReviewComment = ({ review, postId, handleCommentModal }) => {
+  const scrollBox = useRef(null);
+
+  const scrollToBottom = () => {
+    const { scrollHeight, clientHeight } = scrollBox.current;
+
+    scrollBox.current.scrollTop = scrollHeight - clientHeight;
+  };
+
+  const [pageNumber, setPageNumber] = useState(1); //댓글 pageNumber
+  const { comments, setComments, commentLoading, hasMore } = useCommentFetch(
+    "review",
+    pageNumber,
+    postId
+  );
+
+  const observer = useRef();
+  const lastCommentElementRef = useCallback(
+    //useCallback: 이 함수를 호출한 node를 가져온다
+    (node) => {
+      if (commentLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1); //다음 페이지를 가져오라고 한다
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [commentLoading, hasMore]
+  );
 
   return (
     <>
@@ -17,9 +47,10 @@ const ReviewComment = ({ review, comments, handleCommentModal }) => {
         onClick={handleCommentModal}
       >
         <div
-          className="absolute bottom-0 px-5 py-4 w-full rounded-t-xl bg-white"
+          className="absolute bottom-0 px-5 pt-4 pb-20 w-full rounded-t-xl bg-white overflow-scroll"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: "91.5%" }}
+          style={{ height: "92%" }}
+          ref={scrollBox}
         >
           <header className="flex justify-between">
             <img src={back} alt="back-button" onClick={handleCommentModal} />
@@ -32,7 +63,7 @@ const ReviewComment = ({ review, comments, handleCommentModal }) => {
               <img src={profile} alt="profile" className="w-8" />
               <div className="ml-2">
                 <h3 className="text-sm font-bold">{review.user}</h3>
-                <p className="text-base mt-2">{review.title}</p>
+                <p className="text-base mt-2">{review.content}</p>
                 <div className="text-xs text-gray-light mt-1">
                   <span>{timeForToday(review.created_at)}</span>
                   <span> • </span>
@@ -43,31 +74,44 @@ const ReviewComment = ({ review, comments, handleCommentModal }) => {
               </div>
             </div>
           </article>
-          {comments &&
-            comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} />
-            ))}
+          {comments.map((comment, index) => {
+            if (comments.length === index + 1) {
+              return (
+                <Comment
+                  category={"review"}
+                  key={comment.id}
+                  comment={comment}
+                  comments={comments}
+                  setComments={setComments}
+                  postId={postId}
+                  lastCommentElementRef={lastCommentElementRef}
+                ></Comment>
+              );
+            } else {
+              return (
+                <Comment
+                  category={"review"}
+                  key={comment.id}
+                  comment={comment}
+                  comments={comments}
+                  setComments={setComments}
+                  postId={postId}
+                ></Comment>
+              );
+            }
+          })}
         </div>
       </div>
-
-      {/* 댓글 */}
 
       {/* 댓글 작성 - sticky 충돌나서 fixed로 수정*/}
-      <div className="max-w-480 fixed bottom-4 left-0 right-0 flex items-center justify-between mx-6 z-50">
-        <div className="flex justify-between px-3 py-1 w-10/12 h-14 bg-white rounded-2xl shadow-lg">
-          <input
-            className="w-full outline-none"
-            type="text"
-            name="text"
-            maxLength="300"
-            placeholder="댓글을 입력하세요."
-            autoComplete="false"
-          />
-        </div>
-        <div className="flex items-center justify-center h-12 w-12 min-w-min ml-2 mt-1 bg-primary opacity-90 rounded-full shadow-xl">
-          <img className="w-5 h-5" src={pencil} alt="write-comment-button" />
-        </div>
-      </div>
+      <ModalComentCreate
+        category={"review"}
+        postId={postId}
+        comments={comments}
+        setComments={setComments}
+        scrollToBottom={scrollToBottom}
+        hasMore={hasMore}
+      />
     </>
   );
 };

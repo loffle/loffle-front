@@ -54,5 +54,5 @@
     "postcss": "^7.0.36",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
   },
-  "proxy": "http://loffle.cf"
+  "proxy": "https://loffle.cf"
 }

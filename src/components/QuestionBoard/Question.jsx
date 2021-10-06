@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { PROXY } from "../../config";
 //
 import { timeWithHyphen } from "../helpers";
 import QuestionAnswer from "./QuestionAnswer";
+import QuestionUpdate from "./QuestionUpdate";
 
 const Question = ({ question, lastQuestionElementRef }) => {
   const [answers, setAnswers] = useState([]);
@@ -10,6 +12,15 @@ const Question = ({ question, lastQuestionElementRef }) => {
   const [isAnswerModalOn, setIsAnswerModalOn] = useState(false);
   const handleAnswerModal = (e) => {
     setIsAnswerModalOn(!isAnswerModalOn);
+  };
+
+  //수정 토글 버튼
+  const [isUpdateOn, setIsUpdateOn] = useState(false);
+  const handleUpdate = (e) => {
+    setIsUpdateOn(!isUpdateOn);
+    isUpdateOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = "unset")
+      : (document.body.style.overflow = "hidden");
   };
 
   useEffect(() => {
@@ -23,12 +34,39 @@ const Question = ({ question, lastQuestionElementRef }) => {
     if (question) fetchData(); //reiview undefined check
   }, [question]);
 
+  const handleDelete = () => {
+    if (
+      window.confirm(
+        "해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다."
+      )
+    ) {
+      fetch(`${PROXY}/community/question/${question.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${localStorage.access_token}`,
+        },
+      }).then((response) => {
+        alert("게시물이 삭제되었습니다.");
+        window.location.reload();
+      });
+    }
+  };
+
   return (
     <>
+      {isUpdateOn && (
+        <QuestionUpdate
+          questionId={question.id}
+          question={question}
+          handleUpdate={handleUpdate}
+        />
+      )}
+
       {answers && question && isAnswerModalOn && (
         <QuestionAnswer
           question={question}
           answers={answers}
+          setAnswers={setAnswers}
           handleAnswerModal={handleAnswerModal}
         />
       )}
@@ -53,20 +91,17 @@ const Question = ({ question, lastQuestionElementRef }) => {
                 className="text-sm text-gray-darkest"
                 onClick={(e) => e.stopPropagation()}
               >
-                <span>수정</span>
-                <span
-                  className="ml-3"
-                  onClick={() => alert("정말 삭제하시겠습니까?")}
-                >
-                  삭제
-                </span>
+                <button onClick={handleUpdate}>
+                  <span>수정</span>
+                </button>
+                <button onClick={handleDelete}>
+                  <span className="ml-3">삭제</span>
+                </button>
               </div>
             </div>
             <div className="flex justify-between text-sm">
-              <span>{question.question_type}null</span>
-              <span className="text-gray">
-                No.{question.created_at.slice(21, 26)}
-              </span>
+              <span>{question.question_type}</span>
+              <span className="text-gray">No.{question.id}</span>
             </div>
             <h2 className="text-base truncate mb-1">{question.title}</h2>
             <p className="text-sm text-gray line-clamp-2 mb-1">

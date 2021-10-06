@@ -15,11 +15,13 @@ import { useCommentFetch } from "../../hooks/useCommentFetch";
 
 const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   const [pageNumber, setPageNumber] = useState(1); //댓글 pageNumber
-  const { comments, commentCount, commentLoading, hasMore } = useCommentFetch(
-    "post",
-    pageNumber,
-    postId
-  );
+  const {
+    comments,
+    setComments,
+    commentCount,
+    commentLoading,
+    hasMore,
+  } = useCommentFetch("post", pageNumber, postId);
 
   const observer = useRef();
   const lastCommentElementRef = useCallback(
@@ -44,6 +46,9 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   const [isShareModalOn, setIsShareModalOn] = useState(false);
   const handleShareModal = (e) => {
     setIsShareModalOn(!isShareModalOn);
+    isShareModalOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = "unset")
+      : (document.body.style.overflow = "hidden");
   };
 
   //좋아요
@@ -108,7 +113,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   return (
     <>
       {isShareModalOn && <Share handleShareModal={handleShareModal} />}
-      <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+      <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
         <h1 className="text-xl font-bold">자유게시판</h1>
         <button
           className="text-gray-light"
@@ -116,7 +121,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         >
           목록으로
         </button>
-      </div>
+      </header>
       <article className="p-4 border-b border-gray-light">
         <div className="flex justify-between mb-4">
           <div className="flex">
@@ -178,8 +183,11 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         if (comments.length === index + 1) {
           return (
             <Comment
+              category={"post"}
               key={comment.id}
               comment={comment}
+              comments={comments}
+              setComments={setComments}
               postId={postId}
               lastCommentElementRef={lastCommentElementRef}
             ></Comment>
@@ -187,8 +195,11 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         } else {
           return (
             <Comment
+              category={"post"}
               key={comment.id}
               comment={comment}
+              comments={comments}
+              setComments={setComments}
               postId={postId}
             ></Comment>
           );
@@ -196,7 +207,13 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
       })}
 
       {/* 댓글 작성 */}
-      {loading || <CommentCreate postId={postId} />}
+      {loading || (
+        <CommentCreate
+          postId={postId}
+          comments={comments}
+          setComments={setComments}
+        />
+      )}
     </>
   );
 };
