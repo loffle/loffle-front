@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from 'react';
 //
-import attachment from "../../images/attachment.svg";
-import pencil from "../../images/pencil.svg";
+import attachment from '../../images/attachment.svg';
+import pencil from '../../images/pencil.svg';
 //
-import back from "../../images/back.svg";
+import back from '../../images/back.svg';
 const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
-  const navigate = useNavigate(); //Naviagte hook 사용
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
 
   // eslint-disable-next-line no-unused-vars
   const attachmentInput = useRef();
@@ -36,22 +34,22 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
 
   const handlePut = () => {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`); //localStorage token load
 
     const question_type = questionTypes.filter(
       (type) => type.name === questionType
     ); //name -> id 변환 작업
 
     var formdata = new FormData();
-    formdata.append("title", title);
-    formdata.append("content", content);
-    formdata.append("question_type", question_type[0].id);
+    formdata.append('title', title);
+    formdata.append('content', content);
+    formdata.append('question_type', question_type[0].id);
 
     var requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
     fetch(`${PROXY}/community/question/${questionId}`, requestOptions)
@@ -59,24 +57,24 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
       .then((result) => {
         console.log(result);
         window.location.reload();
-        alert("문의 내역 수정이 완료되었습니다.");
+        alert('문의 내역 수정이 완료되었습니다.');
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   useEffect(() => {
     setLoading(true);
 
     fetch(`${PROXY}/community/questiontype`, {
-      method: "GET",
+      method: 'GET',
     })
       .then((response) => response.json())
       .then((result) => {
         setQuestionTypes(result);
         setLoading(false);
       })
-      .catch((error) => console.log("error", error));
-  }, []);
+      .catch((error) => console.log('error', error));
+  }, [PROXY]); //빼도 됩니다.
 
   return (
     <div
@@ -86,7 +84,7 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
       <div
         className="absolute bottom-0 p-1 w-full rounded-t-xl bg-white"
         onClick={(e) => e.stopPropagation()}
-        style={{ height: "92%" }}
+        style={{ height: '92%' }}
       >
         <header className="flex justify-between p-3">
           <img src={back} alt="back-button" onClick={handleUpdate} />

@@ -1,13 +1,12 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { PROXY } from "../../config";
-import Loading from "../Loading";
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { PROXY } from '../../config';
 //
-import attachment from "../../images/attachment.svg";
-import pencil from "../../images/pencil.svg";
+import attachment from '../../images/attachment.svg';
+import pencil from '../../images/pencil.svg';
 
 const QuestionCreate = (props) => {
   window.scrollTo(0, 0);
@@ -16,9 +15,9 @@ const QuestionCreate = (props) => {
   const attachmentInput = useRef();
 
   const [inputs, setInputs] = useState({
-    title: "",
-    content: "",
-    questionType: "",
+    title: '',
+    content: '',
+    questionType: '',
   });
   const titleInput = useRef();
 
@@ -47,27 +46,27 @@ const QuestionCreate = (props) => {
 
   const handleCreate = () => {
     if (!content) {
-      alert("내용을 입력해주세요");
+      alert('내용을 입력해주세요');
       return;
     }
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`); //localStorage token load
 
     const question_type = questionTypes.filter(
       (type) => type.name === questionType
     ); //name -> id 변환 작업
 
     const formdata = new FormData();
-    formdata.append("title", title);
-    formdata.append("content", content);
-    formdata.append("question_type", question_type[0].id);
+    formdata.append('title', title);
+    formdata.append('content', content);
+    formdata.append('question_type', question_type[0].id);
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
     fetch(`${PROXY}/community/question`, requestOptions)
@@ -76,21 +75,21 @@ const QuestionCreate = (props) => {
         console.log(result);
         navigate(`/community/question`);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   useEffect(() => {
     setLoading(true);
 
     fetch(`${PROXY}/community/questiontype`, {
-      method: "GET",
+      method: 'GET',
     })
       .then((response) => response.json())
       .then((result) => {
         setQuestionTypes(result);
         setLoading(false);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   }, []);
 
   return (
@@ -99,7 +98,7 @@ const QuestionCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold"> QnA &gt; 글 작성</h1>
-          <Link to={{ pathname: "/community/question" }}>
+          <Link to={{ pathname: '/community/question' }}>
             <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
           </Link>
         </div>
