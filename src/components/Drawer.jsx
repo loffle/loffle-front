@@ -37,7 +37,7 @@ const Drawer = ({ logo, handleDrawerModal }) => {
           <ul
             onClick={handleDrawerModal}
             //   ^^^ 추후 수정 요망
-            className="flex flex-col justify-center text-xl font-bold gap-14 py-10 text-center"
+            className="flex flex-col justify-center text-xl font-bold gap-12 py-10 text-center"
           >
             <li>소개</li>
             <Link to="/raffle">
