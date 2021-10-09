@@ -18,7 +18,7 @@ const Ticket = ({
     const myHeaders = new Headers();
     myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
 
-    fetch(`${PROXY}/loffle/ticket/${data.ticket}/buy`, {
+    fetch(`${PROXY}/loffle/tickets/${data.ticket}/buy`, {
       method: 'POST',
       headers: myHeaders,
     })
@@ -53,7 +53,7 @@ const Ticket = ({
           <span className="text-xl font-bold">내 응모권</span>
           <div className="py-3 flex justify-center">
             <span className="text-3xl font-bold text-primary align-middle">
-              {numOfTickets}
+              {numOfTickets.toLocaleString()}
               <span className="text-xl font-bold align-middle"> 개</span>
             </span>
           </div>
@@ -61,7 +61,7 @@ const Ticket = ({
           <hr className="border-gray-border my-1" />
 
           <div className="text-xs text-gray mt-5 mb-8 flex flex-col gap-2">
-            <h1>- 응모권은 래플 참여시 차감됩니다. (응모권 1장 = 1000원)</h1>
+            <h1>- 응모권은 래플 참여시 차감됩니다. (응모권 1장 = 1,000원)</h1>
             <h1>- 응모권 구매는 언제든지 가능합니다.</h1>
           </div>
 
@@ -81,10 +81,10 @@ const Ticket = ({
                       defaultChecked
                     />
                     <span className="w-1/4 text-l text-gray-dark">
-                      {ticket.quantity} 장
+                      {ticket.quantity.toLocaleString()} 장
                     </span>
                     <span className="w-1/3 text-l text-gray-dark">
-                      {ticket.price} 원
+                      {ticket.price.toLocaleString()} 원
                     </span>
                   </label>
                 </div>

@@ -45,7 +45,8 @@ const Password = ({ email }) => {
       .then((result) => {
         if (result) {
           localStorage.setItem('access_token', result.token); //localStorage token 생성
-          localStorage.setItem('access_nickname', result.nickname); //localStorage token 생성
+          localStorage.setItem('access_nickname', result.nickname);
+          localStorage.setItem('access_id', result.id);
           alert('로그인에 성공하였습니다.');
           navigate('/');
         }

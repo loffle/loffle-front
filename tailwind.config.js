@@ -4,6 +4,10 @@ module.exports = {
   theme: {
     colors: {
       primary: '#3C4875', //청록
+      secondary: {
+        DEFAULT: '#6095b0',
+        light: '#c3d7e1',
+      },
       red: '#D0172D',
       white: '#FFF',
       gray: {

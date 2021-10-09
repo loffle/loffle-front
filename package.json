@@ -24,6 +24,7 @@
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.3",
     "react-share": "^4.4.0",
+    "swiper": "^6.8.4",
     "web-vitals": "^2.1.1"
   },
   "scripts": {
