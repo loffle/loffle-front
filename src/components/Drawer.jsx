@@ -43,16 +43,16 @@ const Drawer = ({ logo, handleDrawerModal }) => {
             <Link to="/raffle">
               <li>응모하기</li>
             </Link>
-            <Link to="/community/post">
+            <Link to="/community/posts">
               <li>자유게시판</li>
             </Link>
-            <Link to="/community/review">
+            <Link to="/community/reviews">
               <li>당첨 후기 게시판</li>
             </Link>
-            <Link to="/community/notice">
+            <Link to="/community/notices">
               <li>공지사항</li>
             </Link>
-            <Link to="/community/question">
+            <Link to="/community/questions">
               <li>QnA</li>
             </Link>
             {localStorage.access_token ? ( //localStorage token ?

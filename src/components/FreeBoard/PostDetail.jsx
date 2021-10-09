@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 //
 //
-import Loading from "../Loading";
-import PostDetailContent from "./PostDetailContent";
-import PostDetailUpdate from "./PostDetailUpdate";
+import Loading from '../Loading';
+import PostDetailContent from './PostDetailContent';
+import PostDetailUpdate from './PostDetailUpdate';
 
 const PostDetail = (props) => {
   const { postId } = useParams();
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState([]);
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
 
   //수정 토글 버튼
   const [isUpdateOn, setIsUpdateOn] = useState(false);
@@ -25,12 +25,12 @@ const PostDetail = (props) => {
       var myHeaders = new Headers();
       if (localStorage.access_token) {
         //토큰이 있을때만 header 첨부
-        myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
+        myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
       }
 
       const post = await (
-        await fetch(`${PROXY}/community/post/${postId}.json`, {
-          method: "GET",
+        await fetch(`${PROXY}/community/posts/${postId}.json`, {
+          method: 'GET',
           headers: myHeaders,
           //header에 token을 실어 보내야 like_or_not 확인이 가능하다
         })

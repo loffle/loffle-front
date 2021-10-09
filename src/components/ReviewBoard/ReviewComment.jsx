@@ -1,12 +1,12 @@
-import React, { useCallback, useRef, useState } from "react";
-import { timeForToday } from "../helpers";
+import React, { useCallback, useRef, useState } from 'react';
+import { timeForToday } from '../helpers';
 //
-import Comment from "../FreeBoard/Comment/Comment";
+import Comment from '../FreeBoard/Comment/Comment';
 //
-import back from "../../images/back.svg";
-import profile from "../../images/profile.svg";
-import { useCommentFetch } from "../../hooks/useCommentFetch";
-import ModalComentCreate from "../ModalComentCreate";
+import back from '../../images/back.svg';
+import profile from '../../images/profile.svg';
+import { useCommentFetch } from '../../hooks/useCommentFetch';
+import ModalComentCreate from '../ModalComentCreate';
 
 const ReviewComment = ({ review, postId, handleCommentModal }) => {
   const scrollBox = useRef(null);
@@ -19,7 +19,7 @@ const ReviewComment = ({ review, postId, handleCommentModal }) => {
 
   const [pageNumber, setPageNumber] = useState(1); //댓글 pageNumber
   const { comments, setComments, commentLoading, hasMore } = useCommentFetch(
-    "review",
+    'reviews',
     pageNumber,
     postId
   );
@@ -49,7 +49,7 @@ const ReviewComment = ({ review, postId, handleCommentModal }) => {
         <div
           className="absolute bottom-0 px-5 pt-4 pb-20 w-full rounded-t-xl bg-white overflow-scroll"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: "92%" }}
+          style={{ height: '92%' }}
           ref={scrollBox}
         >
           <header className="flex justify-between">
@@ -78,7 +78,7 @@ const ReviewComment = ({ review, postId, handleCommentModal }) => {
             if (comments.length === index + 1) {
               return (
                 <Comment
-                  category={"review"}
+                  category={'reviews'}
                   key={comment.id}
                   comment={comment}
                   comments={comments}
@@ -90,7 +90,7 @@ const ReviewComment = ({ review, postId, handleCommentModal }) => {
             } else {
               return (
                 <Comment
-                  category={"review"}
+                  category={'reviews'}
                   key={comment.id}
                   comment={comment}
                   comments={comments}
@@ -105,7 +105,7 @@ const ReviewComment = ({ review, postId, handleCommentModal }) => {
 
       {/* 댓글 작성 - sticky 충돌나서 fixed로 수정*/}
       <ModalComentCreate
-        category={"review"}
+        category={'reviews'}
         postId={postId}
         comments={comments}
         setComments={setComments}

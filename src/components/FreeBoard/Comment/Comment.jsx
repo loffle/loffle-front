@@ -1,7 +1,7 @@
-import React from "react";
-import profile from "../../../images/profile.svg";
-import { timeForToday } from "../../helpers";
-import { PROXY } from "../../../config.js";
+import React from 'react';
+import profile from '../../../images/profile.svg';
+import { timeForToday } from '../../helpers';
+import { PROXY } from '../../../config.js';
 
 const Comment = ({
   category,
@@ -12,13 +12,13 @@ const Comment = ({
   lastCommentElementRef,
 }) => {
   const handleDelete = () => {
-    if (window.confirm("해당 댓글을 삭제하시겠습니까?")) {
+    if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
       fetch(
         `${PROXY}/community/${category}/${postId}/${
-          category === "question" ? "answer" : "comment"
+          category === 'questions' ? 'answers' : 'comments'
         }/${comment.id}`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
             Authorization: `Token ${localStorage.access_token}`,
           },
@@ -30,7 +30,7 @@ const Comment = ({
             (originalComment) => originalComment.id !== comment.id
           )
         );
-        alert("댓글이 삭제되었습니다.");
+        alert('댓글이 삭제되었습니다.');
       });
     }
   };

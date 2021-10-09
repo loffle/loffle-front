@@ -69,11 +69,11 @@ const QuestionCreate = (props) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/question`, requestOptions)
+    fetch(`${PROXY}/community/questions`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        navigate(`/community/question`);
+        navigate(`/community/questions`);
       })
       .catch((error) => console.log('error', error));
   };
@@ -81,7 +81,7 @@ const QuestionCreate = (props) => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${PROXY}/community/questiontype`, {
+    fetch(`${PROXY}/community/question-types`, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -98,7 +98,7 @@ const QuestionCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold"> QnA &gt; 글 작성</h1>
-          <Link to={{ pathname: '/community/question' }}>
+          <Link to={{ pathname: '/community/questions' }}>
             <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
           </Link>
         </div>

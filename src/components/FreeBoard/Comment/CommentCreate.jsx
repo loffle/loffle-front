@@ -1,13 +1,13 @@
-import React from "react";
-import { useState } from "react";
+import React from 'react';
+import { useState } from 'react';
 //
-import pencil from "../../../images/pencil.svg";
+import pencil from '../../../images/pencil.svg';
 
 const CommentCreate = ({ postId, comments, setComments }) => {
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
 
   const [inputs, setInputs] = useState({
-    content: "",
+    content: '',
   });
 
   const { content } = inputs;
@@ -23,33 +23,33 @@ const CommentCreate = ({ postId, comments, setComments }) => {
   const handleCreate = () => {
     if (!content) {
       //댓글이 없으면 그냥 return
-      alert("댓글을 입력해주세요.");
+      alert('댓글을 입력해주세요.');
       return;
     }
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
 
     var formdata = new FormData();
-    formdata.append("content", content);
+    formdata.append('content', content);
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/post/${postId}/comment`, requestOptions)
+    fetch(`${PROXY}/community/posts/${postId}/comments`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         setComments(comments.concat(result)); //새로운 댓글 setState
         setInputs({
-          content: "",
+          content: '',
         });
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   return (

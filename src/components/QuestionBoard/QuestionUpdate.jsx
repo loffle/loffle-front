@@ -52,7 +52,7 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/question/${questionId}`, requestOptions)
+    fetch(`${PROXY}/community/questions/${questionId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -65,7 +65,7 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${PROXY}/community/questiontype`, {
+    fetch(`${PROXY}/community/question-types`, {
       method: 'GET',
     })
       .then((response) => response.json())

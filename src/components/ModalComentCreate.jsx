@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 //
-import pencil from "../images/pencil.svg";
+import pencil from '../images/pencil.svg';
 
 const ModalComentCreate = ({
   category,
@@ -10,10 +10,10 @@ const ModalComentCreate = ({
   scrollToBottom,
   hasMore,
 }) => {
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
 
   const [inputs, setInputs] = useState({
-    content: "",
+    content: '',
   });
 
   const { content } = inputs;
@@ -29,29 +29,29 @@ const ModalComentCreate = ({
   const handleCreate = () => {
     if (!content) {
       //댓글이 없으면 그냥 return
-      alert("댓글을 입력해주세요.");
+      alert('댓글을 입력해주세요.');
       return;
     }
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
 
     var formdata = new FormData();
-    if (category === "question") {
-      formdata.append("title", content);
+    if (category === 'questions') {
+      formdata.append('title', content);
     }
-    formdata.append("content", content);
+    formdata.append('content', content);
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
     fetch(
       `${PROXY}/community/${category}/${postId}/${
-        category === "question" ? "answer" : "comment"
+        category === 'questions' ? 'answers' : 'comments'
       }`,
       requestOptions
     )
@@ -59,13 +59,13 @@ const ModalComentCreate = ({
       .then((result) => {
         console.log(result);
         setComments(comments.concat(result)); //새로운 댓글 setState
-        hasMore ? alert("댓글이 하단에 추가되었습니다.") : scrollToBottom();
+        hasMore ? alert('댓글이 하단에 추가되었습니다.') : scrollToBottom();
         //댓글이 전부 로딩되지 않았으면 alert, 맨아래면 댓글 바로 확인 가능
         setInputs({
-          content: "",
+          content: '',
         });
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   return (

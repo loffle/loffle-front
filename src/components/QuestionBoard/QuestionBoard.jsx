@@ -1,14 +1,14 @@
-import React, { useCallback, useRef, useState } from "react";
-import { useReviewFetch } from "../../hooks/useReviewFetch";
-import Loading from "../Loading";
-import Question from "./Question";
-import CreateButton from "../CreateButton";
+import React, { useCallback, useRef, useState } from 'react';
+import { useReviewFetch } from '../../hooks/useReviewFetch';
+import Loading from '../Loading';
+import Question from './Question';
+import CreateButton from '../CreateButton';
 
 const QuestionBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const { posts: questions, firstLoading, loading, hasMore } = useReviewFetch(
-    "question",
+    'questions',
     pageNumber
   );
 
@@ -22,7 +22,7 @@ const QuestionBoard = (props) => {
         if (entries[0].isIntersecting && hasMore) {
           //isIntersecting: 관찰 대상의 교차 상태로 전환되었는데의 여부를 나타냄(Boolean)주로 대상 요소의 수에 대한 카운터를 업데이트하는 데 사용됩니다.
           //더 로드할 것이 있는지 체크
-          console.log("Visible"); // 대충 마지막 element가 보이면 여기를 출력한다. 휴.. 뭔 개소리일까..
+          console.log('Visible'); // 대충 마지막 element가 보이면 여기를 출력한다. 휴.. 뭔 개소리일까..
           setPageNumber((prevPageNumber) => prevPageNumber + 1); //다음 페이지를 가져오라고 한다
         }
       });
@@ -73,7 +73,7 @@ const QuestionBoard = (props) => {
           </div>
         ))}
 
-      {firstLoading || <CreateButton to={"/community/question/create"} />}
+      {firstLoading || <CreateButton to={'/community/questions/create'} />}
     </>
   );
 };

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useCommunityFetch } from "../../hooks/useCommunityFetch2";
-import NewPagination from "../NewPagination";
-import FreeBoardLists from "./FreeBoardLists";
+import React, { useState } from 'react';
+import { useCommunityFetch } from '../../hooks/useCommunityFetch2';
+import NewPagination from '../NewPagination';
+import FreeBoardLists from './FreeBoardLists';
 
-import Loading from "../Loading";
-import CreateButton from "../CreateButton";
+import Loading from '../Loading';
+import CreateButton from '../CreateButton';
 
 const FreeBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [order, setOrder] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [order, setOrder] = useState('');
 
   const { posts, loading, totalPosts } = useCommunityFetch(
-    "post",
+    'posts',
     pageNumber,
     order,
     searchTerm
@@ -35,7 +35,7 @@ const FreeBoard = (props) => {
           totalPosts={totalPosts}
         >
           {/* 게시물 작성 버튼 */}
-          <CreateButton to={"/community/post/create"} />
+          <CreateButton to={'/community/posts/create'} />
         </NewPagination>
       )}
     </>

@@ -30,21 +30,24 @@ const App = (props) => {
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
             <Route path="/raffle" element={<RaffleList />} />
-            <Route path="/community/post" element={<FreeBoard />} />
-            <Route path="/community/post/:postId" element={<PostDetail />} />
-            <Route path="/community/post/create" element={<PostCreate />} />
-            <Route path="/community/review" element={<ReviewBoard />} />
+            <Route path="/community/posts" element={<FreeBoard />} />
+            <Route path="/community/posts/:postId" element={<PostDetail />} />
+            <Route path="/community/posts/create" element={<PostCreate />} />
+            <Route path="/community/reviews" element={<ReviewBoard />} />
             <Route
-              path="/community/review/:reviewId"
+              path="/community/reviews/:reviewId"
               element={<ReviewDetail />}
             />
-            <Route path="/community/review/create" element={<ReviewCreate />} />
-            <Route path="/community/question" element={<QuestionBoard />} />
             <Route
-              path="/community/question/create"
+              path="/community/reviews/create"
+              element={<ReviewCreate />}
+            />
+            <Route path="/community/questions" element={<QuestionBoard />} />
+            <Route
+              path="/community/questions/create"
               element={<QuestionCreate />}
             />
-            <Route path="/community/notice" element={<NoticeBoard />} />
+            <Route path="/community/notices" element={<NoticeBoard />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </UserProvider>

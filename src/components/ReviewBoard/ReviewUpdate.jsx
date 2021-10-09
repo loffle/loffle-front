@@ -1,13 +1,13 @@
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 //
-import attachment from "../../images/attachment.svg";
-import pencil from "../../images/pencil.svg";
+import attachment from '../../images/attachment.svg';
+import pencil from '../../images/pencil.svg';
 //
-import back from "../../images/back.svg";
+import back from '../../images/back.svg';
 
 const ReviewUpdate = ({ reviewId, review, handleUpdate }) => {
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate(); //Naviagte hook 사용
 
   // eslint-disable-next-line no-unused-vars
@@ -31,26 +31,26 @@ const ReviewUpdate = ({ reviewId, review, handleUpdate }) => {
 
   const handlePut = () => {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`); //localStorage token load
 
     var formdata = new FormData();
-    formdata.append("title", title);
-    formdata.append("content", content);
+    formdata.append('title', title);
+    formdata.append('content', content);
 
     var requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/review/${reviewId}`, requestOptions)
+    fetch(`${PROXY}/community/reviews/${reviewId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        navigate(`/community/review/${reviewId}`);
+        navigate(`/community/reviews/${reviewId}`);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   return (
@@ -62,7 +62,7 @@ const ReviewUpdate = ({ reviewId, review, handleUpdate }) => {
         <div
           className="absolute bottom-0 p-1 w-full rounded-t-xl bg-white"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: "92%" }}
+          style={{ height: '92%' }}
         >
           <header className="flex justify-between p-3">
             <img src={back} alt="back-button" onClick={handleUpdate} />

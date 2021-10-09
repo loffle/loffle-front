@@ -1,17 +1,17 @@
-import React, { useCallback, useRef, useState, useEffect } from "react";
-import { timeForToday } from "../helpers";
+import React, { useCallback, useRef, useState, useEffect } from 'react';
+import { timeForToday } from '../helpers';
 //
-import profile from "../../images/profile.svg";
-import like from "../../images/like_btn.svg";
-import likeActive from "../../images/like_active_btn.svg";
-import share from "../../images/share.svg";
-import commentIcon from "../../images/comment_btn.svg";
+import profile from '../../images/profile.svg';
+import like from '../../images/like_btn.svg';
+import likeActive from '../../images/like_active_btn.svg';
+import share from '../../images/share.svg';
+import commentIcon from '../../images/comment_btn.svg';
 //
-import Comment from "./Comment/Comment";
-import Share from "../Share";
-import { useNavigate } from "react-router-dom";
-import CommentCreate from "./Comment/CommentCreate";
-import { useCommentFetch } from "../../hooks/useCommentFetch";
+import Comment from './Comment/Comment';
+import Share from '../Share';
+import { useNavigate } from 'react-router-dom';
+import CommentCreate from './Comment/CommentCreate';
+import { useCommentFetch } from '../../hooks/useCommentFetch';
 
 const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   const [pageNumber, setPageNumber] = useState(1); //댓글 pageNumber
@@ -21,7 +21,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
     commentCount,
     commentLoading,
     hasMore,
-  } = useCommentFetch("post", pageNumber, postId);
+  } = useCommentFetch('posts', pageNumber, postId);
 
   const observer = useRef();
   const lastCommentElementRef = useCallback(
@@ -40,15 +40,15 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   );
 
   const navigate = useNavigate(); //Naviagte hook 사용
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
 
   //공유버튼 모달
   const [isShareModalOn, setIsShareModalOn] = useState(false);
   const handleShareModal = (e) => {
     setIsShareModalOn(!isShareModalOn);
     isShareModalOn //모달 켜져있을 시 스크롤 방지
-      ? (document.body.style.overflow = "unset")
-      : (document.body.style.overflow = "hidden");
+      ? (document.body.style.overflow = 'unset')
+      : (document.body.style.overflow = 'hidden');
   };
 
   //좋아요
@@ -64,25 +64,25 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   const handleDelete = () => {
     if (
       window.confirm(
-        "해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다."
+        '해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.'
       )
     ) {
-      fetch(`${PROXY}/community/post/${postId}`, {
-        method: "DELETE",
+      fetch(`${PROXY}/community/posts/${postId}`, {
+        method: 'DELETE',
         headers: {
           Authorization: `Token ${localStorage.access_token}`,
         },
       }).then((response) => {
-        alert("게시물이 삭제되었습니다.");
-        navigate(`/community/post`);
+        alert('게시물이 삭제되었습니다.');
+        navigate(`/community/posts`);
       });
     }
   };
 
   const handleLike = () => {
     if (likeToggle === false) {
-      fetch(`${PROXY}/community/post/${postId}/add-like`, {
-        method: "POST",
+      fetch(`${PROXY}/community/posts/${postId}/like`, {
+        method: 'POST',
         headers: {
           Authorization: `Token ${localStorage.access_token}`,
         },
@@ -92,11 +92,11 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
           setLikeToggle(true);
           setLikeCount(likeCount + 1);
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
     if (likeToggle === true) {
-      fetch(`${PROXY}/community/post/${postId}/add-like`, {
-        method: "DELETE",
+      fetch(`${PROXY}/community/posts/${postId}/like`, {
+        method: 'DELETE',
         headers: {
           Authorization: `Token ${localStorage.access_token}`,
         },
@@ -106,7 +106,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
           setLikeToggle(false);
           setLikeCount(likeCount - 1);
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
   };
 
@@ -117,7 +117,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         <h1 className="text-xl font-bold">자유게시판</h1>
         <button
           className="text-gray-light"
-          onClick={() => navigate(`/community/post`)}
+          onClick={() => navigate(`/community/posts`)}
         >
           목록으로
         </button>
@@ -183,7 +183,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         if (comments.length === index + 1) {
           return (
             <Comment
-              category={"post"}
+              category={'posts'}
               key={comment.id}
               comment={comment}
               comments={comments}
@@ -195,7 +195,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         } else {
           return (
             <Comment
-              category={"post"}
+              category={'posts'}
               key={comment.id}
               comment={comment}
               comments={comments}

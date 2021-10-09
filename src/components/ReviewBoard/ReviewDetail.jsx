@@ -67,7 +67,7 @@ const ReviewDetail = ({ review }) => {
       }
 
       const review = await (
-        await fetch(`${PROXY}/community/review/${reviewId}.json`, {
+        await fetch(`${PROXY}/community/reviews/${reviewId}.json`, {
           headers: myHeaders,
           //header에 token을 실어 보내야 like_or_not 확인이 가능하다
         })
@@ -88,14 +88,14 @@ const ReviewDetail = ({ review }) => {
         '해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.'
       )
     ) {
-      fetch(`${PROXY}/community/review/${reviewDetail.id}`, {
+      fetch(`${PROXY}/community/reviews/${reviewDetail.id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Token ${localStorage.access_token}`,
         },
       }).then((response) => {
         alert('게시물이 삭제되었습니다.');
-        if (reviewId) navigate(`/community/review`);
+        if (reviewId) navigate(`/community/reviews`);
         //detail 페이지면 리스트로 보여주기
         else window.location.reload(); //detail이 아니면 그냥 새로고침
       });
@@ -104,7 +104,7 @@ const ReviewDetail = ({ review }) => {
 
   const handleLike = () => {
     if (likeToggle === false) {
-      fetch(`${PROXY}/community/review/${reviewDetail.id}/add-like`, {
+      fetch(`${PROXY}/community/reviews/${reviewDetail.id}/like`, {
         method: 'POST',
         headers: {
           Authorization: `Token ${localStorage.access_token}`,
@@ -118,7 +118,7 @@ const ReviewDetail = ({ review }) => {
         .catch((error) => console.log('error', error));
     }
     if (likeToggle === true) {
-      fetch(`${PROXY}/community/review/${reviewDetail.id}/add-like`, {
+      fetch(`${PROXY}/community/reviews/${reviewDetail.id}/like`, {
         method: 'DELETE',
         headers: {
           Authorization: `Token ${localStorage.access_token}`,
@@ -170,7 +170,7 @@ const ReviewDetail = ({ review }) => {
           <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
           <button
             className="text-gray-light"
-            onClick={() => navigate(`/community/review`)}
+            onClick={() => navigate(`/community/reviews`)}
           >
             목록으로
           </button>

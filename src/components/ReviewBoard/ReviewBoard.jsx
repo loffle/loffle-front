@@ -1,24 +1,24 @@
-import React, { useCallback, useRef, useState } from "react";
-import { useReviewFetch } from "../../hooks/useReviewFetch";
+import React, { useCallback, useRef, useState } from 'react';
+import { useReviewFetch } from '../../hooks/useReviewFetch';
 //
-import ReviewDetail from "./ReviewDetail";
-import Search from "../Search";
-import Loading from "../Loading";
-import CreateButton from "../CreateButton";
+import ReviewDetail from './ReviewDetail';
+import Search from '../Search';
+import Loading from '../Loading';
+import CreateButton from '../CreateButton';
 //
-import search from "../../images/search_btn.svg";
+import search from '../../images/search_btn.svg';
 
 const ReviewBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [order, setOrder] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [order, setOrder] = useState('');
 
   const {
     posts: reviews, //이거 때매 또 1시간 후... 빨간글씨면 의심하자
     firstLoading,
     loading,
     hasMore,
-  } = useReviewFetch("review", pageNumber, order, searchTerm);
+  } = useReviewFetch('reviews', pageNumber, order, searchTerm);
 
   const observer = useRef();
   const lastReviewElementRef = useCallback(
@@ -30,7 +30,7 @@ const ReviewBoard = (props) => {
         if (entries[0].isIntersecting && hasMore) {
           //isIntersecting: 관찰 대상의 교차 상태로 전환되었는데의 여부를 나타냄(Boolean)주로 대상 요소의 수에 대한 카운터를 업데이트하는 데 사용됩니다.
           //더 로드할 것이 있는지 체크
-          console.log("Visible"); // 대충 마지막 element가 보이면 여기를 출력한다. 휴.. 뭔 개소리일까..
+          console.log('Visible'); // 대충 마지막 element가 보이면 여기를 출력한다. 휴.. 뭔 개소리일까..
           setPageNumber((prevPageNumber) => prevPageNumber + 1); //다음 페이지를 가져오라고 한다
         }
       });
@@ -50,7 +50,7 @@ const ReviewBoard = (props) => {
   };
 
   //검색어 기록 및 불러오기
-  const [lastSearchTerm, setLastSearchTerm] = useState("");
+  const [lastSearchTerm, setLastSearchTerm] = useState('');
 
   return (
     <>
@@ -121,7 +121,7 @@ const ReviewBoard = (props) => {
           </div>
         ))}
 
-      {firstLoading || <CreateButton to={"/community/review/create"} />}
+      {firstLoading || <CreateButton to={'/community/reviews/create'} />}
     </>
   );
 };
