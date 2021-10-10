@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PROXY } from '../config';
 //
 import pencil from '../images/pencil.svg';
 
@@ -10,8 +11,6 @@ const ModalComentCreate = ({
   scrollToBottom,
   hasMore,
 }) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-
   const [inputs, setInputs] = useState({
     content: '',
   });

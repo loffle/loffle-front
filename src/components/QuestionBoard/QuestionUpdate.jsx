@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { PROXY } from '../../config';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
 //
 import back from '../../images/back.svg';
 const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-
   // eslint-disable-next-line no-unused-vars
   const attachmentInput = useRef();
 
@@ -74,7 +73,7 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
         setLoading(false);
       })
       .catch((error) => console.log('error', error));
-  }, [PROXY]); //빼도 됩니다.
+  }, []); //빼도 됩니다.
 
   return (
     <div

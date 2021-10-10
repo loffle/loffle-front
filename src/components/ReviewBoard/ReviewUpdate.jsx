@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PROXY } from '../../config';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
@@ -7,7 +8,6 @@ import pencil from '../../images/pencil.svg';
 import back from '../../images/back.svg';
 
 const ReviewUpdate = ({ reviewId, review, handleUpdate }) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate(); //Naviagte hook 사용
 
   // eslint-disable-next-line no-unused-vars

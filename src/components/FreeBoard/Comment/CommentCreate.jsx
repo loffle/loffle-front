@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import { PROXY } from '../../../config';
 //
 import pencil from '../../../images/pencil.svg';
 
 const CommentCreate = ({ postId, comments, setComments }) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-
   const [inputs, setInputs] = useState({
     content: '',
   });

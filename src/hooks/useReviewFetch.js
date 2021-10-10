@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { PROXY } from '../config';
 
 export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
   const [posts, setPosts] = useState([]);
@@ -16,7 +17,6 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
     }
     setLoading(true);
     setError(false);
-    const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
     let cancel;
 
     const myHeaders = localStorage.access_token

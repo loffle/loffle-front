@@ -28,21 +28,27 @@ const Timer = ({ finishAt }) => {
 
   return (
     <>
-      <span>
-        {timeLeft['hours'] < 10 ? `0${timeLeft['hours']}` : timeLeft['hours']}
-      </span>
-      <span className="mb-2 mx-1">{' : '}</span>
-      <span>
-        {timeLeft['minutes'] < 10
-          ? `0${timeLeft['minutes']}`
-          : timeLeft['minutes']}
-      </span>
-      <span className="mb-2  mx-1">{' : '}</span>
-      <span>
-        {timeLeft['seconds'] < 10
-          ? `0${timeLeft['seconds']}`
-          : timeLeft['seconds']}
-      </span>
+      <div className="text-6xl font-medium w-full absolute z-20 -bottom-8">
+        <div className="flex items-center justify-center">
+          <span>
+            {timeLeft['hours'] < 10
+              ? `0${timeLeft['hours']}`
+              : timeLeft['hours']}
+          </span>
+          <span className="mb-2 mx-1">{' : '}</span>
+          <span>
+            {timeLeft['minutes'] < 10
+              ? `0${timeLeft['minutes']}`
+              : timeLeft['minutes']}
+          </span>
+          <span className="mb-2  mx-1">{' : '}</span>
+          <span>
+            {timeLeft['seconds'] < 10
+              ? `0${timeLeft['seconds']}`
+              : timeLeft['seconds']}
+          </span>
+        </div>
+      </div>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { PROXY } from '../../config';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
@@ -10,7 +11,6 @@ const ReviewCreate = (props) => {
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
   window.scrollTo(0, 0);
 
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const navigate = useNavigate(); //Naviagte hook 사용
 
   const attachmentInput = useRef();

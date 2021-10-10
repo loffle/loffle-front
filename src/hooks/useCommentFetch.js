@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { PROXY } from '../config';
 
 export const useCommentFetch = (category, pageNumber, postId) => {
   const [comments, setComments] = useState([]);
@@ -12,7 +13,6 @@ export const useCommentFetch = (category, pageNumber, postId) => {
     async function fetchData() {
       setCommentLoading(true);
       setError(false);
-      const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
       let cancel;
       axios({
         method: 'GET',

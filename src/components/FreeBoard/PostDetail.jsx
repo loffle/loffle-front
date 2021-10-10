@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { PROXY } from '../../config';
 //
 //
 import Loading from '../Loading';
@@ -10,7 +11,6 @@ const PostDetail = (props) => {
   const { postId } = useParams();
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState([]);
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
 
   //수정 토글 버튼
   const [isUpdateOn, setIsUpdateOn] = useState(false);

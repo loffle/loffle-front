@@ -1,13 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { PROXY } from '../../config';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
 
 const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-
   // eslint-disable-next-line no-unused-vars
   const attachmentInput = useRef();
 

@@ -1,5 +1,6 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { PROXY } from '../config';
 
 export const useCommunityFetch = (category, pageNumber, order, searchTerm) => {
   const [posts, setPosts] = useState([]);
@@ -8,12 +9,11 @@ export const useCommunityFetch = (category, pageNumber, order, searchTerm) => {
   const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState(null); // eslint-disable-line no-unused-vars
 
-  async function fetchData(orderType = "", searchTerm = "") {
+  async function fetchData(orderType = '', searchTerm = '') {
     setLoading(true);
-    const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
 
     axios({
-      method: "GET",
+      method: 'GET',
       url: `${PROXY}/community/${category}.json`,
       params: { ordering: orderType, search: searchTerm, page: pageNumber },
     })
@@ -34,11 +34,11 @@ export const useCommunityFetch = (category, pageNumber, order, searchTerm) => {
 
   useEffect(() => {
     switch (order) {
-      case "최신순":
+      case '최신순':
         fetchData();
         break;
-      case "과거순":
-        fetchData("created_at");
+      case '과거순':
+        fetchData('created_at');
         break;
       default:
     }
@@ -46,7 +46,7 @@ export const useCommunityFetch = (category, pageNumber, order, searchTerm) => {
   }, [order]); //order가 바뀐 것을 감지하면 fetch 다시해주기
 
   useEffect(() => {
-    fetchData("", searchTerm);
+    fetchData('', searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 

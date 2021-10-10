@@ -19,6 +19,7 @@ import QuestionCreate from './components/QuestionBoard/QuestionCreate';
 import NoticeBoard from './components/NoticeBoard/NoticeBoard';
 import Join from './components/Join';
 import RaffleList from './components/Raffle/RaffleList';
+import RaffleDetail from './components/Raffle/RaffleDetail';
 
 const App = (props) => {
   return (
@@ -29,7 +30,8 @@ const App = (props) => {
           <Routes>
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/raffle" element={<RaffleList />} />
+            <Route path="/raffles" element={<RaffleList />} />
+            <Route path="/raffles/:raffleId" element={<RaffleDetail />} />
             <Route path="/community/posts" element={<FreeBoard />} />
             <Route path="/community/posts/:postId" element={<PostDetail />} />
             <Route path="/community/posts/create" element={<PostCreate />} />

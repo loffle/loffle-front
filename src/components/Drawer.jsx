@@ -40,7 +40,7 @@ const Drawer = ({ logo, handleDrawerModal }) => {
             className="flex flex-col justify-center text-xl font-bold gap-12 py-10 text-center"
           >
             <li>소개</li>
-            <Link to="/raffle">
+            <Link to="/raffles">
               <li>응모하기</li>
             </Link>
             <Link to="/community/posts">

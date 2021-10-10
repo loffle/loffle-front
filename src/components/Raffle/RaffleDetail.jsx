@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
-import { PROXY } from '../../config';
-import { Link } from 'react-router-dom';
-//
-import Timer from './Timer';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import RaffleHeader from './RaffleHeader';
+//
+import back from '../../images/back.svg';
 import ImageSwiper from './ImageSwiper';
 
-const RaffleList = (props) => {
+const RaffleDetail = ({ history }) => {
+  window.scrollTo(0, 0);
+  //   const { reviewId } = useParams();
+  const navigate = useNavigate(); //Naviagte hook 사용
+
   // eslint-disable-next-line no-unused-vars
   const [raffles, setRaffles] = useState([
     {
@@ -18,6 +21,7 @@ const RaffleList = (props) => {
       product_id: 1,
     },
   ]);
+
   // eslint-disable-next-line no-unused-vars
   const [product, setProduct] = useState({
     id: 1,
@@ -50,16 +54,24 @@ const RaffleList = (props) => {
     <>
       <div className="max-w-480 min-h-screen">
         <RaffleHeader>
+          <img
+            src={back}
+            alt="back-button"
+            onClick={() => navigate(`/raffles`)}
+          />
           <h1 className="text-xl font-bold">응모하기</h1>
         </RaffleHeader>
 
         {/* image swiper */}
         <ImageSwiper product={product}>
-          <Timer finishAt={raffles[0].finish_at} />
+          <div className="absolute z-20 -bottom-6">
+            <p className="text-xl font-medium text-center px-7">
+              {product.name}
+            </p>
+          </div>
         </ImageSwiper>
 
-        <div className="mt-12 px-7 pb-2">
-          <p className="text-xl font-medium text-center">{product.name}</p>
+        <div className="mt-9 px-7 pb-2">
           <p className=" mt-2 text-gray block text-center">{product.brand}</p>
           <p className="mt-4 text-xl font-bold text-center block">
             실시간 참여 인원 : [{' '}
@@ -82,4 +94,4 @@ const RaffleList = (props) => {
   );
 };
 
-export default RaffleList;
+export default RaffleDetail;
