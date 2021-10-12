@@ -1,6 +1,6 @@
 const PROXY =
   window.location.hostname === 'localhost' ||
-  window.location.hostname === '192.168.35.109'
+  window.location.hostname === '192.168.219.104'
     ? ''
     : '/proxy';
 

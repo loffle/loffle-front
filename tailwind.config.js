@@ -32,6 +32,9 @@ module.exports = {
         },
         modal: '#00000080',
       },
+      zIndex: {
+        60: '60',
+      },
     },
   },
   variants: {
