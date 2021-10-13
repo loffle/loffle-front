@@ -1,7 +1,10 @@
+import { PROXY } from './config';
+
 const apiSettings = {
-  fetchCommunity: async (category, order = "", searchTerm = "") => {
-    const endpoint = `/community/${category}.json${order}${searchTerm}`;
-    return await (await fetch(endpoint)).json();
+  getTickets: () => {
+    return fetch(`${PROXY}/tickets`, {
+      method: 'GET',
+    });
   },
 };
 

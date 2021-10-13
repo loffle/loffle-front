@@ -21,13 +21,13 @@ const RaffleList = (props) => {
     }
 
     //라플 리스트 가져오기
-    fetch(`${PROXY}/loffle/raffles`, {
+    fetch(`${PROXY}/raffles`, {
       method: 'GET',
       headers: myHeaders, //header에 token을 실어 보내야 apply_or_not 확인이 가능하다
     })
       .then((response) => response.json())
       .then((result) => {
-        setRaffles(result);
+        setRaffles(result.results);
         setLoading(false);
       })
       .catch((error) => console.log('error', error));

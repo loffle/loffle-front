@@ -29,7 +29,7 @@ const Raffle = ({ raffle }) => {
 
   useEffect(() => {
     //제품 가져오기
-    fetch(`${PROXY}/loffle/products/${raffle.product}`, {
+    fetch(`${PROXY}/products/${raffle.product}`, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -46,7 +46,11 @@ const Raffle = ({ raffle }) => {
     <>
       {/* image swiper */}
       <ImageSwiper product={product}>
-        <Timer finishAt={raffle.finish_at} />
+        <div className="text-6xl font-medium w-full absolute z-20 -bottom-8">
+          <div className="flex items-center justify-center">
+            <Timer finishAt={raffle.finish_at} />
+          </div>
+        </div>
       </ImageSwiper>
 
       <div className="mt-12 px-7 pb-2">
@@ -66,7 +70,7 @@ const Raffle = ({ raffle }) => {
           state={{ raffle, product }}
           className={
             (raffle.apply_or_not ? 'bg-opacity-70' : '') +
-            ' w-full flex justify-center items-center bg-secondary hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6'
+            ' w-full flex justify-center items-center bg-secondary hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
           }
         >
           <span className="text-xl">

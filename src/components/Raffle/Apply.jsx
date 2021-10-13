@@ -36,17 +36,17 @@ const Apply = ({
     })
       .then((response) => {
         if (response.ok) response.json();
-        else throw new Error('이미 응모한 래플입니다.');
+        else throw new Error(response.statusText); //1번째 방법
+        //else response.text().then(text => throw Error(text)) //2번째 방법
       })
       .then((result) => {
         console.log(result);
-        setLoading(false);
         handleMessageModal();
       })
       .catch((error) => {
         console.log('error', error);
-        setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (

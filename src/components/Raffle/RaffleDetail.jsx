@@ -9,6 +9,7 @@ import ImageSwiper from './ImageSwiper';
 import Candidate from './Candidate';
 import Loading from '../Loading';
 import Apply from './Apply';
+import Timer from './Timer';
 
 const RaffleDetail = (props) => {
   const [loading, setLoading] = useState(false);
@@ -56,10 +57,14 @@ const RaffleDetail = (props) => {
   //응모 참여 모달
   const [isApplyModalOn, setIsApplyModalOn] = useState(false);
   const handleApplyModal = (e) => {
-    setIsApplyModalOn(!isApplyModalOn);
-    isApplyModalOn //모달 켜져있을 시 스크롤 방지
-      ? (document.body.style.overflow = 'unset')
-      : (document.body.style.overflow = 'hidden');
+    if (localStorage.access_token) {
+      setIsApplyModalOn(!isApplyModalOn);
+      isApplyModalOn //모달 켜져있을 시 스크롤 방지
+        ? (document.body.style.overflow = 'unset')
+        : (document.body.style.overflow = 'hidden');
+    } else {
+      alert('로그인이 필요한 서비스입니다!');
+    }
   };
 
   useEffect(() => {
@@ -160,7 +165,7 @@ const RaffleDetail = (props) => {
               onClick={() => handleApplyModal()}
               className={
                 (raffle.apply_or_not ? 'bg-gray' : 'bg-secondary') +
-                ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6'
+                ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
               }
               disabled={raffle.apply_or_not}
             >
@@ -180,6 +185,17 @@ const RaffleDetail = (props) => {
             >
               <u>실시간 응모 현황 보기</u>
             </button>
+
+            {/* 응모 완료자 */}
+            {raffle.apply_or_not && (
+              <div className="text-red">
+                <span className="mt-6 block">
+                  정원 충족시 [추첨]을 시작합니다.
+                </span>
+
+                <Timer finishAt={raffle.finish_at} />
+              </div>
+            )}
 
             {/* raffle detail */}
             <div className="flex justify-center">
