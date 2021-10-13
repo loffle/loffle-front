@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCommunityFetch } from '../../hooks/useCommunityFetch2';
+import { useFreeBoardFetch } from '../../hooks/useFreeBoardFetch';
 import NewPagination from '../NewPagination';
 import FreeBoardLists from './FreeBoardLists';
 
@@ -11,7 +11,7 @@ const FreeBoard = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [order, setOrder] = useState('');
 
-  const { posts, loading, totalPosts } = useCommunityFetch(
+  const { posts, loading, totalPosts } = useFreeBoardFetch(
     'posts',
     pageNumber,
     order,
@@ -21,22 +21,24 @@ const FreeBoard = (props) => {
   return (
     <>
       {loading && <Loading />}
-      <FreeBoardLists
-        posts={posts}
-        loading={loading}
-        setOrder={setOrder}
-        setPageNumber={setPageNumber}
-        setSearchTerm={setSearchTerm}
-      ></FreeBoardLists>
       {loading || (
-        <NewPagination
-          pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
-          totalPosts={totalPosts}
-        >
-          {/* 게시물 작성 버튼 */}
-          <CreateButton to={'/community/posts/create'} />
-        </NewPagination>
+        <>
+          <FreeBoardLists
+            posts={posts}
+            loading={loading}
+            setOrder={setOrder}
+            setPageNumber={setPageNumber}
+            setSearchTerm={setSearchTerm}
+          ></FreeBoardLists>
+          <NewPagination
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            totalPosts={totalPosts}
+          >
+            {/* 게시물 작성 버튼 */}
+            <CreateButton to={'/community/posts/create'} />
+          </NewPagination>
+        </>
       )}
     </>
   );

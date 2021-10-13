@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { PROXY } from '../config';
 
-export const useCommunityFetch = (category, pageNumber, order, searchTerm) => {
+export const useFreeBoardFetch = (category, pageNumber, order, searchTerm) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [postsPerPage] = useState(5);
@@ -12,9 +12,14 @@ export const useCommunityFetch = (category, pageNumber, order, searchTerm) => {
   async function fetchData(orderType = '', searchTerm = '') {
     setLoading(true);
 
+    // axios({
+    //   method: 'GET',
+    //   url: `${PROXY}/community/${category}.json`,
+    //   params: { ordering: orderType, search: searchTerm, page: pageNumber },
+    // })
     axios({
       method: 'GET',
-      url: `${PROXY}/community/${category}.json`,
+      url: `${PROXY}/${category}.json`,
       params: { ordering: orderType, search: searchTerm, page: pageNumber },
     })
       .then((response) => {

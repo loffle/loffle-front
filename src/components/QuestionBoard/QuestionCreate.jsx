@@ -1,9 +1,8 @@
-/* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { PROXY } from '../../config';
+import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
@@ -69,7 +68,7 @@ const QuestionCreate = (props) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/questions`, requestOptions)
+    API.postPost('questions', requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -81,9 +80,7 @@ const QuestionCreate = (props) => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${PROXY}/community/question-types`, {
-      method: 'GET',
-    })
+    API.getQuestionTypes()
       .then((response) => response.json())
       .then((result) => {
         setQuestionTypes(result);

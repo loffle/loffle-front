@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PROXY } from '../../config';
+import API from '../../API';
 //
 import { timeWithHyphen } from '../helpers';
 import QuestionAnswer from './QuestionAnswer';
@@ -12,6 +12,9 @@ const Question = ({ question, lastQuestionElementRef }) => {
   const [isAnswerModalOn, setIsAnswerModalOn] = useState(false);
   const handleAnswerModal = (e) => {
     setIsAnswerModalOn(!isAnswerModalOn);
+    isAnswerModalOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = 'unset')
+      : (document.body.style.overflow = 'hidden');
   };
 
   //수정 토글 버튼
@@ -25,11 +28,12 @@ const Question = ({ question, lastQuestionElementRef }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-      const data = await (
-        await fetch(`${PROXY}/community/questions/${question.id}/answers.json`)
-      ).json();
-      await setAnswers(data.results);
+      API.getAnswer(question.id)
+        .then((response) => response.json())
+        .then((result) => {
+          setAnswers(result.results);
+        })
+        .catch((error) => console.log('error', error));
     }
     if (question) fetchData(); //reiview undefined check
   }, [question]);
@@ -40,15 +44,11 @@ const Question = ({ question, lastQuestionElementRef }) => {
         '해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.'
       )
     ) {
-      fetch(`${PROXY}/community/questions/${question.id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      }).then((response) => {
-        alert('게시물이 삭제되었습니다.');
-        window.location.reload();
-      });
+      API.deletePost('questions', question.id) //
+        .then((response) => {
+          alert('게시물이 삭제되었습니다.');
+          window.location.reload();
+        });
     }
   };
 

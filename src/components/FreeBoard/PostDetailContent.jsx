@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { timeForToday } from '../helpers';
+import API from '../../API';
 //
 import profile from '../../images/profile.svg';
 import like from '../../images/like_btn.svg';
@@ -40,7 +41,6 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   );
 
   const navigate = useNavigate(); //Naviagte hook 사용
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
 
   //공유버튼 모달
   const [isShareModalOn, setIsShareModalOn] = useState(false);
@@ -67,26 +67,17 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         '해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.'
       )
     ) {
-      fetch(`${PROXY}/community/posts/${postId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      }).then((response) => {
-        alert('게시물이 삭제되었습니다.');
-        navigate(`/community/posts`);
-      });
+      API.deletePost('posts', postId) //
+        .then((response) => {
+          alert('게시물이 삭제되었습니다.');
+          navigate(`/community/posts`);
+        });
     }
   };
 
   const handleLike = () => {
     if (likeToggle === false) {
-      fetch(`${PROXY}/community/posts/${postId}/like`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      })
+      API.likePost('posts', postId)
         .then((response) => {
           //공감 요청
           setLikeToggle(true);
@@ -95,12 +86,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         .catch((error) => console.log('error', error));
     }
     if (likeToggle === true) {
-      fetch(`${PROXY}/community/posts/${postId}/like`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      })
+      API.unlikePost('posts', postId)
         .then((response) => {
           //공감 취소 요청
           setLikeToggle(false);

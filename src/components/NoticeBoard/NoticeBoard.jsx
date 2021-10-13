@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { useReviewFetch } from '../../hooks/useReviewFetch';
+import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 //
 import Loading from '../Loading';
 import Notice from './Notice';
@@ -7,10 +7,12 @@ import Notice from './Notice';
 const NoticeBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { posts: notices, firstLoading, loading, hasMore } = useReviewFetch(
-    'notices',
-    pageNumber
-  );
+  const {
+    posts: notices,
+    firstLoading,
+    loading,
+    hasMore,
+  } = useInfinityScrollFetch('notices', pageNumber);
 
   const observer = useRef();
   const lastNoticeElementRef = useCallback(

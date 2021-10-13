@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { PROXY } from '../../../config';
+import API from '../../../API';
 //
 import pencil from '../../../images/pencil.svg';
 
@@ -39,7 +39,7 @@ const CommentCreate = ({ postId, comments, setComments }) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/posts/${postId}/comments`, requestOptions)
+    API.postComment('posts', postId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PROXY } from '../../config';
+import API from '../../API';
 //
 import back from '../../images/back.svg';
 import Message from './Message';
@@ -24,16 +24,10 @@ const Apply = ({
     setIsChecked((prev) => !prev);
   };
 
-  const applyRaffle = () => {
+  const onClick = () => {
     setLoading(true);
 
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
-
-    fetch(`${PROXY}/loffle/raffles/${raffleId}/apply`, {
-      method: 'POST',
-      headers: myHeaders,
-    })
+    API.applyRaffle(raffleId)
       .then((response) => {
         if (response.ok) response.json();
         else throw new Error(response.statusText); //1번째 방법
@@ -111,7 +105,7 @@ const Apply = ({
 
             {/* apply raffle */}
             <button
-              onClick={applyRaffle}
+              onClick={onClick}
               className={
                 (isChecked ? '' : 'bg-opacity-50') +
                 ' w-full flex justify-center items-center bg-secondary hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 mt-4'

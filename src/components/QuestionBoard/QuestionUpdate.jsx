@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { PROXY } from '../../config';
+import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
@@ -51,7 +51,7 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/questions/${questionId}`, requestOptions)
+    API.putPost('questions', questionId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -64,9 +64,7 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${PROXY}/community/question-types`, {
-      method: 'GET',
-    })
+    API.getQuestionTypes()
       .then((response) => response.json())
       .then((result) => {
         setQuestionTypes(result);

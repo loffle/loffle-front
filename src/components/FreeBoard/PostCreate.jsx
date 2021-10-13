@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { PROXY } from '../../config';
+import API from '../../API';
 import cookie from 'react-cookies';
 //
 import attachment from '../../images/attachment.svg';
@@ -64,7 +64,7 @@ const PostCreate = (props) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/posts`, requestOptions)
+    API.postPost('posts', requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -79,7 +79,7 @@ const PostCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold">자유게시판 &gt; 글 작성</h1>
-          <Link to={{ pathname: '/community/post' }}>
+          <Link to={{ pathname: '/community/posts' }}>
             <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
           </Link>
         </div>

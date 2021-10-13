@@ -1,7 +1,7 @@
 import React from 'react';
 import profile from '../../../images/profile.svg';
 import { timeForToday } from '../../helpers';
-import { PROXY } from '../../../config.js';
+import API from '../../../API';
 
 const Comment = ({
   category,
@@ -13,25 +13,18 @@ const Comment = ({
 }) => {
   const handleDelete = () => {
     if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
-      fetch(
-        `${PROXY}/community/${category}/${postId}/${
-          category === 'questions' ? 'answers' : 'comments'
-        }/${comment.id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Token ${localStorage.access_token}`,
-          },
-        }
-      ).then((response) => {
-        console.log(response);
-        setComments(
-          comments.filter(
-            (originalComment) => originalComment.id !== comment.id
-          )
-        );
-        alert('댓글이 삭제되었습니다.');
-      });
+      API.deleteComment(category, postId, comment.id) //
+        .then((response) => {
+          console.log(response);
+          if (response.ok) {
+            setComments(
+              comments.filter(
+                (originalComment) => originalComment.id !== comment.id
+              )
+            );
+            alert('댓글이 삭제되었습니다.');
+          }
+        });
     }
   };
 

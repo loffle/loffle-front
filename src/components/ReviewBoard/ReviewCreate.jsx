@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { PROXY } from '../../config';
+import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
@@ -61,7 +61,7 @@ const ReviewCreate = (props) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/reviews`, requestOptions)
+    API.postPost('reviews', requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

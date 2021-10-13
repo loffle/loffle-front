@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { raffleTime } from '../../components/helpers';
-import { PROXY } from '../../config';
+import API from '../../API';
+//
 //
 import RaffleHeader from './RaffleHeader';
 import back from '../../images/back.svg';
@@ -74,38 +75,26 @@ const RaffleDetail = (props) => {
       //받아오는 스테이트가 없을때만
       setLoading(true);
 
-      var myHeaders = new Headers();
-      if (localStorage.access_token) {
-        //토큰이 있을때만 header 첨부
-        myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
-      }
-
-      //라플 리스트 가져오기
-      fetch(`${PROXY}/loffle/raffles/${raffleId}`, {
-        method: 'GET',
-        headers: myHeaders, //header에 token을 실어 보내야 apply_or_not 확인이 가능하다
-      })
+      //라플 가져오기
+      API.getRaffle(raffleId)
         .then((response) => response.json())
         .then((result) => {
           setRaffle((prev) => {
             return { ...prev, ...result };
           });
-          fetchProduct(result.product);
-          console.log(result);
+          setLoading(false); //제품 가져오기에 두기에 너무 로딩이 길다
+          fetchProduct(result.product_preview.id);
         })
         .catch((error) => console.log('error', error));
 
       const fetchProduct = (productId) => {
-        //제품 리스트 가져오기
-        fetch(`${PROXY}/loffle/products/${productId}`, {
-          method: 'GET',
-        })
+        //제품 가져오기
+        API.getProduct(productId)
           .then((response) => response.json())
           .then((result) => {
             setProduct((prev) => {
               return { ...prev, ...result };
             });
-            setLoading(false);
           })
           .catch((error) => console.log('error', error));
       };

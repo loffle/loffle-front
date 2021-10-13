@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { PROXY } from '../../config';
 import API from '../../API';
 //
 import ticket from '../../images/ticket.svg';
@@ -27,9 +26,6 @@ const RaffleHeader = ({ children }) => {
   useEffect(() => {
     setTicketLoading(true);
 
-    // fetch(`${PROXY}/tickets`, {
-    //   method: 'GET',
-    // })
     API.getTickets()
       .then((response) => response.json())
       .then((result) => {
@@ -37,14 +33,7 @@ const RaffleHeader = ({ children }) => {
       })
       .catch((error) => console.log('error', error));
 
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
-
-    fetch(`${PROXY}/tickets/my-ticket`, {
-      //id 하드코딩 되어있음!!!
-      method: 'GET',
-      headers: myHeaders,
-    })
+    API.getMyTicket()
       .then((response) => response.json())
       .then((result) => {
         setNumOfTickets(result.num_of_tickets);

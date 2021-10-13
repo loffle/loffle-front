@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Share from '../Share';
 import Loading from '../Loading';
 import { timeForToday } from '../helpers';
+import API from '../../API';
 //
 import profile from '../../images/profile.svg';
 import like from '../../images/like_btn.svg';
@@ -60,21 +61,14 @@ const ReviewDetail = ({ review }) => {
       //review가 없는 상태(param으로 접근) fetch
       setLoading(true);
 
-      var myHeaders = new Headers();
-      if (localStorage.access_token) {
-        //토큰이 있을때만 header 첨부
-        myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
-      }
-
-      const review = await (
-        await fetch(`${PROXY}/community/reviews/${reviewId}.json`, {
-          headers: myHeaders,
-          //header에 token을 실어 보내야 like_or_not 확인이 가능하다
+      API.getPost('reviews', reviewId)
+        .then((response) => response.json())
+        .then((result) => {
+          setReviewDetail(result);
+          setLikeCount(result.like_count); //좋아요 세팅
+          setLikeToggle(result.like_or_not);
         })
-      ).json();
-      setReviewDetail(review);
-      setLikeCount(review.like_count); //좋아요 세팅
-      setLikeToggle(review.like_or_not);
+        .catch((error) => console.log('error', error));
 
       setLoading(false);
     }
@@ -88,28 +82,19 @@ const ReviewDetail = ({ review }) => {
         '해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.'
       )
     ) {
-      fetch(`${PROXY}/community/reviews/${reviewDetail.id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      }).then((response) => {
-        alert('게시물이 삭제되었습니다.');
-        if (reviewId) navigate(`/community/reviews`);
-        //detail 페이지면 리스트로 보여주기
-        else window.location.reload(); //detail이 아니면 그냥 새로고침
-      });
+      API.deletePost('reviews', reviewDetail.id) //
+        .then((response) => {
+          alert('게시물이 삭제되었습니다.');
+          if (reviewId) navigate(`/community/reviews`);
+          //detail 페이지면 리스트로 보여주기
+          else window.location.reload(); //detail이 아니면 그냥 새로고침
+        });
     }
   };
 
   const handleLike = () => {
     if (likeToggle === false) {
-      fetch(`${PROXY}/community/reviews/${reviewDetail.id}/like`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      })
+      API.likePost('reviews', reviewDetail.id)
         .then((response) => {
           //공감 요청
           setLikeToggle(true);
@@ -118,12 +103,7 @@ const ReviewDetail = ({ review }) => {
         .catch((error) => console.log('error', error));
     }
     if (likeToggle === true) {
-      fetch(`${PROXY}/community/reviews/${reviewDetail.id}/like`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      })
+      API.unlikePost('reviews', reviewDetail.id)
         .then((response) => {
           //공감 취소 요청
           setLikeToggle(false);

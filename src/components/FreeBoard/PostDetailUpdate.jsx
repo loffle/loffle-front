@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
-import { PROXY } from '../../config';
+import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
@@ -28,7 +28,7 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
 
   const handlePut = () => {
     var myHeaders = new Headers();
-    myHeaders.append('Authorization', `Token ${localStorage.access_token}`); //localStorage token load
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
 
     var formdata = new FormData();
     formdata.append('title', title);
@@ -41,14 +41,12 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/posts/${postId}`, requestOptions)
+    API.putPost('posts', postId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         window.location.reload();
       })
-      //게시물 작성 성공, 성공시 postdetail 보내주기 실패
-      //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));
       .catch((error) => console.log('error', error));
   };
 

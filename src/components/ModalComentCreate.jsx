@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PROXY } from '../config';
+import API from '../API';
 //
 import pencil from '../images/pencil.svg';
 
@@ -48,12 +48,7 @@ const ModalComentCreate = ({
       redirect: 'follow',
     };
 
-    fetch(
-      `${PROXY}/community/${category}/${postId}/${
-        category === 'questions' ? 'answers' : 'comments'
-      }`,
-      requestOptions
-    )
+    API.postComment(category, postId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

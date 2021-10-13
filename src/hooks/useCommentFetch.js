@@ -16,7 +16,7 @@ export const useCommentFetch = (category, pageNumber, postId) => {
       let cancel;
       axios({
         method: 'GET',
-        url: `${PROXY}/community/${category}/${postId}/comments.json`,
+        url: `${PROXY}/${category}/${postId}/comments.json`,
         params: { page: pageNumber },
       })
         .then((response) => {

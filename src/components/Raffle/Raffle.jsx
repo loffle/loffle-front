@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PROXY } from '../../config';
 //
 import Timer from './Timer';
 import ImageSwiper from './ImageSwiper';
@@ -27,20 +26,20 @@ const Raffle = ({ raffle }) => {
     ],
   });
 
-  useEffect(() => {
-    //제품 가져오기
-    fetch(`${PROXY}/products/${raffle.product}`, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setProduct((prev) => {
-          return { ...prev, ...result }; //이미지때문에 prev사용
-        });
-      })
-      .catch((error) => console.log('error', error));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   //제품 가져오기
+  //   fetch(`${PROXY}/products/${raffle.product}`, {
+  //     method: 'GET',
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       setProduct((prev) => {
+  //         return { ...prev, ...result }; //이미지때문에 prev사용
+  //       });
+  //     })
+  //     .catch((error) => console.log('error', error));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>
@@ -54,8 +53,12 @@ const Raffle = ({ raffle }) => {
       </ImageSwiper>
 
       <div className="mt-12 px-7 pb-2">
-        <p className="text-2xl font-medium text-center">{product.name}</p>
-        <p className=" mt-2 text-gray block text-center">{product.brand}</p>
+        <p className="text-2xl font-medium text-center">
+          {raffle.product_preview.name}
+        </p>
+        <p className=" mt-2 text-gray block text-center">
+          {raffle.product_preview.brand}
+        </p>
         <p className="mt-4 text-xl font-bold text-center block">
           실시간 참여 인원 : [{' '}
           <span className="text-secondary">
@@ -69,12 +72,12 @@ const Raffle = ({ raffle }) => {
           to={{ pathname: `/raffles/${raffle.id}` }}
           state={{ raffle, product }}
           className={
-            (raffle.apply_or_not ? 'bg-opacity-70' : '') +
-            ' w-full flex justify-center items-center bg-secondary hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
+            (raffle.apply_or_not ? 'bg-gray' : 'bg-secondary') +
+            ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
           }
         >
           <span className="text-xl">
-            {raffle.apply_or_not ? '응모 확인' : '응모 하기'}
+            {raffle.apply_or_not ? '응모 완료' : '응모 하기'}
           </span>
         </Link>
       </div>

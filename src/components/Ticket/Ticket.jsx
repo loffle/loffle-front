@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { PROXY } from '../../config';
+import API from '../../API';
 
 const Ticket = ({
   handleTicketModal,
@@ -15,13 +15,7 @@ const Ticket = ({
   const onSubmit = (data) => {
     setBuyLoading(true);
 
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
-
-    fetch(`${PROXY}/loffle/tickets/${data.ticket}/buy`, {
-      method: 'POST',
-      headers: myHeaders,
-    })
+    API.buyTicket(data.ticket)
       .then((response) => {
         if (response.ok) {
           console.log('티켓 구매 성공✅');

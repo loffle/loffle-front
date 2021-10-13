@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { useReviewFetch } from '../../hooks/useReviewFetch';
+import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 import Loading from '../Loading';
 import Question from './Question';
 import CreateButton from '../CreateButton';
@@ -7,10 +7,12 @@ import CreateButton from '../CreateButton';
 const QuestionBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { posts: questions, firstLoading, loading, hasMore } = useReviewFetch(
-    'questions',
-    pageNumber
-  );
+  const {
+    posts: questions,
+    firstLoading,
+    loading,
+    hasMore,
+  } = useInfinityScrollFetch('questions', pageNumber);
 
   const observer = useRef();
   const lastQuestionElementRef = useCallback(

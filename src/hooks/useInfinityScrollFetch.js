@@ -2,7 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { PROXY } from '../config';
 
-export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
+export const useInfinityScrollFetch = (
+  category,
+  pageNumber,
+  order,
+  searchTerm
+) => {
   const [posts, setPosts] = useState([]);
   const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,7 +30,7 @@ export const useReviewFetch = (category, pageNumber, order, searchTerm) => {
 
     axios({
       method: 'GET',
-      url: `${PROXY}/community/${category}.json`,
+      url: `${PROXY}/${category}.json`,
       headers: myHeaders,
       params: { ordering: orderType, search: searchTerm, page: pageNumber },
       cancelToken: new axios.CancelToken((c) => (cancel = c)), //취소 토큰(cancel token)을 사용하여 요청을 취소 할 수 있습니다.
