@@ -70,7 +70,6 @@ const RaffleDetail = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     if (!location.state) {
       //받아오는 스테이트가 없을때만
       setLoading(true);
@@ -105,7 +104,10 @@ const RaffleDetail = (props) => {
   return (
     <>
       {isCandidateModalOn && (
-        <Candidate handleCandidateModal={handleCandidateModal} />
+        <Candidate
+          handleCandidateModal={handleCandidateModal}
+          raffleId={raffleId}
+        />
       )}
 
       {isApplyModalOn && (
@@ -114,6 +116,7 @@ const RaffleDetail = (props) => {
           handleCandidateModal={handleCandidateModal}
           raffleId={raffleId}
           raffle={raffle}
+          setRaffle={setRaffle}
           product={product}
         />
       )}

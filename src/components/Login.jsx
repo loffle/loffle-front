@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-//
-import { PROXY } from '../config';
+import API from '../API';
 //
 import Loading from '../components/Loading';
 import Warning from '../Warning';
@@ -9,6 +8,8 @@ import Join from './Join';
 import Password from './Password';
 
 const Login = (props) => {
+  window.scrollTo(0, 0);
+
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [emailChecked, setEmailChecked] = useState(false); //이메일 체크 했는지 안했는지
@@ -34,7 +35,7 @@ const Login = (props) => {
       body: formdata,
     };
 
-    fetch(`${PROXY}/account/check-email`, requestOptions)
+    API.checkInfo('email', requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.email_exist === true) {

@@ -1,13 +1,11 @@
 .pagination {
   width: 100%;
-  margin-top: 15px;
-  padding: 0px 2px;
+  margin-bottom: 15px;
 }
 ul {
   display: flex;
   justify-content: space-evenly;
   list-style: none;
-  padding: 0;
 }
 ul.pagination li {
   display: inline-block;
@@ -23,13 +21,10 @@ ul.pagination li a {
   color: #888;
   font-size: 1.3rem;
 }
-ul.pagination li.active a {
-  color: black;
-  font-weight: 500;
-  margin: 0 0;
-}
+/* ul.pagination li.active a {
+} */
 ul.pagination li.active {
-  font-size: 1.4rem;
+  margin: 0 1.54rem;
 }
 .page-selection {
   width: 48px;

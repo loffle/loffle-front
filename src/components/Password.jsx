@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { PROXY } from '../config';
+import API from '../API';
 
 import Warning from '../Warning';
 
@@ -31,7 +31,7 @@ const Password = ({ email }) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/account/login`, requestOptions)
+    API.postAccount('login', requestOptions)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -49,6 +49,7 @@ const Password = ({ email }) => {
           localStorage.setItem('access_id', result.id);
           alert('로그인에 성공하였습니다.');
           navigate('/');
+          window.location.reload(); //새로고침을 해줘야 localStorage에 있는지 확인함
         }
       })
       .catch((error) => console.log('error', error));

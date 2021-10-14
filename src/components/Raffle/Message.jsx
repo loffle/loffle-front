@@ -7,6 +7,7 @@ const Message = ({
   handleCandidateModal,
   raffle,
   product,
+  ordinalNumber,
 }) => {
   const handleCandidate = () => {
     handleMessageModal();
@@ -22,7 +23,9 @@ const Message = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h1 className="text-lg font-bold">[ {product.name} ]</h1>
-        <span className="text-sm">n번 째로 응모 완료되었습니다.</span>
+        <span className="text-sm">
+          {ordinalNumber}번 째로 응모 완료되었습니다.
+        </span>
         <span className="text-sm text-gray-light">
           당첨자 발표 : {raffleTime(raffle.finish_at)}
         </span>

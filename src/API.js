@@ -1,4 +1,5 @@
 import { PROXY } from './config';
+import axios from 'axios';
 
 const myHeaders = new Headers();
 if (localStorage.access_token) {
@@ -29,8 +30,8 @@ const apiSettings = {
       headers: myHeaders,
     });
   },
-  getRaffle: (id) => {
-    return fetch(`${PROXY}/raffles/${id}`, {
+  getRaffle: (id, users) => {
+    return fetch(`${PROXY}/raffles/${id}${users ? '/users' : ''}`, {
       method: 'GET',
       headers: myHeaders,
     });
@@ -40,6 +41,13 @@ const apiSettings = {
       method: 'GET',
     });
   },
+  getCandidate: (id, pageNumber) => {
+    return axios({
+      method: 'GET',
+      url: `${PROXY}/raffles/${id}/users.json`,
+      params: { page: pageNumber },
+    });
+  },
   postPost: (category, option) => {
     return fetch(`${PROXY}/${category}`, option);
   },
@@ -47,7 +55,6 @@ const apiSettings = {
     return fetch(`${PROXY}/${category}/${id}`, {
       method: 'GET',
       headers: myHeaders,
-      //header에 token을 실어 보내야 like_or_not 확인이 가능하다
     });
   },
   putPost: (category, id, option) => {
@@ -99,6 +106,13 @@ const apiSettings = {
     return fetch(`${PROXY}/questions/${id}/answers`, {
       method: 'GET',
     });
+  },
+  checkInfo: (category, option) => {
+    return fetch(`${PROXY}/check-${category}`, option);
+  },
+  postAccount: (category, option) => {
+    //category : login, signup, logout
+    return fetch(`${PROXY}/${category}`, option);
   },
 };
 

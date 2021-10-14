@@ -9,10 +9,13 @@ const Apply = ({
   handleCandidateModal,
   raffleId,
   raffle,
+  setRaffle,
   product,
+  location,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [ordinalNumber, setOrdinalNumber] = useState(10000); //테스트용
 
   //응모 참여 모달
   const [isMessageModalOn, setIsMessageModalOn] = useState(false);
@@ -29,16 +32,27 @@ const Apply = ({
 
     API.applyRaffle(raffleId)
       .then((response) => {
-        if (response.ok) response.json();
-        else throw new Error(response.statusText); //1번째 방법
-        //else response.text().then(text => throw Error(text)) //2번째 방법
+        if (response.ok) return response.json();
+        //[issue 해결] response.ok 하면 return을 꼭 해주자!
+        else {
+          if (response.status === 400) {
+            throw new Error('소유한 티켓이 없습니다.');
+          }
+        }
       })
       .then((result) => {
         console.log(result);
+        setOrdinalNumber(result.ordinal_number);
         handleMessageModal();
+        setRaffle({
+          ...raffle,
+          apply_or_not: true,
+        });
+        window.history.replaceState(null, '');
+        //[issue 해결] location.state 날리기 -> 새로고침시 이전 state 남아있는거 날리기 -> raffle reload
       })
       .catch((error) => {
-        console.log('error', error);
+        alert(error);
       })
       .finally(() => setLoading(false));
   };
@@ -52,6 +66,7 @@ const Apply = ({
           handleCandidateModal={handleCandidateModal}
           raffle={raffle}
           product={product}
+          ordinalNumber={ordinalNumber}
         />
       )}
       <div

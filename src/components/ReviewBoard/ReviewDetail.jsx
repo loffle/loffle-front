@@ -10,7 +10,6 @@ import likeActive from '../../images/like_active_btn.svg';
 import share from '../../images/share.svg';
 import commentIcon from '../../images/comment_btn.svg';
 import ReviewComment from './ReviewComment';
-import { PROXY } from '../../config';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReviewUpdate from './ReviewUpdate';
 

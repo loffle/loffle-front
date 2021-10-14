@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import API from '../../API';
 //
 import Timer from './Timer';
 import ImageSwiper from './ImageSwiper';
@@ -26,20 +27,18 @@ const Raffle = ({ raffle }) => {
     ],
   });
 
-  // useEffect(() => {
-  //   //제품 가져오기
-  //   fetch(`${PROXY}/products/${raffle.product}`, {
-  //     method: 'GET',
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setProduct((prev) => {
-  //         return { ...prev, ...result }; //이미지때문에 prev사용
-  //       });
-  //     })
-  //     .catch((error) => console.log('error', error));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    //제품 가져오기
+    API.getProduct(raffle.product_preview.id)
+      .then((response) => response.json())
+      .then((result) => {
+        setProduct((prev) => {
+          return { ...prev, ...result }; //이미지때문에 prev사용
+        });
+      })
+      .catch((error) => console.log('error', error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

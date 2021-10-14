@@ -34,6 +34,7 @@ const FreeBoard = (props) => {
             pageNumber={pageNumber}
             setPageNumber={setPageNumber}
             totalPosts={totalPosts}
+            itemsCountPerPage={5}
           >
             {/* 게시물 작성 버튼 */}
             <CreateButton to={'/community/posts/create'} />

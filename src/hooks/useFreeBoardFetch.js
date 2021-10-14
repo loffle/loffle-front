@@ -12,11 +12,6 @@ export const useFreeBoardFetch = (category, pageNumber, order, searchTerm) => {
   async function fetchData(orderType = '', searchTerm = '') {
     setLoading(true);
 
-    // axios({
-    //   method: 'GET',
-    //   url: `${PROXY}/community/${category}.json`,
-    //   params: { ordering: orderType, search: searchTerm, page: pageNumber },
-    // })
     axios({
       method: 'GET',
       url: `${PROXY}/${category}.json`,

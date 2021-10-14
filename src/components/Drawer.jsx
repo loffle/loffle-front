@@ -11,12 +11,13 @@ const Drawer = ({ logo, handleDrawerModal }) => {
       headers: { Authorization: `Token ${localStorage.access_token}` },
     };
 
-    fetch(`${PROXY}/account/logout`, requestOptions)
+    fetch(`${PROXY}/logout`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         localStorage.removeItem('access_token'); //localStorage token 제거
         localStorage.removeItem('access_nickname'); //localStorage token 제거
+        localStorage.removeItem('access_id');
         alert(result.detail);
       })
       .catch((error) => console.log('error', error));
@@ -57,8 +58,6 @@ const Drawer = ({ logo, handleDrawerModal }) => {
             </Link>
             {localStorage.access_token ? ( //localStorage token ?
               <li onClick={handleLogout} className="flex justify-center">
-                {/* <img src={profile} alt="my-page-button" className="w-8" /> */}
-                {/* {user.username}님 | 로그아웃 */}
                 {localStorage.access_nickname}님 | 로그아웃
               </li>
             ) : (
