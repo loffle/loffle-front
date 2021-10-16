@@ -87,17 +87,19 @@ const Question = ({ question, lastQuestionElementRef }) => {
               ) : (
                 <span>답변 대기</span>
               )}
-              <div
-                className="text-sm text-gray-darkest"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button onClick={handleUpdate}>
-                  <span>수정</span>
-                </button>
-                <button onClick={handleDelete}>
-                  <span className="ml-3">삭제</span>
-                </button>
-              </div>
+              {localStorage.access_nickname === question.user && (
+                <div
+                  className="text-sm text-gray-darkest"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button onClick={handleUpdate}>
+                    <span>수정</span>
+                  </button>
+                  <button onClick={handleDelete}>
+                    <span className="ml-3">삭제</span>
+                  </button>
+                </div>
+              )}
             </div>
             <div className="flex justify-between text-sm">
               <span>{question.question_type}</span>

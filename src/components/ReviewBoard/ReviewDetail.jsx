@@ -92,6 +92,7 @@ const ReviewDetail = ({ review }) => {
   };
 
   const handleLike = () => {
+    if (!localStorage.access_token) return; //권한
     if (likeToggle === false) {
       API.likePost('reviews', reviewDetail.id)
         .then((response) => {
@@ -170,14 +171,16 @@ const ReviewDetail = ({ review }) => {
                 </span>
               </div>
             </div>
-            <div className="text-sm">
-              <button onClick={handleUpdate}>
-                <span className="text-gray-light">수정</span>
-              </button>
-              <button onClick={handleDelete}>
-                <span className="text-gray-light pl-3">삭제</span>
-              </button>
-            </div>
+            {localStorage.access_nickname === reviewDetail.user && (
+              <div className="text-sm">
+                <button onClick={handleUpdate}>
+                  <span className="text-gray-light">수정</span>
+                </button>
+                <button onClick={handleDelete}>
+                  <span className="text-gray-light pl-3">삭제</span>
+                </button>
+              </div>
+            )}
           </div>
           {/* image */}
           <img

@@ -1,15 +1,17 @@
-.pagination {
+:global .pagination {
   width: 100%;
-  margin-top: 15px;
+  margin-top: 11px;
   padding: 0px 2px;
 }
-ul {
+
+:global ul {
   display: flex;
   justify-content: space-evenly;
   list-style: none;
   padding: 0;
 }
-ul.pagination li {
+
+:global ul.pagination li {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -18,20 +20,25 @@ ul.pagination li {
   align-items: center;
   font-size: 1.3rem;
 }
-ul.pagination li a {
+
+:global ul.pagination li a {
   text-decoration: none;
   color: #888;
   font-size: 1.3rem;
 }
-ul.pagination li.active a {
+
+:global ul.pagination li.active a {
   color: black;
   font-weight: 500;
   margin: 0 0;
 }
-ul.pagination li.active {
+
+:global ul.pagination li.active {
   font-size: 1.4rem;
+  margin: 0 0rem;
 }
-.page-selection {
+
+:global .page-selection {
   width: 48px;
   height: 30px;
   color: #515151;

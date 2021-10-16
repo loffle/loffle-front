@@ -121,7 +121,10 @@ const ReviewBoard = (props) => {
           </div>
         ))}
 
-      {firstLoading || <CreateButton to={'/community/reviews/create'} />}
+      {firstLoading ||
+        (localStorage.access_token && (
+          <CreateButton to={'/community/reviews/create'} />
+        ))}
     </>
   );
 };

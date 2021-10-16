@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../API';
 import Pagination from 'react-js-pagination';
-import './candidatePaging.module.css';
+import styles from './candidatePaging.module.css';
 
 const Candidate = ({ handleCandidateModal, raffleId }) => {
   const [candidates, setCandidates] = useState([]);
@@ -78,7 +78,7 @@ const Candidate = ({ handleCandidateModal, raffleId }) => {
               activePage={pageNumber}
               itemsCountPerPage={10}
               totalItemsCount={totalPosts}
-              pageRangeDisplayed={1}
+              pageRangeDisplayed={2}
               onChange={setPageNumber}
             />
             <div className="h-9 w-20 bg-white fixed my-0 mx-auto left-0 right-0">

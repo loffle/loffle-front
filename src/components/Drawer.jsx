@@ -19,6 +19,7 @@ const Drawer = ({ logo, handleDrawerModal }) => {
         localStorage.removeItem('access_nickname'); //localStorage token 제거
         localStorage.removeItem('access_id');
         alert(result.detail);
+        window.location.reload();
       })
       .catch((error) => console.log('error', error));
 
@@ -38,7 +39,7 @@ const Drawer = ({ logo, handleDrawerModal }) => {
           <ul
             onClick={handleDrawerModal}
             //   ^^^ 추후 수정 요망
-            className="flex flex-col justify-center text-xl font-bold gap-12 py-10 text-center"
+            className="flex flex-col justify-center text-l xs:text-xl font-bold gap-8 xs:gap-11 py-7 xs:py-10 text-center"
           >
             <li>소개</li>
             <Link to="/raffles">

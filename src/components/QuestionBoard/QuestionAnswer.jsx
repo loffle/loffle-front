@@ -24,11 +24,12 @@ const QuestionAnswer = ({
   return (
     <>
       <div
-        className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-50"
+        className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-60"
         onClick={handleAnswerModal}
       >
         <div
-          className="absolute bottom-0 px-5 py-4 w-full rounded-t-xl bg-white"
+          className="absolute bottom-0 px-5 py-4 w-full rounded-t-xl bg-white overflow-scroll"
+          //  모달 바닥은 scroll금지, 모달창 내부는 스크롤 허용 overflow-scroll
           onClick={(e) => e.stopPropagation()}
           style={{ height: '92%' }}
           ref={scrollBox}

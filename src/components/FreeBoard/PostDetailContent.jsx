@@ -76,6 +76,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
   };
 
   const handleLike = () => {
+    if (!localStorage.access_token) return; //권한
     if (likeToggle === false) {
       API.likePost('posts', postId)
         .then((response) => {
@@ -119,14 +120,17 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
               </span>
             </div>
           </div>
-          <div>
-            <span className="text-gray-light" onClick={handleUpdate}>
-              수정
-            </span>
-            <span className="text-gray-light pl-4" onClick={handleDelete}>
-              삭제
-            </span>
-          </div>
+          {/* 본인이 쓴 게시물만 U,D 가능 */}
+          {post.user === localStorage.access_nickname && (
+            <div>
+              <span className="text-gray-light" onClick={handleUpdate}>
+                수정
+              </span>
+              <span className="text-gray-light pl-4" onClick={handleDelete}>
+                삭제
+              </span>
+            </div>
+          )}
         </div>
 
         {/* 제목 */}

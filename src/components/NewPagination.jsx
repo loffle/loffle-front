@@ -1,5 +1,5 @@
 import React from 'react';
-import './paging.css';
+import './paging.module.css';
 import Pagination from 'react-js-pagination';
 
 const NewPagination = ({
@@ -12,7 +12,7 @@ const NewPagination = ({
   return (
     <>
       <div className="sticky bottom-4 flex items-center justify-between mx-3">
-        <nav className="flex justify-between w-11/12 h-14 bg-white rounded-2xl shadow-lg">
+        <nav className="flex justify-between w-full h-14 bg-white rounded-2xl shadow-lg">
           <Pagination
             activePage={pageNumber}
             itemsCountPerPage={itemsCountPerPage}

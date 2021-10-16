@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API from '../API';
 //
 import pencil from '../images/pencil.svg';
@@ -11,13 +12,24 @@ const ModalComentCreate = ({
   scrollToBottom,
   hasMore,
 }) => {
+  const navigate = useNavigate();
+
   const [inputs, setInputs] = useState({
     content: '',
   });
 
   const { content } = inputs;
 
+  const onClick = () => {
+    if (!localStorage.access_token) {
+      if (window.confirm('로그인 화면으로 이동할까요?✨')) {
+        navigate('/login');
+      }
+    }
+  };
+
   const onChange = (e) => {
+    if (!localStorage.access_token) return; //권한
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setInputs({
       ...inputs, // 기존의 input 객체를 복사한 뒤
@@ -26,6 +38,7 @@ const ModalComentCreate = ({
   };
 
   const handleCreate = () => {
+    if (!localStorage.access_token) return; //권한
     if (!content) {
       //댓글이 없으면 그냥 return
       alert('댓글을 입력해주세요.');
@@ -70,8 +83,13 @@ const ModalComentCreate = ({
           name="content"
           value={content}
           onChange={onChange}
+          onClick={onClick}
           maxLength="300"
-          placeholder="댓글을 입력하세요."
+          placeholder={
+            localStorage.access_token //권한
+              ? '댓글을 입력하세요.'
+              : '로그인 후 댓글을 작성해주세요.'
+          }
           autoComplete="off"
         />
       </div>

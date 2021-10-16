@@ -40,9 +40,11 @@ const Comment = ({
           <h3 className="text-sm pl-2 font-bold">{comment.user}</h3>
         </div>
         <div className="text-sm">
-          <span className="text-gray-light ml-4" onClick={handleDelete}>
-            삭제
-          </span>
+          {comment.user === localStorage.access_nickname && ( //권한
+            <span className="text-gray-light ml-4" onClick={handleDelete}>
+              삭제
+            </span>
+          )}
         </div>
       </div>
 

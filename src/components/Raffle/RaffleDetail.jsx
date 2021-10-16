@@ -64,7 +64,9 @@ const RaffleDetail = (props) => {
         ? (document.body.style.overflow = 'unset')
         : (document.body.style.overflow = 'hidden');
     } else {
-      alert('로그인이 필요한 서비스입니다!');
+      if (window.confirm('로그인 화면으로 이동할까요?✨')) {
+        navigate('/login');
+      }
     }
   };
 

@@ -75,7 +75,9 @@ const QuestionBoard = (props) => {
           </div>
         ))}
 
-      {firstLoading || <CreateButton to={'/community/questions/create'} />}
+      {(localStorage.access_token && firstLoading) || (
+        <CreateButton to={'/community/questions/create'} />
+      )}
     </>
   );
 };

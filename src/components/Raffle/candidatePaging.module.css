@@ -1,13 +1,15 @@
-.pagination {
+:global .pagination {
   width: 100%;
   margin-bottom: 15px;
 }
-ul {
+
+:global ul {
   display: flex;
   justify-content: space-evenly;
   list-style: none;
 }
-ul.pagination li {
+
+:global ul.pagination li {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -16,17 +18,18 @@ ul.pagination li {
   align-items: center;
   font-size: 1.3rem;
 }
-ul.pagination li a {
+
+:global ul.pagination li a {
   text-decoration: none;
   color: #888;
   font-size: 1.3rem;
 }
-/* ul.pagination li.active a {
-} */
-ul.pagination li.active {
-  margin: 0 1.54rem;
+
+:global ul.pagination li.active {
+  margin: 0 0.3rem;
 }
-.page-selection {
+
+:global .page-selection {
   width: 48px;
   height: 30px;
   color: #515151;

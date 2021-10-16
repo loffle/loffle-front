@@ -37,7 +37,9 @@ const FreeBoard = (props) => {
             itemsCountPerPage={5}
           >
             {/* 게시물 작성 버튼 */}
-            <CreateButton to={'/community/posts/create'} />
+            {localStorage.access_token && (
+              <CreateButton to={'/community/posts/create'} />
+            )}
           </NewPagination>
         </>
       )}
