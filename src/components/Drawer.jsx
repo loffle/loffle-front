@@ -1,27 +1,29 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { PROXY } from "../config";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { PROXY } from '../config';
 
 const Drawer = ({ logo, handleDrawerModal }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     var requestOptions = {
-      method: "GET",
+      method: 'GET',
       headers: { Authorization: `Token ${localStorage.access_token}` },
     };
 
-    fetch(`${PROXY}/account/logout`, requestOptions)
+    fetch(`${PROXY}/logout`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        localStorage.removeItem("access_token"); //localStorage token 제거
-        localStorage.removeItem("access_nickname"); //localStorage token 제거
+        localStorage.removeItem('access_token'); //localStorage token 제거
+        localStorage.removeItem('access_nickname'); //localStorage token 제거
+        localStorage.removeItem('access_id');
         alert(result.detail);
+        window.location.reload();
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
 
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -37,26 +39,26 @@ const Drawer = ({ logo, handleDrawerModal }) => {
           <ul
             onClick={handleDrawerModal}
             //   ^^^ 추후 수정 요망
-            className="flex flex-col justify-center text-xl font-bold gap-14 py-10 text-center"
+            className="flex flex-col justify-center text-l xs:text-xl font-bold gap-8 xs:gap-11 py-7 xs:py-10 text-center"
           >
             <li>소개</li>
-            <li>응모하기</li>
-            <Link to="/community/post">
+            <Link to="/raffles">
+              <li>응모하기</li>
+            </Link>
+            <Link to="/community/posts">
               <li>자유게시판</li>
             </Link>
-            <Link to="/community/review">
+            <Link to="/community/reviews">
               <li>당첨 후기 게시판</li>
             </Link>
-            <Link to="/community/notice">
+            <Link to="/community/notices">
               <li>공지사항</li>
             </Link>
-            <Link to="/community/question">
+            <Link to="/community/questions">
               <li>QnA</li>
             </Link>
             {localStorage.access_token ? ( //localStorage token ?
               <li onClick={handleLogout} className="flex justify-center">
-                {/* <img src={profile} alt="my-page-button" className="w-8" /> */}
-                {/* {user.username}님 | 로그아웃 */}
                 {localStorage.access_nickname}님 | 로그아웃
               </li>
             ) : (

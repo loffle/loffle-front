@@ -1,9 +1,8 @@
-/* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { PROXY } from '../../config';
+import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
@@ -69,11 +68,11 @@ const QuestionCreate = (props) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/question`, requestOptions)
+    API.postPost('questions', requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        navigate(`/community/question`);
+        navigate(`/community/questions`);
       })
       .catch((error) => console.log('error', error));
   };
@@ -81,9 +80,7 @@ const QuestionCreate = (props) => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${PROXY}/community/questiontype`, {
-      method: 'GET',
-    })
+    API.getQuestionTypes()
       .then((response) => response.json())
       .then((result) => {
         setQuestionTypes(result);
@@ -98,7 +95,7 @@ const QuestionCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold"> QnA &gt; 글 작성</h1>
-          <Link to={{ pathname: '/community/question' }}>
+          <Link to={{ pathname: '/community/questions' }}>
             <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
           </Link>
         </div>

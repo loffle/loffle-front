@@ -3,27 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.2.0",
+    "@craco/craco": "^6.3.0",
     "@headlessui/react": "^1.4.1",
-    "@tailwindcss/line-clamp": "^0.2.1",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "axios": "^0.21.1",
+    "@tailwindcss/forms": "^0.3.4",
+    "@tailwindcss/line-clamp": "^0.2.2",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.2.1",
+    "axios": "^0.22.0",
     "history": "^5.0.1",
-    "http-proxy-middleware": "^0.19.1",
+    "http-proxy-middleware": "^2.0.1",
     "react": "^17.0.2",
     "react-cookies": "^0.1.1",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.15.3",
+    "react-hook-form": "^7.17.1",
     "react-js-pagination": "^3.0.3",
     "react-modal": "^3.14.3",
-    "react-router": "*",
-    "react-router-dom": "^6.0.0-beta.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.3",
     "react-share": "^4.4.0",
-    "web-vitals": "^1.0.1"
+    "swiper": "^6.8.4",
+    "web-vitals": "^2.1.1"
   },
   "scripts": {
     "start": "craco start",
@@ -49,10 +51,10 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://loffle.cf",
   "devDependencies": {
-    "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.36",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
-  },
-  "proxy": "https://loffle.cf"
+    "autoprefixer": "^9.8.8",
+    "postcss": "^7.0.39",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
+  }
 }

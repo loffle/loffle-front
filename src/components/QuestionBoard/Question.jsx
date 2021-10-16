@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { PROXY } from "../../config";
+import React, { useEffect, useState } from 'react';
+import API from '../../API';
 //
-import { timeWithHyphen } from "../helpers";
-import QuestionAnswer from "./QuestionAnswer";
-import QuestionUpdate from "./QuestionUpdate";
+import { timeWithHyphen } from '../helpers';
+import QuestionAnswer from './QuestionAnswer';
+import QuestionUpdate from './QuestionUpdate';
 
 const Question = ({ question, lastQuestionElementRef }) => {
   const [answers, setAnswers] = useState([]);
@@ -12,6 +12,9 @@ const Question = ({ question, lastQuestionElementRef }) => {
   const [isAnswerModalOn, setIsAnswerModalOn] = useState(false);
   const handleAnswerModal = (e) => {
     setIsAnswerModalOn(!isAnswerModalOn);
+    isAnswerModalOn //모달 켜져있을 시 스크롤 방지
+      ? (document.body.style.overflow = 'unset')
+      : (document.body.style.overflow = 'hidden');
   };
 
   //수정 토글 버튼
@@ -19,17 +22,18 @@ const Question = ({ question, lastQuestionElementRef }) => {
   const handleUpdate = (e) => {
     setIsUpdateOn(!isUpdateOn);
     isUpdateOn //모달 켜져있을 시 스크롤 방지
-      ? (document.body.style.overflow = "unset")
-      : (document.body.style.overflow = "hidden");
+      ? (document.body.style.overflow = 'unset')
+      : (document.body.style.overflow = 'hidden');
   };
 
   useEffect(() => {
     async function fetchData() {
-      const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
-      const data = await (
-        await fetch(`${PROXY}/community/question/${question.id}/answer.json`)
-      ).json();
-      await setAnswers(data.results);
+      API.getAnswer(question.id)
+        .then((response) => response.json())
+        .then((result) => {
+          setAnswers(result.results);
+        })
+        .catch((error) => console.log('error', error));
     }
     if (question) fetchData(); //reiview undefined check
   }, [question]);
@@ -37,18 +41,14 @@ const Question = ({ question, lastQuestionElementRef }) => {
   const handleDelete = () => {
     if (
       window.confirm(
-        "해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다."
+        '해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.'
       )
     ) {
-      fetch(`${PROXY}/community/question/${question.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      }).then((response) => {
-        alert("게시물이 삭제되었습니다.");
-        window.location.reload();
-      });
+      API.deletePost('questions', question.id) //
+        .then((response) => {
+          alert('게시물이 삭제되었습니다.');
+          window.location.reload();
+        });
     }
   };
 
@@ -87,17 +87,19 @@ const Question = ({ question, lastQuestionElementRef }) => {
               ) : (
                 <span>답변 대기</span>
               )}
-              <div
-                className="text-sm text-gray-darkest"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button onClick={handleUpdate}>
-                  <span>수정</span>
-                </button>
-                <button onClick={handleDelete}>
-                  <span className="ml-3">삭제</span>
-                </button>
-              </div>
+              {localStorage.access_nickname === question.user && (
+                <div
+                  className="text-sm text-gray-darkest"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button onClick={handleUpdate}>
+                    <span>수정</span>
+                  </button>
+                  <button onClick={handleDelete}>
+                    <span className="ml-3">삭제</span>
+                  </button>
+                </div>
+              )}
             </div>
             <div className="flex justify-between text-sm">
               <span>{question.question_type}</span>

@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import pencil from "../images/pencil.svg";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import pencil from '../images/pencil.svg';
 
 const CreateButton = ({ to }) => (
   <div className="sticky bottom-4 flex justify-end items-center mx-2">

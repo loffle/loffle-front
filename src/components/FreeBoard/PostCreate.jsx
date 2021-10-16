@@ -1,23 +1,23 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import cookie from "react-cookies";
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import API from '../../API';
+import cookie from 'react-cookies';
 //
-import attachment from "../../images/attachment.svg";
-import pencil from "../../images/pencil.svg";
+import attachment from '../../images/attachment.svg';
+import pencil from '../../images/pencil.svg';
 
 const PostCreate = (props) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
   window.scrollTo(0, 0);
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const navigate = useNavigate(); //Naviagte hook 사용
 
   const attachmentInput = useRef();
 
   const [inputs, setInputs] = useState({
-    title: "",
-    content: "",
+    title: '',
+    content: '',
   });
   const titleInput = useRef();
 
@@ -45,32 +45,32 @@ const PostCreate = (props) => {
 
   const handleCreate = () => {
     if (!title || !content) {
-      alert("제목 또는 내용을 입력해주세요");
+      alert('제목 또는 내용을 입력해주세요');
       return;
     }
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
-    myHeaders.append("Cookie", `${cookie.load("sessionid")}`);
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`); //localStorage token load
+    myHeaders.append('Cookie', `${cookie.load('sessionid')}`);
 
     var formdata = new FormData();
-    formdata.append("title", title);
-    formdata.append("content", content);
+    formdata.append('title', title);
+    formdata.append('content', content);
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/post`, requestOptions)
+    API.postPost('posts', requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        navigate(`/community/post/${result.id}`);
+        navigate(`/community/posts/${result.id}`);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   return (
@@ -79,7 +79,7 @@ const PostCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold">자유게시판 &gt; 글 작성</h1>
-          <Link to={{ pathname: "/community/post" }}>
+          <Link to={{ pathname: '/community/posts' }}>
             <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
           </Link>
         </div>
