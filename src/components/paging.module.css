@@ -1,0 +1,45 @@
+:global .pagination {
+  width: 100%;
+  margin-top: 11px;
+  padding: 0px 2px;
+}
+
+:global ul {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  padding: 0;
+}
+
+:global ul.pagination li {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+}
+
+:global ul.pagination li a {
+  text-decoration: none;
+  color: #888;
+  font-size: 1.3rem;
+}
+
+:global ul.pagination li.active a {
+  color: black;
+  font-weight: 500;
+  margin: 0 0;
+}
+
+:global ul.pagination li.active {
+  font-size: 1.4rem;
+  margin: 0 0rem;
+}
+
+:global .page-selection {
+  width: 48px;
+  height: 30px;
+  color: #515151;
+}

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Warning from '../Warning';
-import { PROXY } from '../config';
+import API from '../API';
 
 const Join = ({ email }) => {
   const {
@@ -30,7 +30,7 @@ const Join = ({ email }) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/account/signup`, requestOptions)
+    API.postAccount('signup', requestOptions)
       .then((response) => {
         if (response.ok) {
           alert('회원가입이 완료되었습니다. 로그인을 해주세요.');
@@ -52,7 +52,7 @@ const Join = ({ email }) => {
         body: formdata,
       };
 
-      fetch(`${PROXY}/account/check-${key}`, requestOptions)
+      API.checkInfo(key, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.username_exist === true) {

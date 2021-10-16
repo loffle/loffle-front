@@ -1,7 +1,7 @@
-import React from "react";
-import profile from "../../../images/profile.svg";
-import { timeForToday } from "../../helpers";
-import { PROXY } from "../../../config.js";
+import React from 'react';
+import profile from '../../../images/profile.svg';
+import { timeForToday } from '../../helpers';
+import API from '../../../API';
 
 const Comment = ({
   category,
@@ -12,26 +12,19 @@ const Comment = ({
   lastCommentElementRef,
 }) => {
   const handleDelete = () => {
-    if (window.confirm("해당 댓글을 삭제하시겠습니까?")) {
-      fetch(
-        `${PROXY}/community/${category}/${postId}/${
-          category === "question" ? "answer" : "comment"
-        }/${comment.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Token ${localStorage.access_token}`,
-          },
-        }
-      ).then((response) => {
-        console.log(response);
-        setComments(
-          comments.filter(
-            (originalComment) => originalComment.id !== comment.id
-          )
-        );
-        alert("댓글이 삭제되었습니다.");
-      });
+    if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
+      API.deleteComment(category, postId, comment.id) //
+        .then((response) => {
+          console.log(response);
+          if (response.ok) {
+            setComments(
+              comments.filter(
+                (originalComment) => originalComment.id !== comment.id
+              )
+            );
+            alert('댓글이 삭제되었습니다.');
+          }
+        });
     }
   };
 
@@ -47,9 +40,11 @@ const Comment = ({
           <h3 className="text-sm pl-2 font-bold">{comment.user}</h3>
         </div>
         <div className="text-sm">
-          <span className="text-gray-light ml-4" onClick={handleDelete}>
-            삭제
-          </span>
+          {comment.user === localStorage.access_nickname && ( //권한
+            <span className="text-gray-light ml-4" onClick={handleDelete}>
+              삭제
+            </span>
+          )}
         </div>
       </div>
 

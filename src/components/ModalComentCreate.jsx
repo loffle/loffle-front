@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import API from '../API';
 //
-import pencil from "../images/pencil.svg";
+import pencil from '../images/pencil.svg';
 
 const ModalComentCreate = ({
   category,
@@ -10,15 +12,24 @@ const ModalComentCreate = ({
   scrollToBottom,
   hasMore,
 }) => {
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
-    content: "",
+    content: '',
   });
 
   const { content } = inputs;
 
+  const onClick = () => {
+    if (!localStorage.access_token) {
+      if (window.confirm('로그인 화면으로 이동할까요?✨')) {
+        navigate('/login');
+      }
+    }
+  };
+
   const onChange = (e) => {
+    if (!localStorage.access_token) return; //권한
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setInputs({
       ...inputs, // 기존의 input 객체를 복사한 뒤
@@ -27,45 +38,41 @@ const ModalComentCreate = ({
   };
 
   const handleCreate = () => {
+    if (!localStorage.access_token) return; //권한
     if (!content) {
       //댓글이 없으면 그냥 return
-      alert("댓글을 입력해주세요.");
+      alert('댓글을 입력해주세요.');
       return;
     }
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
 
     var formdata = new FormData();
-    if (category === "question") {
-      formdata.append("title", content);
+    if (category === 'questions') {
+      formdata.append('title', content);
     }
-    formdata.append("content", content);
+    formdata.append('content', content);
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
-    fetch(
-      `${PROXY}/community/${category}/${postId}/${
-        category === "question" ? "answer" : "comment"
-      }`,
-      requestOptions
-    )
+    API.postComment(category, postId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         setComments(comments.concat(result)); //새로운 댓글 setState
-        hasMore ? alert("댓글이 하단에 추가되었습니다.") : scrollToBottom();
+        hasMore ? alert('댓글이 하단에 추가되었습니다.') : scrollToBottom();
         //댓글이 전부 로딩되지 않았으면 alert, 맨아래면 댓글 바로 확인 가능
         setInputs({
-          content: "",
+          content: '',
         });
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   return (
@@ -76,8 +83,13 @@ const ModalComentCreate = ({
           name="content"
           value={content}
           onChange={onChange}
+          onClick={onClick}
           maxLength="300"
-          placeholder="댓글을 입력하세요."
+          placeholder={
+            localStorage.access_token //권한
+              ? '댓글을 입력하세요.'
+              : '로그인 후 댓글을 작성해주세요.'
+          }
           autoComplete="off"
         />
       </div>

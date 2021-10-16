@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Share from "../Share";
-import Loading from "../Loading";
-import { timeForToday } from "../helpers";
+import React, { useEffect, useState } from 'react';
+import Share from '../Share';
+import Loading from '../Loading';
+import { timeForToday } from '../helpers';
+import API from '../../API';
 //
-import profile from "../../images/profile.svg";
-import like from "../../images/like_btn.svg";
-import likeActive from "../../images/like_active_btn.svg";
-import share from "../../images/share.svg";
-import commentIcon from "../../images/comment_btn.svg";
-import ReviewComment from "./ReviewComment";
-import { PROXY } from "../../config";
-import { useNavigate, useParams } from "react-router";
-import ReviewUpdate from "./ReviewUpdate";
+import profile from '../../images/profile.svg';
+import like from '../../images/like_btn.svg';
+import likeActive from '../../images/like_active_btn.svg';
+import share from '../../images/share.svg';
+import commentIcon from '../../images/comment_btn.svg';
+import ReviewComment from './ReviewComment';
+import { useNavigate, useParams } from 'react-router-dom';
+import ReviewUpdate from './ReviewUpdate';
 
 const ReviewDetail = ({ review }) => {
   const { reviewId } = useParams();
@@ -25,8 +25,8 @@ const ReviewDetail = ({ review }) => {
   const handleShareModal = (e) => {
     setIsShareModalOn(!isShareModalOn);
     isShareModalOn //모달 켜져있을 시 스크롤 방지
-      ? (document.body.style.overflow = "unset")
-      : (document.body.style.overflow = "hidden");
+      ? (document.body.style.overflow = 'unset')
+      : (document.body.style.overflow = 'hidden');
   };
 
   //댓글 모달
@@ -34,8 +34,8 @@ const ReviewDetail = ({ review }) => {
   const handleCommentModal = (e) => {
     setIsCommentModalOn(!isCommentModalOn);
     isCommentModalOn //모달 켜져있을 시 스크롤 방지
-      ? (document.body.style.overflow = "unset")
-      : (document.body.style.overflow = "hidden");
+      ? (document.body.style.overflow = 'unset')
+      : (document.body.style.overflow = 'hidden');
   };
 
   //수정 토글 버튼
@@ -43,14 +43,14 @@ const ReviewDetail = ({ review }) => {
   const handleUpdate = (e) => {
     setIsUpdateOn(!isUpdateOn);
     isUpdateOn //모달 켜져있을 시 스크롤 방지
-      ? (document.body.style.overflow = "unset")
-      : (document.body.style.overflow = "hidden");
+      ? (document.body.style.overflow = 'unset')
+      : (document.body.style.overflow = 'hidden');
   };
 
   //좋아요
-  const [likeCount, setLikeCount] = useState(review ? review.like_count : ""); //좋아요 개수
+  const [likeCount, setLikeCount] = useState(review ? review.like_count : ''); //좋아요 개수
   const [likeToggle, setLikeToggle] = useState(
-    review ? review.like_or_not : ""
+    review ? review.like_or_not : ''
   ); //좋아요 여부
 
   useEffect(() => {
@@ -60,21 +60,14 @@ const ReviewDetail = ({ review }) => {
       //review가 없는 상태(param으로 접근) fetch
       setLoading(true);
 
-      var myHeaders = new Headers();
-      if (localStorage.access_token) {
-        //토큰이 있을때만 header 첨부
-        myHeaders.append("Authorization", `Token ${localStorage.access_token}`);
-      }
-
-      const review = await (
-        await fetch(`${PROXY}/community/review/${reviewId}.json`, {
-          headers: myHeaders,
-          //header에 token을 실어 보내야 like_or_not 확인이 가능하다
+      API.getPost('reviews', reviewId)
+        .then((response) => response.json())
+        .then((result) => {
+          setReviewDetail(result);
+          setLikeCount(result.like_count); //좋아요 세팅
+          setLikeToggle(result.like_or_not);
         })
-      ).json();
-      setReviewDetail(review);
-      setLikeCount(review.like_count); //좋아요 세팅
-      setLikeToggle(review.like_or_not);
+        .catch((error) => console.log('error', error));
 
       setLoading(false);
     }
@@ -85,51 +78,38 @@ const ReviewDetail = ({ review }) => {
   const handleDelete = () => {
     if (
       window.confirm(
-        "해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다."
+        '해당 게시물을 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.'
       )
     ) {
-      fetch(`${PROXY}/community/review/${reviewDetail.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      }).then((response) => {
-        alert("게시물이 삭제되었습니다.");
-        if (reviewId) navigate(`/community/review`);
-        //detail 페이지면 리스트로 보여주기
-        else window.location.reload(); //detail이 아니면 그냥 새로고침
-      });
+      API.deletePost('reviews', reviewDetail.id) //
+        .then((response) => {
+          alert('게시물이 삭제되었습니다.');
+          if (reviewId) navigate(`/community/reviews`);
+          //detail 페이지면 리스트로 보여주기
+          else window.location.reload(); //detail이 아니면 그냥 새로고침
+        });
     }
   };
 
   const handleLike = () => {
+    if (!localStorage.access_token) return; //권한
     if (likeToggle === false) {
-      fetch(`${PROXY}/community/review/${reviewDetail.id}/add-like`, {
-        method: "POST",
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      })
+      API.likePost('reviews', reviewDetail.id)
         .then((response) => {
           //공감 요청
           setLikeToggle(true);
           setLikeCount(likeCount + 1);
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
     if (likeToggle === true) {
-      fetch(`${PROXY}/community/review/${reviewDetail.id}/add-like`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${localStorage.access_token}`,
-        },
-      })
+      API.unlikePost('reviews', reviewDetail.id)
         .then((response) => {
           //공감 취소 요청
           setLikeToggle(false);
           setLikeCount(likeCount - 1);
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
   };
 
@@ -170,7 +150,7 @@ const ReviewDetail = ({ review }) => {
           <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
           <button
             className="text-gray-light"
-            onClick={() => navigate(`/community/review`)}
+            onClick={() => navigate(`/community/reviews`)}
           >
             목록으로
           </button>
@@ -191,14 +171,16 @@ const ReviewDetail = ({ review }) => {
                 </span>
               </div>
             </div>
-            <div className="text-sm">
-              <button onClick={handleUpdate}>
-                <span className="text-gray-light">수정</span>
-              </button>
-              <button onClick={handleDelete}>
-                <span className="text-gray-light pl-3">삭제</span>
-              </button>
-            </div>
+            {localStorage.access_nickname === reviewDetail.user && (
+              <div className="text-sm">
+                <button onClick={handleUpdate}>
+                  <span className="text-gray-light">수정</span>
+                </button>
+                <button onClick={handleDelete}>
+                  <span className="text-gray-light pl-3">삭제</span>
+                </button>
+              </div>
+            )}
           </div>
           {/* image */}
           <img
@@ -258,7 +240,7 @@ const ReviewDetail = ({ review }) => {
           <div className="px-4 pb-4 text-sm">
             <div className="flex justify-between">
               <span>
-                좋아요{" "}
+                좋아요{' '}
                 <strong>
                   {likeCount === undefined
                     ? reviewDetail.like_count

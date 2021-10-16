@@ -1,13 +1,12 @@
-import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
+import React from 'react';
+import { useState } from 'react';
+import { useRef } from 'react';
+import API from '../../API';
 //
-import attachment from "../../images/attachment.svg";
-import pencil from "../../images/pencil.svg";
+import attachment from '../../images/attachment.svg';
+import pencil from '../../images/pencil.svg';
 
 const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
-
   // eslint-disable-next-line no-unused-vars
   const attachmentInput = useRef();
 
@@ -29,28 +28,26 @@ const PostDetailUpdate = ({ postId, post, handleUpdate }) => {
 
   const handlePut = () => {
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${localStorage.access_token}`); //localStorage token load
+    myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
 
     var formdata = new FormData();
-    formdata.append("title", title);
-    formdata.append("content", content);
+    formdata.append('title', title);
+    formdata.append('content', content);
 
     var requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/post/${postId}`, requestOptions)
+    API.putPost('posts', postId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         window.location.reload();
       })
-      //게시물 작성 성공, 성공시 postdetail 보내주기 실패
-      //.then((result) => navigate(`${PROXY}/community/post/${result.id}`));
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   return (

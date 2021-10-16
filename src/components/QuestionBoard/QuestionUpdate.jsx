@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
 //
 import back from '../../images/back.svg';
 const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-
   // eslint-disable-next-line no-unused-vars
   const attachmentInput = useRef();
 
@@ -52,7 +51,7 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
       redirect: 'follow',
     };
 
-    fetch(`${PROXY}/community/question/${questionId}`, requestOptions)
+    API.putPost('questions', questionId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -65,20 +64,18 @@ const QuestionUpdate = ({ questionId, question, handleUpdate }) => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${PROXY}/community/questiontype`, {
-      method: 'GET',
-    })
+    API.getQuestionTypes()
       .then((response) => response.json())
       .then((result) => {
         setQuestionTypes(result);
         setLoading(false);
       })
       .catch((error) => console.log('error', error));
-  }, [PROXY]); //빼도 됩니다.
+  }, []); //빼도 됩니다.
 
   return (
     <div
-      className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-20"
+      className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-60"
       onClick={handleUpdate}
     >
       <div

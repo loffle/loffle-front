@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
-import { timeForToday } from "../helpers";
+import React, { useRef } from 'react';
+import { timeForToday } from '../helpers';
 //
-import Comment from "../FreeBoard/Comment/Comment";
-import ModalComentCreate from "../ModalComentCreate";
+import Comment from '../FreeBoard/Comment/Comment';
+import ModalComentCreate from '../ModalComentCreate';
 //
-import back from "../../images/back.svg";
-import profile from "../../images/profile.svg";
+import back from '../../images/back.svg';
+import profile from '../../images/profile.svg';
 
 const QuestionAnswer = ({
   question,
@@ -24,13 +24,14 @@ const QuestionAnswer = ({
   return (
     <>
       <div
-        className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-20"
+        className="max-w-480 mx-auto flex items-center justify-center fixed top-0 left-0 right-0 bottom-0 bg-modal z-60"
         onClick={handleAnswerModal}
       >
         <div
-          className="absolute bottom-0 px-5 py-4 w-full rounded-t-xl bg-white"
+          className="absolute bottom-0 px-5 py-4 w-full rounded-t-xl bg-white overflow-scroll"
+          //  모달 바닥은 scroll금지, 모달창 내부는 스크롤 허용 overflow-scroll
           onClick={(e) => e.stopPropagation()}
-          style={{ height: "92%" }}
+          style={{ height: '92%' }}
           ref={scrollBox}
         >
           <header className="flex justify-between">
@@ -64,7 +65,7 @@ const QuestionAnswer = ({
           {answers &&
             answers.map((answer) => (
               <Comment
-                category={"question"}
+                category={'questions'}
                 key={answer.id}
                 comment={answer}
                 comments={answers}
@@ -77,7 +78,7 @@ const QuestionAnswer = ({
 
       {/* 답변 작성 - sticky 충돌나서 fixed로 수정*/}
       <ModalComentCreate
-        category={"question"}
+        category={'questions'}
         postId={question.id}
         comments={answers}
         setComments={setAnswers}
