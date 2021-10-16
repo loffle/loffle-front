@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../API';
 import Pagination from 'react-js-pagination';
-import styles from './candidatePaging.module.css';
+import './candidatePaging.module.css';
 
 const Candidate = ({ handleCandidateModal, raffleId }) => {
   const [candidates, setCandidates] = useState([]);
