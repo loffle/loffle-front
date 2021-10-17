@@ -72,7 +72,7 @@ const Ticket = ({
                       className="form-radio h-5 w-5 text-primary"
                       name="ticket"
                       value={ticket.id}
-                      defaultChecked
+                      defaultChecked={ticket.id === 1 ? true : false}
                     />
                     <span className="w-1/4 text-l text-gray-dark">
                       {ticket.quantity.toLocaleString()} 장
