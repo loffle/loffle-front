@@ -39,34 +39,37 @@ const Drawer = ({ logo, handleDrawerModal }) => {
           <ul
             onClick={handleDrawerModal}
             //   ^^^ 추후 수정 요망
-            className="flex flex-col justify-center text-l xs:text-xl font-bold gap-8 xs:gap-11 py-7 xs:py-10 text-center"
+            className="flex flex-col justify-center text-l xs:text-xl font-bold py-7 xs:py-10 text-center"
           >
-            <li>소개</li>
+            <li className="py-4 xs:py-5">소개</li>
             <Link to="/raffles">
-              <li>응모하기</li>
+              <li className="py-4 xs:py-5">응모하기</li>
             </Link>
             <Link to="/community/posts">
-              <li>자유게시판</li>
+              <li className="py-4 xs:py-5">자유게시판</li>
             </Link>
             <Link to="/community/reviews">
-              <li>당첨 후기 게시판</li>
+              <li className="py-4 xs:py-5">당첨 후기 게시판</li>
             </Link>
             <Link to="/community/notices">
-              <li>공지사항</li>
+              <li className="py-4 xs:py-5">공지사항</li>
             </Link>
             <Link to="/community/questions">
-              <li>QnA</li>
+              <li className="py-4 xs:py-5">QnA</li>
             </Link>
             {localStorage.access_token ? ( //localStorage token ?
-              <li onClick={handleLogout} className="flex justify-center">
+              <li
+                onClick={handleLogout}
+                className="flex justify-center py-4 xs:py-5"
+              >
                 {localStorage.access_nickname}님 | 로그아웃
               </li>
             ) : (
-              <Link to="/login">
+              <Link className="py-4 xs:py-5" to="/login">
                 <li>로그인 | 회원가입</li>
               </Link>
             )}
-            <img className="h-6" src={logo} alt="logo" />
+            <img className="h-6 mt-4 xs:mt-5" src={logo} alt="logo" />
           </ul>
         </div>
       </div>
