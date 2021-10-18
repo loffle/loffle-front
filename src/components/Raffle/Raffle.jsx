@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { PROGRESS_LIST } from '../../config';
 import API from '../../API';
 //
 import Timer from './Timer';
@@ -42,25 +43,54 @@ const Raffle = ({ raffle }) => {
 
   return (
     <>
-      {/* image swiper */}
-      <ImageSwiper product={product}>
-        <div className="text-6xl font-medium w-full absolute z-20 -bottom-8">
-          <div className="flex items-center justify-center">
-            <Timer finishAt={raffle.finish_at} />
+      <div className=" bg-secondary-light pb-8 relative">
+        <div
+          className={
+            'px-5 py-1 m-5 bg-white absolute z-20 rounded-full shadow-md text-' +
+            PROGRESS_LIST[raffle.progress].progressColor
+          }
+        >
+          {PROGRESS_LIST[raffle.progress].name}
+        </div>
+        <div className="flex items-center justify-center ">
+          <div className="w-11/12 h-11/12">
+            <ImageSwiper product={product} />
           </div>
         </div>
-      </ImageSwiper>
+        <div
+          className={
+            'text-6xl font-medium w-full absolute z-20 -bottom-8 text-' +
+            PROGRESS_LIST[raffle.progress].progressColor
+          }
+        >
+          <div className="flex items-center justify-center">
+            <Timer raffle={raffle} />
+          </div>
+        </div>
+      </div>
 
       <div className="mt-12 px-7 pb-2">
-        <p className="text-2xl font-medium text-center">
+        <p
+          className={
+            'text-2xl font-medium text-center ' +
+            PROGRESS_LIST[raffle.progress].textColor
+          }
+        >
           {raffle.product_preview.name}
         </p>
         <p className=" mt-2 text-gray block text-center">
           {raffle.product_preview.brand}
         </p>
-        <p className="mt-4 text-xl font-bold text-center block">
-          실시간 참여 인원 : [{' '}
-          <span className="text-secondary">
+        <p
+          className={
+            'mt-4 text-xl font-bold text-center block ' +
+            PROGRESS_LIST[raffle.progress].textColor
+          }
+        >
+          {PROGRESS_LIST[raffle.progress].liveOrTotal} 참여 인원 : [{' '}
+          <span
+            className={'text-' + PROGRESS_LIST[raffle.progress].progressColor}
+          >
             {raffle.apply_count} / {raffle.target_quantity}
           </span>{' '}
           명 ]
@@ -71,12 +101,18 @@ const Raffle = ({ raffle }) => {
           to={{ pathname: `/raffles/${raffle.id}` }}
           state={{ raffle, product }}
           className={
-            (raffle.apply_or_not ? 'bg-gray' : 'bg-secondary') +
+            (raffle.apply_or_not
+              ? 'bg-gray'
+              : 'bg-' + PROGRESS_LIST[raffle.progress].btnColor) +
             ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
           }
         >
           <span className="text-xl">
-            {raffle.apply_or_not ? '응모 완료' : '응모 하기'}
+            {raffle.progress === 'waiting' && '응모 확인'}
+            {raffle.progress === 'ongoing' &&
+              (raffle.apply_or_not ? '응모 완료' : '응모 하기')}
+            {raffle.progress === 'closed' && '당첨 결과 확인'}
+            {raffle.progress === 'canceled' && '취소 결과 확인'}
           </span>
         </Link>
       </div>

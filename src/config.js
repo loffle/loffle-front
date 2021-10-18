@@ -4,11 +4,35 @@ const PROXY =
     ? ''
     : '/proxy';
 
-const API_URL = 'http://loffle.cf';
+const PROGRESS_LIST = {
+  waiting: {
+    name: '대기중',
+    progressColor: 'secondary',
+    textColor: '',
+    btnColor: 'secondary',
+    liveOrTotal: '실시간',
+  },
+  ongoing: {
+    name: '진행중',
+    progressColor: 'primary',
+    textColor: '',
+    btnColor: 'primary',
+    liveOrTotal: '실시간',
+  },
+  closed: {
+    name: '응모 종료',
+    progressColor: 'gray-deactivate',
+    textColor: 'text-gray-deactivate',
+    btnColor: 'gray-activate',
+    liveOrTotal: '총',
+  },
+  canceled: {
+    name: '응모 취소',
+    progressColor: 'gray-deactivate',
+    textColor: 'text-gray-deactivate',
+    btnColor: 'gray-deactivate',
+    liveOrTotal: '총',
+  },
+};
 
-const SESSION_ID = '3shon67npij42ss64st4xzu3jnfscznr';
-
-const CSRF_TOKEN =
-  '4kSrQLZUeGnQjqVinW5y5b3daYteSPMNRwqvmRHsCvJGQyZ21jv79kgpgnUJy6sr';
-
-export { PROXY, API_URL, SESSION_ID, CSRF_TOKEN };
+export { PROXY, PROGRESS_LIST };

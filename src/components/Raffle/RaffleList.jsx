@@ -8,29 +8,109 @@ import Raffle from './Raffle';
 
 const RaffleList = (props) => {
   const [loading, setLoading] = useState(false);
-  const [raffles, setRaffles] = useState([]);
+  const [raffles, setRaffles] = useState([
+    {
+      id: 31,
+      url: 'https://loffle.cf/raffles/4',
+      user: 'leeyongjoo',
+      product_preview: {
+        id: 2,
+        name: '[waiting] 응모 대기',
+        brand: '[waiting] 응모 대기',
+        url: 'https://loffle.cf/products/2',
+      },
+      apply_count: 0,
+      apply_or_not: false,
+      begin_at: '2021-10-20T17:58:00+09:00',
+      finish_at: '2021-10-22T17:58:00+09:00',
+      target_quantity: 999,
+      created_at: '2021-10-13T17:58:41.611786+09:00',
+      modified_at: '2021-10-13T17:58:41.611786+09:00',
+      progress: 'waiting',
+    },
+    {
+      id: 32,
+      url: 'https://loffle.cf/raffles/4',
+      user: 'leeyongjoo',
+      product_preview: {
+        id: 2,
+        name: '[ongoing] 응모 진행중',
+        brand: '[ongoing] 응모 진행중',
+        url: 'https://loffle.cf/products/2',
+      },
+      apply_count: 1,
+      apply_or_not: false,
+      begin_at: '2021-10-18T17:58:00+09:00',
+      finish_at: '2021-10-22T17:58:00+09:00',
+      target_quantity: 999,
+      created_at: '2021-10-13T17:58:41.611786+09:00',
+      modified_at: '2021-10-13T17:58:41.611786+09:00',
+      progress: 'ongoing',
+    },
+    {
+      id: 33,
+      url: 'https://loffle.cf/raffles/4',
+      user: 'leeyongjoo',
+      product_preview: {
+        id: 2,
+        name: '[closed] 응모 종료',
+        brand: '[closed] 응모 종료',
+        url: 'https://loffle.cf/products/2',
+      },
+      apply_count: 1,
+      apply_or_not: false,
+      begin_at: '2021-10-14T17:58:00+09:00',
+      finish_at: '2021-10-15T17:58:00+09:00',
+      target_quantity: 999,
+      created_at: '2021-10-13T17:58:41.611786+09:00',
+      modified_at: '2021-10-13T17:58:41.611786+09:00',
+      progress: 'closed',
+    },
+    {
+      id: 34,
+      url: 'https://loffle.cf/raffles/4',
+      user: 'leeyongjoo',
+      product_preview: {
+        id: 2,
+        name: '[canceled] 응모 취소',
+        brand: '[canceled] 응모 취소',
+        url: 'https://loffle.cf/products/2',
+      },
+      apply_count: 1,
+      apply_or_not: false,
+      begin_at: '2021-10-14T17:58:00+09:00',
+      finish_at: '2021-10-15T17:58:00+09:00',
+      target_quantity: 999,
+      created_at: '2021-10-13T17:58:41.611786+09:00',
+      modified_at: '2021-10-13T17:58:41.611786+09:00',
+      progress: 'canceled',
+    },
+  ]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setLoading(true);
+    // setLoading(true);
 
-    var myHeaders = new Headers();
-    if (localStorage.access_token) {
-      //토큰이 있을때만 header 첨부
-      myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
-    }
+    // var myHeaders = new Headers();
+    // if (localStorage.access_token) {
+    //   myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
+    // }
 
-    //라플 리스트 가져오기
-    fetch(`${PROXY}/raffles`, {
-      method: 'GET',
-      headers: myHeaders, //header에 token을 실어 보내야 apply_or_not 확인이 가능하다
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setRaffles(result.results);
-        setLoading(false);
-      })
-      .catch((error) => console.log('error', error));
+    // //라플 리스트 가져오기
+    // fetch(`${PROXY}/raffles`, {
+    //   method: 'GET',
+    //   headers: myHeaders, //header에 token을 실어 보내야 apply_or_not 확인이 가능하다
+    // })
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     //setRaffles(result.results);
+    //     //let value = result.results;
+    //     setRaffles((prev) => {
+    //       return [...prev, ...result.results];
+    //     });
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => console.log('error', error));
   }, []);
 
   return (
