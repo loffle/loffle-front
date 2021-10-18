@@ -21,15 +21,11 @@ const RaffleList = (props) => {
     }
     setLoading(true);
 
-    var myHeaders = new Headers();
-    if (localStorage.access_token) {
-      //토큰이 있을때만 header 첨부
-      myHeaders.append('Authorization', `Token ${localStorage.access_token}`);
-    }
-
     axios(`${PROXY}/raffles`, {
       method: 'GET',
-      headers: myHeaders, //header에 token을 실어 보내야 apply_or_not 확인이 가능하다
+      headers: localStorage.access_token
+        ? { Authorization: `Token ${localStorage.access_token}` }
+        : {}, //header에 token을 실어 보내야 apply_or_not 확인이 가능하다
       params: { page: pageNumber },
     }).then((response) => {
       setRaffles((prev) => [...prev, ...response.data.results]);

@@ -40,7 +40,7 @@ const Candidate = ({ handleCandidateModal, raffle, raffleId }) => {
         ) + 1
       );
     } else {
-      if (localStorage.nickname) {
+      if (localStorage.access_token) {
         alert('응모하신 내역이 없습니다.');
       } else {
         if (window.confirm('로그인 화면으로 이동할까요?✨')) {
