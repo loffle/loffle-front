@@ -1,25 +1,54 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API from '../../API';
 import Pagination from 'react-js-pagination';
 import './candidatePaging.module.css';
 
-const Candidate = ({ handleCandidateModal, raffleId }) => {
+const Candidate = ({ handleCandidateModal, raffle, raffleId }) => {
+  const navigate = useNavigate();
+
+  const [totalCandidates, setTotalCandidates] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const [totalPosts, setTotalPosts] = useState(0);
 
   useEffect(() => {
     setLoading(true);
 
-    API.getCandidate(raffleId, pageNumber) //
+    API.getCandidate(raffleId) //
       .then((response) => {
-        setCandidates(response.data.results);
-        setTotalPosts(response.data.count);
-
+        setTotalCandidates(response.data);
+        setCandidates(response.data.slice(0, pageNumber * 10));
         setLoading(false);
       });
-  }, [pageNumber, raffleId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [raffleId]);
+
+  useEffect(() => {
+    setCandidates(
+      totalCandidates.slice((pageNumber - 1) * 10, pageNumber * 10)
+    );
+  }, [pageNumber, totalCandidates]);
+
+  const onClick = () => {
+    if (raffle.apply_or_not) {
+      setPageNumber(
+        Math.floor(
+          totalCandidates.findIndex(
+            (obj) => obj.username === localStorage.access_nickname
+          ) / 10
+        ) + 1
+      );
+    } else {
+      if (localStorage.nickname) {
+        alert('응모하신 내역이 없습니다.');
+      } else {
+        if (window.confirm('로그인 화면으로 이동할까요?✨')) {
+          navigate('/login');
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -47,13 +76,33 @@ const Candidate = ({ handleCandidateModal, raffleId }) => {
                   </tr>
                 )}
                 {loading ||
-                  (candidates.length > 0 &&
+                  (candidates?.length === 0 && (
+                    <tr>
+                      <td className="whitespace-nowrap w-1/3 py-44">
+                        <div className="flex items-center justify-center">
+                          <div className="text-sm font-medium">
+                            "응모 내역이 아직 없습니다"
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                {loading ||
+                  (candidates?.length > 0 &&
                     candidates.map((user) => (
-                      <tr key={user.apply_at}>
+                      <tr
+                        key={user.apply_at}
+                        className={
+                          user.username === localStorage.access_nickname &&
+                          'bg-gray-border'
+                        }
+                      >
                         <td className="whitespace-nowrap w-1/3 py-2">
                           <div className="flex items-center justify-center">
                             <div className="text-sm font-medium">
-                              {user.row_number}
+                              {totalCandidates.findIndex(
+                                (obj) => obj.username === user.username
+                              ) + 1}
                             </div>
                           </div>
                         </td>
@@ -77,13 +126,13 @@ const Candidate = ({ handleCandidateModal, raffleId }) => {
             <Pagination
               activePage={pageNumber}
               itemsCountPerPage={10}
-              totalItemsCount={totalPosts}
+              totalItemsCount={totalCandidates?.length}
               pageRangeDisplayed={2}
               onChange={setPageNumber}
             />
             <div className="h-9 w-20 bg-white fixed my-0 mx-auto left-0 right-0">
               <div className="flex justify-center items-center h-full">
-                <button>
+                <button onClick={onClick}>
                   <svg
                     className="w-5 h-5"
                     data-darkreader-inline-stroke=""

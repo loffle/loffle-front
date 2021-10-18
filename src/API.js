@@ -41,11 +41,10 @@ const apiSettings = {
       method: 'GET',
     });
   },
-  getCandidate: (id, pageNumber) => {
+  getCandidate: (id) => {
     return axios({
       method: 'GET',
       url: `${PROXY}/raffles/${id}/users.json`,
-      params: { page: pageNumber },
     });
   },
   postPost: (category, option) => {

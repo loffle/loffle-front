@@ -108,6 +108,7 @@ const RaffleDetail = (props) => {
       {isCandidateModalOn && (
         <Candidate
           handleCandidateModal={handleCandidateModal}
+          raffle={raffle}
           raffleId={raffleId}
         />
       )}
@@ -187,7 +188,7 @@ const RaffleDetail = (props) => {
                   정원 충족시 [추첨]을 시작합니다.
                 </span>
 
-                <Timer finishAt={raffle.finish_at} />
+                <Timer finishAt={raffle.end_date_time} />
               </div>
             )}
 
@@ -197,14 +198,14 @@ const RaffleDetail = (props) => {
                 <div>
                   <span className="font-semibold">래플 응모기간</span>
                   <span className="text-gray ml-2">
-                    {raffleTime(raffle.begin_at)} -{' '}
-                    {raffleTime(raffle.finish_at)}
+                    {raffleTime(raffle.start_date_time)} -{' '}
+                    {raffleTime(raffle.end_date_time)}
                   </span>
                 </div>
                 <div className="">
                   <span className="font-semibold">당첨자 발표일</span>
                   <span className="text-gray ml-2">
-                    {raffleTime(raffle.finish_at)}
+                    {raffleTime(raffle.end_date_time)}
                   </span>
                 </div>
               </div>

@@ -46,7 +46,7 @@ const Raffle = ({ raffle }) => {
       <ImageSwiper product={product}>
         <div className="text-6xl font-medium w-full absolute z-20 -bottom-8">
           <div className="flex items-center justify-center">
-            <Timer finishAt={raffle.finish_at} />
+            <Timer finishAt={raffle.end_date_time} />
           </div>
         </div>
       </ImageSwiper>
