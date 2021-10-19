@@ -4,10 +4,10 @@ const Timer = ({ raffle }) => {
   const calculateTimeLeft = () => {
     let difference = '';
     if (raffle.progress === 'waiting') {
-      difference = +new Date(raffle.begin_at) - +new Date();
+      difference = +new Date(raffle.start_date_time) - +new Date();
     }
     if (raffle.progress === 'ongoing') {
-      difference = +new Date(raffle.finish_at) - +new Date();
+      difference = +new Date(raffle.end_date_time) - +new Date();
     }
     let timeLeft = {};
 

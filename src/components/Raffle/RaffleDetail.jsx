@@ -12,6 +12,7 @@ import Candidate from './Candidate';
 import Loading from '../Loading';
 import Apply from './Apply';
 import Timer from './Timer';
+import Message from './Message';
 
 const RaffleDetail = (props) => {
   const [loading, setLoading] = useState(false);
@@ -71,6 +72,22 @@ const RaffleDetail = (props) => {
     }
   };
 
+  //결과 확인 모달
+  const [isResultModalOn, setIsResultModalOn] = useState(false);
+  const handleResultModal = (e) => {
+    console.log('hi');
+    if (localStorage.access_token) {
+      setIsResultModalOn(!isResultModalOn);
+      isResultModalOn //모달 켜져있을 시 스크롤 방지
+        ? (document.body.style.overflow = 'unset')
+        : (document.body.style.overflow = 'hidden');
+    } else {
+      if (window.confirm('로그인 화면으로 이동할까요?✨')) {
+        navigate('/login');
+      }
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!location.state) {
@@ -104,6 +121,11 @@ const RaffleDetail = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const PROGRESS_FUNCTION = {
+    ongoing: () => handleApplyModal(),
+    closed: () => handleResultModal(),
+  };
+
   return (
     <>
       {isCandidateModalOn && (
@@ -120,6 +142,14 @@ const RaffleDetail = (props) => {
           raffleId={raffleId}
           raffle={raffle}
           setRaffle={setRaffle}
+          product={product}
+        />
+      )}
+
+      {isResultModalOn && (
+        <Message
+          handleMessageModal={handleResultModal}
+          raffle={raffle}
           product={product}
         />
       )}
@@ -170,7 +200,8 @@ const RaffleDetail = (props) => {
 
             {/* apply raffle */}
             <button
-              onClick={() => handleApplyModal()}
+              onClick={PROGRESS_FUNCTION[raffle.progress]}
+              //onClick={() => handleApplyModal()}
               className={
                 (raffle.apply_or_not
                   ? 'bg-gray'
@@ -210,7 +241,7 @@ const RaffleDetail = (props) => {
                   정원 충족시 [추첨]을 시작합니다.
                 </span>
 
-                <Timer finishAt={raffle.finish_at} />
+                <Timer finishAt={raffle.end_date_time} />
               </div>
             )}
 
@@ -220,14 +251,14 @@ const RaffleDetail = (props) => {
                 <div>
                   <span className="font-semibold">래플 응모기간</span>
                   <span className="text-gray ml-2">
-                    {raffleTime(raffle.begin_at)} -{' '}
-                    {raffleTime(raffle.finish_at)}
+                    {raffleTime(raffle.start_date_time)} -{' '}
+                    {raffleTime(raffle.end_date_time)}
                   </span>
                 </div>
                 <div className="">
                   <span className="font-semibold">당첨자 발표일</span>
                   <span className="text-gray ml-2">
-                    {raffleTime(raffle.finish_at)}
+                    {raffleTime(raffle.announce_date_time)}
                   </span>
                 </div>
               </div>
