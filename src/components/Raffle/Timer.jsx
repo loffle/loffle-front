@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-const Timer = ({ finishAt }) => {
+const Timer = ({ raffle }) => {
   const calculateTimeLeft = () => {
-    const difference = +new Date(finishAt) - +new Date();
+    let difference = '';
+    if (raffle.progress === 'waiting') {
+      difference = +new Date(raffle.start_date_time) - +new Date();
+    }
+    if (raffle.progress === 'ongoing') {
+      difference = +new Date(raffle.end_date_time) - +new Date();
+    }
     let timeLeft = {};
 
     if (difference > 0) {
@@ -12,6 +18,12 @@ const Timer = ({ finishAt }) => {
           Math.floor(difference / (1000 * 60 * 60 * 24)) * 24,
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
+      };
+    } else {
+      timeLeft = {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
       };
     }
 

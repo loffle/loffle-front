@@ -27,7 +27,7 @@ const Message = ({
           {ordinalNumber}번 째로 응모 완료되었습니다.
         </span>
         <span className="text-sm text-gray-light">
-          당첨자 발표 : {raffleTime(raffle.finish_at)}
+          당첨자 발표 : {raffleTime(raffle.announce_date_time)}
         </span>
         <div className="flex"></div>
       </div>
@@ -39,7 +39,7 @@ const Message = ({
           닫기
         </button>
         <button
-          className="w-1/2 py-3 rounded-br-lg bg-gray-dark"
+          className="w-1/2 py-3 rounded-br-lg bg-gray-activate"
           onClick={handleCandidate}
         >
           응모 내역 확인

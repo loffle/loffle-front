@@ -9,30 +9,20 @@ import SwiperCore, { Scrollbar } from 'swiper';
 // install Swiper modules
 SwiperCore.use([Scrollbar]);
 
-const ImageSwiper = ({ children, product }) => {
+const ImageSwiper = ({ product }) => {
   return (
-    <div className=" bg-secondary-light pb-8 relative">
-      <div className="px-5 py-1 m-5 bg-white absolute z-20 rounded-full shadow-md text-secondary">
-        진행중
-      </div>
-      <div className="flex items-center justify-center ">
-        <div className="w-11/12 h-11/12">
-          <Swiper
-            scrollbar={{
-              hide: true,
-            }}
-            className="mySwiper bg-secondary-light"
-          >
-            {product.images.map((image) => (
-              <SwiperSlide key={image.id}>
-                <img src={image.src} alt="product" />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </div>
-      {children}
-    </div>
+    <Swiper
+      scrollbar={{
+        hide: true,
+      }}
+      className="mySwipe"
+    >
+      {product.images.map((image) => (
+        <SwiperSlide key={image.id}>
+          <img src={image.src} alt="product" />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 
