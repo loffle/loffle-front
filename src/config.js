@@ -19,15 +19,15 @@ const PROGRESS_LIST = {
     btnColor: 'primary',
     liveOrTotal: '실시간',
   },
-  closed: {
+  done: {
     name: '응모 종료',
     progressColor: 'gray-deactivate',
     textColor: 'text-gray-deactivate',
     btnColor: 'gray-activate',
     liveOrTotal: '총',
   },
-  canceled: {
-    name: '응모 취소',
+  failed: {
+    name: '응모 실패',
     progressColor: 'gray-deactivate',
     textColor: 'text-gray-deactivate',
     btnColor: 'gray-deactivate',

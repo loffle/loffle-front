@@ -24,27 +24,46 @@ const Message = ({
       >
         <h1 className="text-lg font-bold">[ {product.name} ]</h1>
         <span className="text-sm">
-          {ordinalNumber}번 째로 응모 완료되었습니다.
+          {raffle.progress === 'ongoing' &&
+            `${ordinalNumber}번 째로 응모 완료되었습니다.`}
+          {raffle.progress === 'done' && //candidate에 포함되어 있는지도 확인해야함!
+            '[1차 추첨 명단에] 포함되셨습니다!\n부여받은 번호는 아래와 같습니다.'}
+          {/* `아쉽게도 ${localStorage.access_nickname} 님이 부여받은 번호는 아래와 같습니다.` */}
         </span>
-        <span className="text-sm text-gray-light">
-          당첨자 발표 : {raffleTime(raffle.announce_date_time)}
-        </span>
+        {raffle.progress === 'ongoing' && (
+          <span className="text-sm text-gray-light">
+            당첨자 발표 : {raffleTime(raffle.announce_date_time)}
+          </span>
+        )}
+        {/* 공 보여주기 */}
         <div className="flex"></div>
       </div>
-      <div className="w-9/12 text-white text-sm xs:text-base">
-        <button
-          className="w-1/2 py-3 rounded-bl-lg bg-gray"
-          onClick={handleMessageModal}
-        >
-          닫기
-        </button>
-        <button
-          className="w-1/2 py-3 rounded-br-lg bg-gray-activate"
-          onClick={handleCandidate}
-        >
-          응모 내역 확인
-        </button>
-      </div>
+      {raffle.progress === 'ongoing' && (
+        <div className="w-9/12 text-white text-sm xs:text-base">
+          <button
+            className="w-1/2 py-3 rounded-bl-lg bg-gray"
+            onClick={handleMessageModal}
+          >
+            닫기
+          </button>
+          <button
+            className="w-1/2 py-3 rounded-br-lg bg-gray-activate"
+            onClick={handleCandidate}
+          >
+            응모 내역 확인
+          </button>
+        </div>
+      )}
+      {raffle.progress === 'done' && (
+        <div className="w-9/12 text-white text-sm xs:text-base">
+          <button
+            className="w-full py-3 rounded-b-lg bg-gray-900"
+            onClick={handleMessageModal}
+          >
+            확인
+          </button>
+        </div>
+      )}
     </div>
   );
 };

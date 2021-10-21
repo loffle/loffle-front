@@ -5,6 +5,9 @@ module.exports = {
     maxWidth: {
       480: '480px',
     },
+    maxHeight: {
+      480: '480px',
+    },
     fontFamily: {
       body: ['Roboto'],
     },
@@ -40,6 +43,9 @@ module.exports = {
       },
       boxShadow: {
         btn: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      },
+      height: {
+        vw: '100vw',
       },
     },
   },

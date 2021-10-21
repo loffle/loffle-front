@@ -9,6 +9,7 @@ import CreateButton from '../CreateButton';
 import search from '../../images/search_btn.svg';
 
 const ReviewBoard = (props) => {
+  window.scrollTo(0, 0);
   const [pageNumber, setPageNumber] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [order, setOrder] = useState('');

@@ -64,11 +64,7 @@ const Raffle = ({ raffle }) => {
           }
         >
           <div className="flex items-center justify-center">
-<<<<<<< HEAD
-            <Timer finishAt={raffle.end_date_time} />
-=======
             <Timer raffle={raffle} />
->>>>>>> feature/raffle-temp
           </div>
         </div>
       </div>
@@ -105,9 +101,11 @@ const Raffle = ({ raffle }) => {
           to={{ pathname: `/raffles/${raffle.id}` }}
           state={{ raffle, product }}
           className={
-            (raffle.apply_or_not
-              ? 'bg-gray'
-              : 'bg-' + PROGRESS_LIST[raffle.progress].btnColor) +
+            // (raffle.apply_or_not
+            //   ? 'bg-gray'
+            //   : 'bg-' + PROGRESS_LIST[raffle.progress].btnColor) +
+            'bg-' +
+            PROGRESS_LIST[raffle.progress].btnColor +
             ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
           }
         >
@@ -115,8 +113,8 @@ const Raffle = ({ raffle }) => {
             {raffle.progress === 'waiting' && '응모 확인'}
             {raffle.progress === 'ongoing' &&
               (raffle.apply_or_not ? '응모 완료' : '응모 하기')}
-            {raffle.progress === 'closed' && '당첨 결과 확인'}
-            {raffle.progress === 'canceled' && '취소 결과 확인'}
+            {raffle.progress === 'done' && '당첨 결과 확인'}
+            {raffle.progress === 'failed' && '취소 결과 확인'}
           </span>
         </Link>
       </div>

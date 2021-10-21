@@ -7,6 +7,11 @@ if (localStorage.access_token) {
 }
 
 const apiSettings = {
+  getCategory: (category) => {
+    return fetch(`${PROXY}/${category}`, {
+      method: 'GET',
+    });
+  },
   getTickets: () => {
     return fetch(`${PROXY}/tickets`, {
       method: 'GET',

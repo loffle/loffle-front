@@ -5,16 +5,22 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
 import 'swiper/swiper-bundle.min.css';
 // import Swiper core and required modules
-import SwiperCore, { Scrollbar } from 'swiper';
+import SwiperCore, { Autoplay, Scrollbar } from 'swiper';
 // install Swiper modules
-SwiperCore.use([Scrollbar]);
+SwiperCore.use([Scrollbar, Autoplay]);
 
-const ImageSwiper = ({ product }) => {
+const ImageSwiper = ({ product, category }) => {
   return (
     <Swiper
-      scrollbar={{
-        hide: true,
-      }}
+      slidesPerView={1}
+      //scrollbar={{ hide: true }}
+      autoplay={
+        category && {
+          delay: 3000,
+          disableOnInteraction: false,
+        }
+      }
+      loop={category && true}
       className="mySwipe"
     >
       {product.images.map((image) => (

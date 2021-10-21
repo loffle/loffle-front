@@ -20,6 +20,7 @@ import NoticeBoard from './components/NoticeBoard/NoticeBoard';
 import Join from './components/Join';
 import RaffleList from './components/Raffle/RaffleList';
 import RaffleDetail from './components/Raffle/RaffleDetail';
+import Index from './components/Index/Index';
 
 const App = (props) => {
   return (
@@ -28,6 +29,7 @@ const App = (props) => {
         <UserProvider>
           <Header />
           <Routes>
+            <Route path="/" element={<Index />} />
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
             <Route path="/raffles" element={<RaffleList />} />

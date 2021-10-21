@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 //
 import logo from '../images/loffle_logo.svg';
 import notification from '../images/notification.svg';
@@ -23,7 +24,9 @@ const Header = () => {
       )}
       <header className="shadow-md w-full h-14 sticky top-0 l-0 r-0 z-30 bg-white px-5">
         <div className="h-full flex items-center justify-between">
-          <img className="h-6" src={logo} alt="logo" />
+          <Link to={'/'}>
+            <img className="h-6" src={logo} alt="logo" />
+          </Link>
           <div className="flex">
             <img
               className="w-5 h-5"

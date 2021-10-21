@@ -7,6 +7,7 @@ import Loading from '../Loading';
 import CreateButton from '../CreateButton';
 
 const FreeBoard = (props) => {
+  window.scrollTo(0, 0);
   const [pageNumber, setPageNumber] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [order, setOrder] = useState('');
