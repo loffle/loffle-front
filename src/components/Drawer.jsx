@@ -1,31 +1,9 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { PROXY } from '../config';
+import { Link } from 'react-router-dom';
+//
+import profile from '../images/profile.svg';
 
 const Drawer = ({ logo, handleDrawerModal }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    var requestOptions = {
-      method: 'GET',
-      headers: { Authorization: `Token ${localStorage.access_token}` },
-    };
-
-    fetch(`${PROXY}/logout`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        localStorage.removeItem('access_token'); //localStorage token 제거
-        localStorage.removeItem('access_nickname'); //localStorage token 제거
-        localStorage.removeItem('access_id');
-        alert(result.detail);
-        window.location.reload();
-      })
-      .catch((error) => console.log('error', error));
-
-    navigate('/');
-  };
-
   return (
     <>
       <div
@@ -60,15 +38,14 @@ const Drawer = ({ logo, handleDrawerModal }) => {
               <li className="py-4 xs:py-5">QnA</li>
             </Link>
             {localStorage.access_token ? ( //localStorage token ?
-              <li
-                onClick={handleLogout}
-                className="flex justify-center py-4 xs:py-5"
-              >
-                {localStorage.access_nickname}님 | 로그아웃
-              </li>
+              <Link to="/my">
+                <li className="flex justify-center py-4 xs:py-5">
+                  <img src={profile} alt="profile" className="w-9" />
+                </li>
+              </Link>
             ) : (
               <Link className="py-4 xs:py-5" to="/login">
-                <li>로그인 | 회원가입</li>
+                <li>로그인 · 회원가입</li>
               </Link>
             )}
             <img className="h-6 mt-4 xs:mt-5" src={logo} alt="logo" />

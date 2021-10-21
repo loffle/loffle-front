@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import CountUp from 'react-countup';
 import API from '../../API';
 
 const Ticket = ({
@@ -47,7 +48,14 @@ const Ticket = ({
           <span className="text-xl font-bold">내 응모권</span>
           <div className="py-3 flex justify-center">
             <span className="text-3xl font-bold text-primary align-middle">
-              {numOfTickets.toLocaleString()}
+              {console.log(numOfTickets)}
+              <CountUp
+                start={0}
+                end={numOfTickets}
+                delay={0.5}
+                duration={0.5}
+                separator=","
+              />
               <span className="text-xl font-bold align-middle"> 개</span>
             </span>
           </div>

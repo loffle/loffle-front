@@ -21,6 +21,7 @@ import Join from './components/Join';
 import RaffleList from './components/Raffle/RaffleList';
 import RaffleDetail from './components/Raffle/RaffleDetail';
 import Index from './components/Index/Index';
+import My from './components/My/My';
 
 const App = (props) => {
   return (
@@ -32,6 +33,7 @@ const App = (props) => {
             <Route path="/" element={<Index />} />
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/my" element={<My />} />
             <Route path="/raffles" element={<RaffleList />} />
             <Route path="/raffles/:raffleId" element={<RaffleDetail />} />
             <Route path="/community/posts" element={<FreeBoard />} />

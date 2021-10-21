@@ -42,7 +42,7 @@ const RaffleHeader = ({ children }) => {
       API.getMyTicket()
         .then((response) => response.json())
         .then((result) => {
-          setNumOfTickets(result.num_of_tickets);
+          setNumOfTickets(result.num_tickets);
         })
         .catch((error) => console.log('error', error));
 

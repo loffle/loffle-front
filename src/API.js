@@ -7,6 +7,12 @@ if (localStorage.access_token) {
 }
 
 const apiSettings = {
+  getUser: (id) => {
+    return fetch(`${PROXY}/users/${id}`, {
+      method: 'GET',
+      headers: myHeaders,
+    });
+  },
   getCategory: (category) => {
     return fetch(`${PROXY}/${category}`, {
       method: 'GET',
