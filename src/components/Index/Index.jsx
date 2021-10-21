@@ -120,14 +120,14 @@ const Index = (props) => {
             </div>
           </Link>
           <div className="rounded-xl mt-3 w-auto">
-            <div className="whitespace-nowrap overflow-x-scroll flex">
+            <div className="whitespace-nowrap overflow-x-scroll flex pr-5">
               {reviews.map((review) => (
                 <Link to={`/community/reviews/${review.id}`}>
                   <div
                     alt="thumbnail"
                     className="w-32 h-44 rounded-lg bg-cover p-2 flex flex-col justify-between ml-5 shadow-btn"
                     style={{
-                      backgroundImage: `url(https://source.unsplash.com/collection/${review.id})`,
+                      backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.5),rgba(0,0,0,0) 30%), url(https://source.unsplash.com/collection/${review.id})`,
                     }}
                   >
                     <img className="w-9 h-9" src={profile} alt="profile"></img>

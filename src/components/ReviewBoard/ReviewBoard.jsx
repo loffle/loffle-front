@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 //
 import ReviewDetail from './ReviewDetail';
@@ -9,7 +9,6 @@ import CreateButton from '../CreateButton';
 import search from '../../images/search_btn.svg';
 
 const ReviewBoard = (props) => {
-  window.scrollTo(0, 0);
   const [pageNumber, setPageNumber] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [order, setOrder] = useState('');
@@ -52,6 +51,10 @@ const ReviewBoard = (props) => {
 
   //검색어 기록 및 불러오기
   const [lastSearchTerm, setLastSearchTerm] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
