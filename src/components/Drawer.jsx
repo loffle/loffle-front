@@ -41,7 +41,9 @@ const Drawer = ({ logo, handleDrawerModal }) => {
             //   ^^^ 추후 수정 요망
             className="flex flex-col justify-center text-l xs:text-xl font-bold py-7 xs:py-10 text-center"
           >
-            <li className="py-4 xs:py-5">소개</li>
+            <Link to="/">
+              <li className="py-4 xs:py-5">소개</li>
+            </Link>
             <Link to="/raffles">
               <li className="py-4 xs:py-5">응모하기</li>
             </Link>

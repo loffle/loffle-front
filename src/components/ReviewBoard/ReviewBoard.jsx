@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 //
 import ReviewDetail from './ReviewDetail';
@@ -51,6 +51,10 @@ const ReviewBoard = (props) => {
 
   //검색어 기록 및 불러오기
   const [lastSearchTerm, setLastSearchTerm] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

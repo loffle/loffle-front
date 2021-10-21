@@ -7,6 +7,11 @@ if (localStorage.access_token) {
 }
 
 const apiSettings = {
+  getCategory: (category) => {
+    return fetch(`${PROXY}/${category}`, {
+      method: 'GET',
+    });
+  },
   getTickets: () => {
     return fetch(`${PROXY}/tickets`, {
       method: 'GET',
@@ -41,11 +46,10 @@ const apiSettings = {
       method: 'GET',
     });
   },
-  getCandidate: (id, pageNumber) => {
+  getCandidate: (id) => {
     return axios({
       method: 'GET',
       url: `${PROXY}/raffles/${id}/users.json`,
-      params: { page: pageNumber },
     });
   },
   postPost: (category, option) => {
