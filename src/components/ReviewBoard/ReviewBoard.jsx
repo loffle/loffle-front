@@ -62,7 +62,7 @@ const ReviewBoard = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [reviews]);
+  }, []);
 
   return (
     <>

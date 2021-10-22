@@ -44,7 +44,7 @@ const QuestionBoard = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [questions]);
+  }, []);
 
   return (
     <>

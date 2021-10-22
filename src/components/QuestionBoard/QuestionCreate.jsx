@@ -70,6 +70,7 @@ const QuestionCreate = ({ handleCreateMode, setQuestions }) => {
       .then((result) => {
         setQuestions((prev) => [result, ...prev]);
         handleCreateMode();
+        window.scrollTo(0, 0);
       })
       .catch((error) => console.log('error', error));
   };

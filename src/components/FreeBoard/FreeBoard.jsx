@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import { useFreeBoardFetch } from '../../hooks/useFreeBoardFetch';
+import QueryString from 'qs';
 import NewPagination from '../NewPagination';
 import FreeBoardLists from './FreeBoardLists';
-
-import Loading from '../Loading';
+//
 import CreateButton from '../CreateButton';
 import PostCreate from './PostCreate';
+import { useLocation } from 'react-router-dom';
 
 const FreeBoard = (props) => {
+  const location = useLocation();
+  const queryData = QueryString.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
   window.scrollTo(0, 0);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(
+    queryData.page ? +queryData.page : 1
+  );
   const [searchTerm, setSearchTerm] = useState('');
-  const [order, setOrder] = useState('');
+  const [order, setOrder] = useState('최신순');
 
   const { posts, loading, totalPosts } = useFreeBoardFetch(
     'posts',
@@ -27,19 +34,18 @@ const FreeBoard = (props) => {
 
   return (
     <>
-      {loading && <Loading />}
-      {loading ||
-        (createMode ? (
-          <PostCreate handleCreateMode={handleCreateMode} />
-        ) : (
-          <>
-            <FreeBoardLists
-              posts={posts}
-              loading={loading}
-              setOrder={setOrder}
-              setPageNumber={setPageNumber}
-              setSearchTerm={setSearchTerm}
-            ></FreeBoardLists>
+      {createMode ? (
+        <PostCreate handleCreateMode={handleCreateMode} />
+      ) : (
+        <>
+          <FreeBoardLists
+            posts={posts}
+            loading={loading}
+            setOrder={setOrder}
+            setPageNumber={setPageNumber}
+            setSearchTerm={setSearchTerm}
+          ></FreeBoardLists>
+          {totalPosts > 0 && (
             <NewPagination
               pageNumber={pageNumber}
               setPageNumber={setPageNumber}
@@ -51,8 +57,10 @@ const FreeBoard = (props) => {
                 <CreateButton handleCreateMode={handleCreateMode} />
               )}
             </NewPagination>
-          </>
-        ))}
+          )}
+          )
+        </>
+      )}
     </>
   );
 };

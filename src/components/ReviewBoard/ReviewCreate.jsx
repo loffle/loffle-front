@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
@@ -9,9 +8,6 @@ const ReviewCreate = ({ handleCreateMode, setReviews }) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
   window.scrollTo(0, 0);
-
-  const navigate = useNavigate(); //Naviagte hook 사용
-
   const attachmentInput = useRef();
 
   const [inputs, setInputs] = useState({
@@ -65,6 +61,7 @@ const ReviewCreate = ({ handleCreateMode, setReviews }) => {
       .then((result) => {
         setReviews((prev) => [result, ...prev]);
         handleCreateMode();
+        window.scrollTo(0, 0);
       })
       .catch((error) => console.log('error', error));
   };
