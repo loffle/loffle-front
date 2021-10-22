@@ -15,6 +15,7 @@ const Index = (props) => {
   const [posts, setPosts] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [notices, setNotices] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [banner, setBanner] = useState({
     images: [
       {
@@ -92,7 +93,7 @@ const Index = (props) => {
               to={`/raffles/${raffle[0].id}`}
               className="w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 mt-6 shadow-lg bg-primary"
             >
-              응모 구경하러 가기
+              구경하러 가기
             </Link>
           </section>
         )}
@@ -119,7 +120,7 @@ const Index = (props) => {
               <span className="text-gray text-sm">당첨 후기 게시판</span>
             </div>
           </Link>
-          <div className="rounded-xl mt-3 w-auto">
+          <div className="rounded-xl mt-5 w-auto">
             <div className="whitespace-nowrap overflow-x-scroll flex pr-5">
               {reviews.map((review) => (
                 <Link to={`/community/reviews/${review.id}`}>
@@ -154,7 +155,7 @@ const Index = (props) => {
         </section>
       </div>
 
-      <hr className="border-gray-border px-5 my-11" />
+      <hr className="border-gray-border px-5 mt-11" />
     </>
   );
 };

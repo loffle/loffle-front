@@ -104,7 +104,7 @@ const PostDetailContent = ({ loading, postId, post, handleUpdate }) => {
         <h1 className="text-xl font-bold">자유게시판</h1>
         <button
           className="text-gray-light"
-          onClick={() => navigate(`/community/posts`)}
+          onClick={() => window.history.back()}
         >
           목록으로
         </button>

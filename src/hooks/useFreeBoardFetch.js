@@ -28,27 +28,16 @@ export const useFreeBoardFetch = (category, pageNumber, order, searchTerm) => {
   }
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNumber]);
-
-  useEffect(() => {
     switch (order) {
-      case '최신순':
-        fetchData();
-        break;
       case '과거순':
-        fetchData('created_at');
+        fetchData('created_at', searchTerm);
         break;
       default:
+        fetchData('', searchTerm);
+        break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order]); //order가 바뀐 것을 감지하면 fetch 다시해주기
-
-  useEffect(() => {
-    fetchData('', searchTerm);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm]);
+  }, [order, pageNumber, searchTerm]);
 
   return {
     posts,

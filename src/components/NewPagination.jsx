@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './paging.module.css';
 import Pagination from 'react-js-pagination';
 
@@ -9,6 +10,13 @@ const NewPagination = ({
   itemsCountPerPage,
   children,
 }) => {
+  const navigate = useNavigate();
+
+  const onChange = (num) => {
+    navigate(`/community/posts?page=${num}`);
+    setPageNumber(num);
+  };
+
   return (
     <>
       <div className="sticky bottom-4 flex items-center justify-between mx-3">
@@ -19,8 +27,8 @@ const NewPagination = ({
             totalItemsCount={totalPosts}
             pageRangeDisplayed={5}
             hideNavigation
-            onChange={setPageNumber}
-          />
+            onChange={onChange}
+          ></Pagination>
         </nav>
         {children}
       </div>
