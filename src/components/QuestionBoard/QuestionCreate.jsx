@@ -1,15 +1,12 @@
 /* eslint-disable default-case */
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
 
-const QuestionCreate = (props) => {
+const QuestionCreate = ({ handleCreateMode, setQuestions }) => {
   window.scrollTo(0, 0);
-  const navigate = useNavigate(); //Naviagte hook 사용
 
   const attachmentInput = useRef();
 
@@ -71,8 +68,8 @@ const QuestionCreate = (props) => {
     API.postPost('questions', requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        navigate(`/community/questions`);
+        setQuestions((prev) => [result, ...prev]);
+        handleCreateMode();
       })
       .catch((error) => console.log('error', error));
   };
@@ -95,9 +92,12 @@ const QuestionCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold"> QnA &gt; 글 작성</h1>
-          <Link to={{ pathname: '/community/questions' }}>
-            <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
-          </Link>
+          <span
+            className="text-gray h-5 ml-5 bg-white"
+            onClick={handleCreateMode}
+          >
+            뒤로가기
+          </span>
         </div>
 
         {/* form */}

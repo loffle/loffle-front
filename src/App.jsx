@@ -38,21 +38,12 @@ const App = (props) => {
             <Route path="/raffles/:raffleId" element={<RaffleDetail />} />
             <Route path="/community/posts" element={<FreeBoard />} />
             <Route path="/community/posts/:postId" element={<PostDetail />} />
-            <Route path="/community/posts/create" element={<PostCreate />} />
             <Route path="/community/reviews" element={<ReviewBoard />} />
             <Route
               path="/community/reviews/:reviewId"
               element={<ReviewDetail />}
             />
-            <Route
-              path="/community/reviews/create"
-              element={<ReviewCreate />}
-            />
             <Route path="/community/questions" element={<QuestionBoard />} />
-            <Route
-              path="/community/questions/create"
-              element={<QuestionCreate />}
-            />
             <Route path="/community/notices" element={<NoticeBoard />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>

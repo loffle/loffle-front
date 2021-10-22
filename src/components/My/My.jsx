@@ -9,7 +9,6 @@ import { PROXY } from '../../config';
 const My = (props) => {
   const [info, setInfo] = useState({});
   const [MyTickets, setMyTickets] = useState({});
-  const [ticketLoading, setTicketLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ const My = (props) => {
   };
 
   useEffect(() => {
-    setTicketLoading(true);
+    window.scrollTo(0, 0);
 
     API.getMyTicket()
       .then((response) => response.json())
@@ -51,8 +50,6 @@ const My = (props) => {
         setInfo(result);
       })
       .catch((error) => console.log('error', error));
-
-    setTicketLoading(false);
   }, []);
 
   return (
@@ -172,7 +169,7 @@ const My = (props) => {
         <hr className="border-gray-border mt-3 mb-8" />
 
         <div className="flex justify-between">
-          <button className="border-gray border rounded-lg h-8 px-1 flex items-center justify-center text-sm mb-2">
+          <button className="border-gray border rounded-lg h-8 px-2 flex items-center justify-center text-sm mb-2">
             회원 탈퇴
           </button>
           <button

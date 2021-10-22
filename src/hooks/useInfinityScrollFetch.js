@@ -87,6 +87,7 @@ export const useInfinityScrollFetch = (
 
   return {
     posts,
+    setPosts,
     firstLoading,
     loading,
     postsPerPage,

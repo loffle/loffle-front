@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import API from '../../API';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
 
-const ReviewCreate = (props) => {
+const ReviewCreate = ({ handleCreateMode, setReviews }) => {
   // const [logoLoading, setLogoLoading] = useState(false);
   // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
   window.scrollTo(0, 0);
@@ -64,8 +63,8 @@ const ReviewCreate = (props) => {
     API.postPost('reviews', requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        navigate(`/community/reviews`);
+        setReviews((prev) => [result, ...prev]);
+        handleCreateMode();
       })
       .catch((error) => console.log('error', error));
   };
@@ -76,9 +75,12 @@ const ReviewCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold">당첨 후기 게시판 &gt; 글 작성</h1>
-          <Link to={{ pathname: '/community/reviews' }}>
-            <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
-          </Link>
+          <span
+            className="text-gray h-5 ml-5 bg-white"
+            onClick={handleCreateMode}
+          >
+            뒤로가기
+          </span>
         </div>
         {/* form */}
         <form className="m-1 border-2 border-gray-border shadow-lg rounded-lg">
