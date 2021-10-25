@@ -61,7 +61,7 @@ const Login = (props) => {
             <div className="w-full h-full">
               <div className="flex justify-center flex-col">
                 <span className="text-xl font-bold leading-tight mt-10">
-                  로그인, 회원가입을 진행해주세요.
+                  로그인 · 회원가입을 진행해주세요.
                 </span>
               </div>
               <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>

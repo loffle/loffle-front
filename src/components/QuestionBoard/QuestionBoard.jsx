@@ -2,13 +2,16 @@ import React, { useCallback, useRef, useState } from 'react';
 import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 import Loading from '../Loading';
 import Question from './Question';
+import QuestionCreate from './QuestionCreate';
 import CreateButton from '../CreateButton';
+import { useEffect } from 'react';
 
 const QuestionBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const {
     posts: questions,
+    setPosts: setQuestions,
     firstLoading,
     loading,
     hasMore,
@@ -33,50 +36,68 @@ const QuestionBoard = (props) => {
     [loading, hasMore]
   );
 
+  //Create Mode
+  const [createMode, setCreateMode] = useState(false);
+  const handleCreateMode = () => {
+    setCreateMode(!createMode);
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       {firstLoading && <Loading />}
       {firstLoading ||
-        (questions && (
-          <div className="max-w-480 min-h-screen">
-            <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-              <h1 className="text-xl font-bold">QnA</h1>
+        (questions &&
+          (createMode ? (
+            <QuestionCreate
+              handleCreateMode={handleCreateMode}
+              setQuestions={setQuestions}
+            />
+          ) : (
+            <div className="max-w-480 min-h-screen">
+              <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+                <h1 className="text-xl font-bold">QnA</h1>
+              </div>
+
+              {questions.map((question, index) => {
+                if (questions.length === index + 1) {
+                  return (
+                    <Question
+                      key={question.id}
+                      question={question}
+                      lastQuestionElementRef={lastQuestionElementRef}
+                    ></Question>
+                  );
+                } else {
+                  return (
+                    <Question key={question.id} question={question}></Question>
+                  );
+                }
+              })}
+
+              {firstLoading ||
+                (questions.length === 0 && (
+                  <div className="flex justify-center pt-80">
+                    <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
+                  </div>
+                ))}
+
+              {hasMore && loading && (
+                <div
+                  className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-10 mx-auto"
+                  style={{ borderTop: `5px solid #353535` }}
+                ></div>
+              )}
             </div>
-
-            {questions.map((question, index) => {
-              if (questions.length === index + 1) {
-                return (
-                  <Question
-                    key={question.id}
-                    question={question}
-                    lastQuestionElementRef={lastQuestionElementRef}
-                  ></Question>
-                );
-              } else {
-                return (
-                  <Question key={question.id} question={question}></Question>
-                );
-              }
-            })}
-
-            {firstLoading ||
-              (questions.length === 0 && (
-                <div className="flex justify-center pt-80">
-                  <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
-                </div>
-              ))}
-
-            {hasMore && loading && (
-              <div
-                className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-10 mx-auto"
-                style={{ borderTop: `5px solid #353535` }}
-              ></div>
-            )}
-          </div>
-        ))}
+          )))}
 
       {localStorage.access_token &&
-        (firstLoading || <CreateButton to={'/community/questions/create'} />)}
+        (firstLoading || createMode || (
+          <CreateButton handleCreateMode={handleCreateMode} />
+        ))}
     </>
   );
 };

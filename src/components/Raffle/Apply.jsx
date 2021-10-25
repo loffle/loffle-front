@@ -41,7 +41,10 @@ const Apply = ({
         }
       })
       .then((result) => {
-        console.log(result);
+        if (result.ordinal_number === raffle.target_quantity) {
+          //n번째 응모의 n이 목표 수량과 같을때 새로고침
+          window.location.reload();
+        }
         setOrdinalNumber(result.ordinal_number);
         handleMessageModal();
         setRaffle({

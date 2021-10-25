@@ -184,16 +184,19 @@ const ReviewDetail = ({ review }) => {
           </div>
           {/* image */}
           <img
-            src="http://benzol4.com/wp-content/uploads/2018/11/blog-ph-1.jpg"
+            //src="http://benzol4.com/wp-content/uploads/2018/11/blog-ph-1.jpg"
+            src={`https://source.unsplash.com/collection/${reviewDetail.id}`}
             alt="main"
+            className="w-full h-vw object-cover max-h-480"
           />
 
           {/* related item */}
           <div className="flex p-4 border-b border-gray-border">
             <img
-              src="http://benzol4.com/wp-content/uploads/2018/11/blog-ph-1.jpg"
+              //src="http://benzol4.com/wp-content/uploads/2018/11/blog-ph-1.jpg"
+              src={`https://source.unsplash.com/collection/${reviewDetail.id}`}
               alt="thumbnail"
-              className="w-16 rounded-lg"
+              className="w-16 h-16 rounded-lg"
             />
             <div className="ml-2 text-sm">
               <span className="line-clamp-2 pr-2">

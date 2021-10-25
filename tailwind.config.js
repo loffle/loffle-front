@@ -4,6 +4,10 @@ module.exports = {
   theme: {
     maxWidth: {
       480: '480px',
+      280: '280px',
+    },
+    maxHeight: {
+      480: '480px',
     },
     fontFamily: {
       body: ['Roboto'],
@@ -29,11 +33,20 @@ module.exports = {
           border: '#e3e3e3',
           input: '#e5e7eb',
           social: '#737373',
+          raffle: '#BABABA',
+          deactivate: '#A39F9F',
+          activate: '#655D5D',
         },
         modal: '#00000080',
       },
       zIndex: {
         60: '60',
+      },
+      boxShadow: {
+        btn: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      },
+      height: {
+        vw: '100vw',
       },
     },
   },

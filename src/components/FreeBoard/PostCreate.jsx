@@ -1,18 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import API from '../../API';
 import cookie from 'react-cookies';
 //
 import attachment from '../../images/attachment.svg';
 import pencil from '../../images/pencil.svg';
 
-const PostCreate = (props) => {
-  // const [logoLoading, setLogoLoading] = useState(false);
-  // const [fileUrl, setFileUrl] = useState({ file: "", previewURL: "" });
+const PostCreate = ({ handleCreateMode }) => {
   window.scrollTo(0, 0);
   const navigate = useNavigate(); //Naviagte hook 사용
-
   const attachmentInput = useRef();
 
   const [inputs, setInputs] = useState({
@@ -24,24 +20,12 @@ const PostCreate = (props) => {
   const { title, content } = inputs;
 
   const onChange = (e) => {
-    //   //e.preventDefault();
-    //   let reader = new FileReader();
-    //   let file = e.target.files[0];
-    //   reader.onloadend = () => {
-    //     setFileUrl({
-    //       file: file,
-    //       previewURL: reader.result,
-    //     });
-    //   };
-    //   reader.readAsDataURL(file);
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setInputs({
       ...inputs, // 기존의 input 객체를 복사한 뒤
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
-
-  //const token = cookie.load("csrftoken");
 
   const handleCreate = () => {
     if (!title || !content) {
@@ -79,9 +63,12 @@ const PostCreate = (props) => {
         {/* header */}
         <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
           <h1 className="text-xl font-bold">자유게시판 &gt; 글 작성</h1>
-          <Link to={{ pathname: '/community/posts' }}>
-            <span className="text-gray h-5 ml-5 bg-white">뒤로가기</span>
-          </Link>
+          <span
+            className="text-gray h-5 ml-5 bg-white"
+            onClick={handleCreateMode}
+          >
+            뒤로가기
+          </span>
         </div>
         {/* form */}
         <form className="m-1 border-2 border-gray-border shadow-lg rounded-lg">

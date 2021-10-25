@@ -1,10 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 //
 import ReviewDetail from './ReviewDetail';
 import Search from '../Search';
 import Loading from '../Loading';
 import CreateButton from '../CreateButton';
+import ReviewCreate from './ReviewCreate';
 //
 import search from '../../images/search_btn.svg';
 
@@ -15,6 +16,7 @@ const ReviewBoard = (props) => {
 
   const {
     posts: reviews, //이거 때매 또 1시간 후... 빨간글씨면 의심하자
+    setPosts: setReviews,
     firstLoading,
     loading,
     hasMore,
@@ -52,9 +54,19 @@ const ReviewBoard = (props) => {
   //검색어 기록 및 불러오기
   const [lastSearchTerm, setLastSearchTerm] = useState('');
 
+  //Create Mode
+  const [createMode, setCreateMode] = useState(false);
+  const handleCreateMode = () => {
+    setCreateMode(!createMode);
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
-      {firstLoading && <Loading />}
+      {/* {firstLoading && <Loading />} */}
       {isSearchModalOn && (
         <Search
           setPageNumber={setPageNumber}
@@ -64,66 +76,77 @@ const ReviewBoard = (props) => {
           handleSearchModal={handleSearchModal}
         />
       )}
-      {firstLoading ||
-        (reviews && (
-          <div className="max-w-480 min-h-screen">
-            <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-              <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
-              <div className="flex items-center">
-                <button onClick={() => handleSearchModal()}>
-                  <img className="w-4 h-4" src={search} alt="search-button" />
-                </button>
-                <select
-                  onChange={handleSelect}
-                  className="text-gray h-5 ml-5 bg-white"
-                >
-                  <option>최신순 </option>
-                  <option>과거순 </option>
-                </select>
-              </div>
-            </header>
-
-            {reviews.map((review, index) => {
-              if (reviews.length === index + 1) {
-                return (
-                  <div key={review.id} ref={lastReviewElementRef}>
-                    <ReviewDetail
-                      review={review}
-                      loading={loading}
-                    ></ReviewDetail>
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={review.id}>
-                    <ReviewDetail
-                      review={review}
-                      loading={loading}
-                    ></ReviewDetail>
-                  </div>
-                );
-              }
-            })}
-
-            {firstLoading ||
-              (reviews.length === 0 && (
-                <div className="flex justify-center pt-80">
-                  <h1 className="text-lg">검색 내역 혹은 게시글이 없습니다.</h1>
+      {
+        //firstLoading ||
+        reviews &&
+          (createMode ? (
+            <ReviewCreate
+              handleCreateMode={handleCreateMode}
+              setReviews={setReviews}
+            />
+          ) : (
+            <div className="max-w-480 min-h-screen">
+              <header className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+                <h1 className="text-xl font-bold">당첨 후기 게시판</h1>
+                <div className="flex items-center">
+                  <button onClick={() => handleSearchModal()}>
+                    <img className="w-4 h-4" src={search} alt="search-button" />
+                  </button>
+                  <select
+                    onChange={handleSelect}
+                    className="text-gray h-5 ml-5 bg-white"
+                  >
+                    <option>최신순 </option>
+                    <option>과거순 </option>
+                  </select>
                 </div>
-              ))}
+              </header>
 
-            {hasMore && loading && (
-              <div
-                className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-5 mx-auto"
-                style={{ borderTop: `5px solid #353535` }}
-              ></div>
-            )}
-          </div>
-        ))}
+              {reviews.map((review, index) => {
+                if (reviews.length === index + 1) {
+                  return (
+                    <div key={review.id} ref={lastReviewElementRef}>
+                      <ReviewDetail
+                        review={review}
+                        loading={loading}
+                      ></ReviewDetail>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={review.id}>
+                      <ReviewDetail
+                        review={review}
+                        loading={loading}
+                      ></ReviewDetail>
+                    </div>
+                  );
+                }
+              })}
+
+              {firstLoading ||
+                (reviews.length === 0 && (
+                  <div className="flex justify-center pt-80">
+                    <h1 className="text-lg">
+                      검색 내역 혹은 게시글이 없습니다.
+                    </h1>
+                  </div>
+                ))}
+
+              {hasMore && loading && (
+                <div
+                  className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-5 mx-auto"
+                  style={{ borderTop: `5px solid #353535` }}
+                ></div>
+              )}
+            </div>
+          ))
+      }
 
       {firstLoading ||
+        createMode ||
         (localStorage.access_token && (
-          <CreateButton to={'/community/reviews/create'} />
+          <CreateButton handleCreateMode={handleCreateMode} />
         ))}
     </>
   );

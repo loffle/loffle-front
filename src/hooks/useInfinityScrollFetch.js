@@ -63,10 +63,10 @@ export const useInfinityScrollFetch = (
       setPosts([]);
       switch (order) {
         case '최신순':
-          fetchData();
+          fetchData('', searchTerm);
           break;
         case '과거순':
-          fetchData('created_at');
+          fetchData('created_at', searchTerm);
           break;
         default:
       }
@@ -87,6 +87,7 @@ export const useInfinityScrollFetch = (
 
   return {
     posts,
+    setPosts,
     firstLoading,
     loading,
     postsPerPage,
