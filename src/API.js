@@ -47,6 +47,12 @@ const apiSettings = {
       headers: myHeaders,
     });
   },
+  getGivenNumber: (id) => {
+    return fetch(`${PROXY}/raffles/${id}/candidates`, {
+      method: 'GET',
+      headers: myHeaders,
+    });
+  },
   getProduct: (id) => {
     return fetch(`${PROXY}/products/${id}`, {
       method: 'GET',

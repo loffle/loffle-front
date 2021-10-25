@@ -66,7 +66,7 @@ const ReviewBoard = (props) => {
 
   return (
     <>
-      {firstLoading && <Loading />}
+      {/* {firstLoading && <Loading />} */}
       {isSearchModalOn && (
         <Search
           setPageNumber={setPageNumber}
@@ -76,8 +76,9 @@ const ReviewBoard = (props) => {
           handleSearchModal={handleSearchModal}
         />
       )}
-      {firstLoading ||
-        (reviews &&
+      {
+        //firstLoading ||
+        reviews &&
           (createMode ? (
             <ReviewCreate
               handleCreateMode={handleCreateMode}
@@ -139,7 +140,8 @@ const ReviewBoard = (props) => {
                 ></div>
               )}
             </div>
-          )))}
+          ))
+      }
 
       {firstLoading ||
         createMode ||

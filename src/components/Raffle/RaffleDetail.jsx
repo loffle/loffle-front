@@ -47,6 +47,8 @@ const RaffleDetail = (props) => {
         }
   );
 
+  const [givenNumbers, setGivenNumbers] = useState([]);
+
   //실시간 응모자 리스트 모달
   const [isCandidateModalOn, setIsCandidateModalOn] = useState(false);
   const handleCandidateModal = (e) => {
@@ -74,7 +76,6 @@ const RaffleDetail = (props) => {
   //결과 확인 모달
   const [isResultModalOn, setIsResultModalOn] = useState(false);
   const handleResultModal = (e) => {
-    console.log('hi');
     if (localStorage.access_token) {
       setIsResultModalOn(!isResultModalOn);
       isResultModalOn //모달 켜져있을 시 스크롤 방지
@@ -84,6 +85,21 @@ const RaffleDetail = (props) => {
       if (window.confirm('로그인 화면으로 이동할까요?✨')) {
         navigate('/login');
       }
+    }
+  };
+
+  const fetchGivenNumber = (progress, applyOrNot) => {
+    if (progress === 'done' && applyOrNot === true) {
+      //응모 done && 사용자가 응모를 한 상태
+      API.getGivenNumber(raffleId)
+        .then((response) => response.json())
+        .then((result) => {
+          const tmp = result.filter(
+            (obj) => obj.user === localStorage.access_nickname
+          )[0]?.given_numbers; //결과가 있으면 저장 없으면 pass
+          setGivenNumbers(tmp);
+        })
+        .catch((error) => console.log('error', error));
     }
   };
 
@@ -102,6 +118,7 @@ const RaffleDetail = (props) => {
           });
           setLoading(false); //제품 가져오기에 두기에 너무 로딩이 길다
           fetchProduct(result.product_preview.id);
+          fetchGivenNumber(result.progress, result.apply_or_not);
         })
         .catch((error) => console.log('error', error));
 
@@ -116,13 +133,18 @@ const RaffleDetail = (props) => {
           })
           .catch((error) => console.log('error', error));
       };
+    } else {
+      //받아오는 스테이트가 있을때
+      fetchGivenNumber(raffle.progress, raffle.apply_or_not);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const PROGRESS_FUNCTION = {
     ongoing: () => handleApplyModal(),
-    done: () => handleResultModal(),
+    done: () => {
+      handleResultModal();
+    },
   };
 
   return (
@@ -151,6 +173,7 @@ const RaffleDetail = (props) => {
           handleMessageModal={handleResultModal}
           raffle={raffle}
           product={product}
+          givenNumbers={givenNumbers}
         />
       )}
 
@@ -193,7 +216,11 @@ const RaffleDetail = (props) => {
               <p className=" text-gray">{product.brand}</p>
               <p className="mt-4 text-xl font-bold">
                 {PROGRESS_LIST[raffle.progress].liveOrTotal} 참여 인원 : [{' '}
-                <span className="text-secondary">
+                <span
+                  className={
+                    'text-' + PROGRESS_LIST[raffle.progress].progressColor
+                  }
+                >
                   {raffle.apply_count} / {raffle.target_quantity}
                 </span>{' '}
                 명 ]
@@ -210,7 +237,10 @@ const RaffleDetail = (props) => {
                   PROGRESS_LIST[raffle.progress].btnColor +
                   ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 mt-6 shadow-lg ' +
                   ((raffle.progress === 'waiting' ||
-                    raffle.progress === 'failed') &&
+                    raffle.progress === 'failed' ||
+                    localStorage.access_nickname === undefined || //미인증 사용자
+                    (raffle.progress === 'done' &&
+                      raffle.apply_or_not === false)) && //응모가 완료인 상태인데 응모를 하지 않은 사용자
                     'hidden')
                 }
                 disabled={raffle.progress === 'ongoing' && raffle.apply_or_not} //응모가 진행중이면서 응모를 완료한 상태

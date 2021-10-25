@@ -48,7 +48,6 @@ const Ticket = ({
           <span className="text-xl font-bold">내 응모권</span>
           <div className="py-3 flex justify-center">
             <span className="text-3xl font-bold text-primary align-middle">
-              {console.log(numOfTickets)}
               <CountUp
                 start={0}
                 end={numOfTickets}
