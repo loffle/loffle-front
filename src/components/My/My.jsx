@@ -1,6 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useState, useEffect } from 'react';
 import CountUp from 'react-countup';
 import API from '../../API';
 import { useNavigate } from 'react-router-dom';
