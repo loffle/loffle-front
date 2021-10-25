@@ -128,7 +128,7 @@ const Index = (props) => {
                     alt="thumbnail"
                     className="w-32 h-44 rounded-lg bg-cover p-2 flex flex-col justify-between ml-5 shadow-btn"
                     style={{
-                      backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.5),rgba(0,0,0,0) 30%), url(https://source.unsplash.com/collection/${review.id})`,
+                      backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.5),rgba(0,0,0,0) 30%), url("https://picsum.photos/id/${review.id}/128/176")`,
                     }}
                   >
                     <img className="w-9 h-9" src={profile} alt="profile"></img>
