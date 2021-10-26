@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { PROXY } from '../../config';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import API from '../../API';
 import ImageSwiper from '../Raffle/ImageSwiper';
-import axios from 'axios';
 import Timer from '../Raffle/Timer';
 import Post from '../FreeBoard/Post';
 import Notice from '../NoticeBoard/Notice';
+import PostSkeleton from '../FreeBoard/Skeleton';
+import NoticeSkeleton from '../NoticeBoard/Skeleton';
+//
 import profile from '../../images/profile.svg';
 
 const Index = (props) => {
@@ -47,7 +50,6 @@ const Index = (props) => {
         (value) => value.progress === 'ongoing'
       );
       setRaffle((prev) => tmp);
-      setLoading(false);
     });
 
     API.getCategory('posts')
@@ -68,6 +70,7 @@ const Index = (props) => {
       .then((response) => response.json())
       .then((result) => {
         setNotices(result.results.slice(0, 3));
+        setLoading(false);
       })
       .catch((error) => console.log('error', error));
 
@@ -78,7 +81,7 @@ const Index = (props) => {
     <>
       <div className="max-w-480 min-h-screen">
         {/* ImageSwiper */}
-        <section className="flex items-center justify-center ">
+        <section className="flex items-center justify-center w-full h-vw max-h-480">
           <ImageSwiper product={banner} category={'index'} />
         </section>
 
@@ -106,6 +109,13 @@ const Index = (props) => {
             <span className="text-gray text-sm">자유게시판</span>
           </Link>
           <div className="shadow-btn rounded-xl my-2">
+            {loading && (
+              <>
+                <PostSkeleton />
+                <PostSkeleton />
+                <PostSkeleton />
+              </>
+            )}
             {posts.length > 0 &&
               posts.map((post) => <Post key={post.id} post={post} />)}
           </div>
@@ -123,7 +133,7 @@ const Index = (props) => {
           <div className="rounded-xl mt-5 w-auto">
             <div className="whitespace-nowrap overflow-x-scroll flex pr-5">
               {reviews.map((review) => (
-                <Link to={`/community/reviews/${review.id}`}>
+                <Link to={`/community/reviews/${review.id}`} key={review.id}>
                   <div
                     alt="thumbnail"
                     className="w-32 h-44 rounded-lg bg-cover p-2 flex flex-col justify-between ml-5 shadow-btn"
@@ -148,6 +158,7 @@ const Index = (props) => {
             <span className="text-gray text-sm">공지사항</span>
           </Link>
           <div className="shadow-btn rounded-xl my-2">
+            {loading && <NoticeSkeleton />}
             {notices.map((notice) => (
               <Notice key={notice.id} notice={notice} />
             ))}

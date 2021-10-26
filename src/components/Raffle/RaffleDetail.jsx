@@ -191,7 +191,7 @@ const RaffleDetail = (props) => {
             </RaffleHeader>
 
             {/* image swiper */}
-            <div className=" bg-secondary-light pb-8 relative">
+            <div className=" bg-secondary-light relative">
               <div
                 className={
                   'px-5 py-1 m-5 bg-white absolute z-20 rounded-full shadow-md text-' +
@@ -200,7 +200,7 @@ const RaffleDetail = (props) => {
               >
                 {PROGRESS_LIST[raffle.progress].name}
               </div>
-              <div className="flex items-center justify-center ">
+              <div className="flex items-center justify-center w-full h-vw max-h-480">
                 <div className="w-11/12 h-11/12">
                   <ImageSwiper product={product} />
                 </div>

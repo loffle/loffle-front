@@ -5,6 +5,7 @@ import Question from './Question';
 import QuestionCreate from './QuestionCreate';
 import CreateButton from '../CreateButton';
 import { useEffect } from 'react';
+import Skeleton from './Skeleton';
 
 const QuestionBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -48,51 +49,54 @@ const QuestionBoard = (props) => {
 
   return (
     <>
-      {firstLoading && <Loading />}
-      {firstLoading ||
-        (questions &&
-          (createMode ? (
-            <QuestionCreate
-              handleCreateMode={handleCreateMode}
-              setQuestions={setQuestions}
-            />
-          ) : (
-            <div className="max-w-480 min-h-screen">
-              <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-                <h1 className="text-xl font-bold">QnA</h1>
+      {createMode ? (
+        <QuestionCreate
+          handleCreateMode={handleCreateMode}
+          setQuestions={setQuestions}
+        />
+      ) : (
+        <div className="max-w-480 min-h-screen">
+          <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+            <h1 className="text-xl font-bold">QnA</h1>
+          </div>
+
+          {firstLoading && (
+            <>
+              <Skeleton />
+              <Skeleton />
+            </>
+          )}
+          {questions.map((question, index) => {
+            if (questions.length === index + 1) {
+              return (
+                <Question
+                  key={question.id}
+                  question={question}
+                  lastQuestionElementRef={lastQuestionElementRef}
+                ></Question>
+              );
+            } else {
+              return (
+                <Question key={question.id} question={question}></Question>
+              );
+            }
+          })}
+
+          {firstLoading ||
+            (questions.length === 0 && (
+              <div className="flex justify-center pt-80">
+                <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
               </div>
+            ))}
 
-              {questions.map((question, index) => {
-                if (questions.length === index + 1) {
-                  return (
-                    <Question
-                      key={question.id}
-                      question={question}
-                      lastQuestionElementRef={lastQuestionElementRef}
-                    ></Question>
-                  );
-                } else {
-                  return (
-                    <Question key={question.id} question={question}></Question>
-                  );
-                }
-              })}
-
-              {firstLoading ||
-                (questions.length === 0 && (
-                  <div className="flex justify-center pt-80">
-                    <h1 className="text-lg">문의하신 내역이 없습니다.</h1>
-                  </div>
-                ))}
-
-              {hasMore && loading && (
-                <div
-                  className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-10 mx-auto"
-                  style={{ borderTop: `5px solid #353535` }}
-                ></div>
-              )}
-            </div>
-          )))}
+          {hasMore && loading && (
+            <div
+              className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-10 mx-auto"
+              style={{ borderTop: `5px solid #353535` }}
+            ></div>
+          )}
+        </div>
+      )}
 
       {localStorage.access_token &&
         (firstLoading || createMode || (
