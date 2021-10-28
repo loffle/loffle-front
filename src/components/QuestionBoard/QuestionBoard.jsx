@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
-import Loading from '../Loading';
 import Question from './Question';
 import QuestionCreate from './QuestionCreate';
 import CreateButton from '../CreateButton';

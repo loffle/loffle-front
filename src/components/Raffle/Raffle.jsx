@@ -108,6 +108,9 @@ const Raffle = ({ raffle }) => {
             PROGRESS_LIST[raffle.progress].btnColor +
             ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
           }
+          style={{
+            backgroundColor: raffle.progress === 'failed' ? '#A39F9F' : '',
+          }}
         >
           <span className="text-xl">
             {raffle.progress === 'waiting' && '응모 확인'}

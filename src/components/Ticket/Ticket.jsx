@@ -19,7 +19,6 @@ const Ticket = ({
     API.buyTicket(data.ticket)
       .then((response) => {
         if (response.ok) {
-          console.log('티켓 구매 성공✅');
           const quantity = ticketList.filter(
             (ticket) => ticket.id === +data.ticket
           )[0].quantity;
