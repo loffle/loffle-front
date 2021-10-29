@@ -16,7 +16,7 @@ const PROGRESS_LIST = {
     name: '진행중',
     progressColor: 'primary',
     textColor: '',
-    btnColor: 'primary',
+    btnColor: '',
     liveOrTotal: '실시간',
   },
   done: {
@@ -35,4 +35,15 @@ const PROGRESS_LIST = {
   },
 };
 
-export { PROXY, PROGRESS_LIST };
+const PICK_COLOR = (progress, applyOrNot) => {
+  if (progress === 'failed') return '#A39F9F'; //배포시 issue 해결
+  if (progress === 'ongoing') {
+    // applyOrNot 조건은 함수 필요해서
+    if (applyOrNot) {
+      return '#A6A6A6';
+    }
+    return '#3C4875';
+  }
+};
+
+export { PROXY, PROGRESS_LIST, PICK_COLOR };

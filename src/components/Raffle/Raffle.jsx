@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PROGRESS_LIST } from '../../config';
+import { PROGRESS_LIST, PICK_COLOR } from '../../config';
 import API from '../../API';
 //
 import Timer from './Timer';
@@ -43,7 +43,7 @@ const Raffle = ({ raffle }) => {
 
   return (
     <>
-      <div className=" bg-secondary-light pb-8 relative">
+      <div className=" bg-secondary-light relative">
         <div
           className={
             'px-5 py-1 m-5 bg-white absolute z-20 rounded-full shadow-md text-' +
@@ -52,7 +52,7 @@ const Raffle = ({ raffle }) => {
         >
           {PROGRESS_LIST[raffle.progress].name}
         </div>
-        <div className="flex items-center justify-center ">
+        <div className="flex items-center justify-center w-full h-vw max-h-480">
           <div className="w-11/12 h-11/12">
             <ImageSwiper product={product} />
           </div>
@@ -101,13 +101,13 @@ const Raffle = ({ raffle }) => {
           to={{ pathname: `/raffles/${raffle.id}` }}
           state={{ raffle, product }}
           className={
-            // (raffle.apply_or_not
-            //   ? 'bg-gray'
-            //   : 'bg-' + PROGRESS_LIST[raffle.progress].btnColor) +
             'bg-' +
             PROGRESS_LIST[raffle.progress].btnColor +
             ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
           }
+          style={{
+            backgroundColor: PICK_COLOR(raffle.progress, raffle.apply_or_not),
+          }}
         >
           <span className="text-xl">
             {raffle.progress === 'waiting' && '응모 확인'}

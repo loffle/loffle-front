@@ -19,7 +19,6 @@ const Ticket = ({
     API.buyTicket(data.ticket)
       .then((response) => {
         if (response.ok) {
-          console.log('티켓 구매 성공✅');
           const quantity = ticketList.filter(
             (ticket) => ticket.id === +data.ticket
           )[0].quantity;
@@ -55,7 +54,7 @@ const Ticket = ({
                 duration={0.5}
                 separator=","
               />
-              <span className="text-xl font-bold align-middle"> 개</span>
+              <span className="text-xl font-bold align-middle"> 장</span>
             </span>
           </div>
 

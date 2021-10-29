@@ -4,7 +4,7 @@ import axios from 'axios';
 import { PROXY } from '../../config';
 //
 import RaffleHeader from './RaffleHeader';
-import Loading from '../Loading';
+import Skeleton from './Skeleton';
 import Raffle from './Raffle';
 
 const RaffleList = (props) => {
@@ -44,20 +44,24 @@ const RaffleList = (props) => {
 
   return (
     <>
-      {firstLoading && <Loading />}
-      {firstLoading ||
-        (raffles.length > 0 && (
-          <div className="max-w-480 min-h-screen">
-            <RaffleHeader>
-              <h1 className="text-xl font-bold">응모하기</h1>
-            </RaffleHeader>
+      {
+        <div className="max-w-480 min-h-screen">
+          <RaffleHeader>
+            <h1 className="text-xl font-bold">응모하기</h1>
+          </RaffleHeader>
 
-            {raffles.map((raffle) => (
-              <Raffle key={raffle.id} raffle={raffle} />
-            ))}
-          </div>
-        ))}
-      {firstLoading || (
+          {firstLoading && (
+            <>
+              <Skeleton />
+              <Skeleton />
+            </>
+          )}
+          {raffles?.map((raffle) => (
+            <Raffle key={raffle.id} raffle={raffle} />
+          ))}
+        </div>
+      }
+      {
         <div className="px-7">
           <button
             onClick={loadMore}
@@ -104,7 +108,7 @@ const RaffleList = (props) => {
             </span>
           </button>
         </div>
-      )}
+      }
       <div className="pt-5"></div>
     </>
   );

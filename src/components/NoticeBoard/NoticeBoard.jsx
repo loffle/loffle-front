@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 //
-import Loading from '../Loading';
+import Skeleton from './Skeleton';
 import Notice from './Notice';
 
 const NoticeBoard = (props) => {
@@ -35,36 +35,38 @@ const NoticeBoard = (props) => {
 
   return (
     <>
-      {firstLoading && <Loading />}
-      {firstLoading ||
-        (notices && (
-          <div className="max-w-480 min-h-screen">
-            <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
-              <h1 className="text-xl font-bold">공지사항</h1>
-            </div>
+      <div className="max-w-480 min-h-screen">
+        <div className="flex items-center justify-between mb-1 p-5 h-14 border-b border-gray-border">
+          <h1 className="text-xl font-bold">공지사항</h1>
+        </div>
 
-            {notices.map((notice, index) => {
-              if (notices.length === index + 1) {
-                return (
-                  <Notice
-                    key={notice.id}
-                    notice={notice}
-                    lastNoticeElementRef={lastNoticeElementRef}
-                  ></Notice>
-                );
-              } else {
-                return <Notice key={notice.id} notice={notice}></Notice>;
-              }
-            })}
+        {firstLoading && (
+          <>
+            <Skeleton />
+            <Skeleton />
+          </>
+        )}
+        {notices.map((notice, index) => {
+          if (notices.length === index + 1) {
+            return (
+              <Notice
+                key={notice.id}
+                notice={notice}
+                lastNoticeElementRef={lastNoticeElementRef}
+              ></Notice>
+            );
+          } else {
+            return <Notice key={notice.id} notice={notice}></Notice>;
+          }
+        })}
 
-            {hasMore && loading && (
-              <div
-                className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-5 mx-auto"
-                style={{ borderTop: `5px solid #353535` }}
-              ></div>
-            )}
-          </div>
-        ))}
+        {hasMore && loading && (
+          <div
+            className="border-4 border-gray-light rounded-full w-8 h-8 animate-spin my-5 mx-auto"
+            style={{ borderTop: `5px solid #353535` }}
+          ></div>
+        )}
+      </div>
     </>
   );
 };

@@ -147,6 +147,16 @@ const RaffleDetail = (props) => {
     },
   };
 
+  const applyOrCheck = () => {
+    if (localStorage.access_token) {
+      PROGRESS_FUNCTION[raffle.progress]();
+    } else {
+      if (window.confirm('로그인 화면으로 이동할까요?✨')) {
+        navigate('/login');
+      }
+    }
+  };
+
   return (
     <>
       {isCandidateModalOn && (
@@ -191,7 +201,7 @@ const RaffleDetail = (props) => {
             </RaffleHeader>
 
             {/* image swiper */}
-            <div className=" bg-secondary-light pb-8 relative">
+            <div className=" bg-secondary-light relative">
               <div
                 className={
                   'px-5 py-1 m-5 bg-white absolute z-20 rounded-full shadow-md text-' +
@@ -200,7 +210,7 @@ const RaffleDetail = (props) => {
               >
                 {PROGRESS_LIST[raffle.progress].name}
               </div>
-              <div className="flex items-center justify-center ">
+              <div className="flex items-center justify-center w-full h-vw max-h-480">
                 <div className="w-11/12 h-11/12">
                   <ImageSwiper product={product} />
                 </div>
@@ -226,23 +236,28 @@ const RaffleDetail = (props) => {
                 명 ]
               </p>
 
-              {/* apply raffle */}
+              {/* apply raffle || check result */}
               <button
-                onClick={PROGRESS_FUNCTION[raffle.progress]}
+                onClick={applyOrCheck}
                 className={
-                  // (raffle.apply_or_not
-                  //   ? 'bg-gray'
-                  //   : 'bg-' + PROGRESS_LIST[raffle.progress].btnColor) +
                   'bg-' +
                   PROGRESS_LIST[raffle.progress].btnColor +
                   ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 mt-6 shadow-lg ' +
                   ((raffle.progress === 'waiting' ||
                     raffle.progress === 'failed' ||
-                    localStorage.access_nickname === undefined || //미인증 사용자
+                    // localStorage.access_nickname === undefined || //미인증 사용자
                     (raffle.progress === 'done' &&
                       raffle.apply_or_not === false)) && //응모가 완료인 상태인데 응모를 하지 않은 사용자
                     'hidden')
                 }
+                style={{
+                  backgroundColor:
+                    raffle.progress === 'ongoing'
+                      ? raffle.apply_or_not
+                        ? '#A6A6A6'
+                        : '#3C4875'
+                      : '',
+                }}
                 disabled={raffle.progress === 'ongoing' && raffle.apply_or_not} //응모가 진행중이면서 응모를 완료한 상태
               >
                 <span
@@ -270,7 +285,7 @@ const RaffleDetail = (props) => {
 
               {/* ongoing && 응모 완료자 */}
               {raffle.progress === 'ongoing' && //
-                raffle.apply_or_not && ( //조건문 잘못된거 같은데; 안고쳐지누
+                raffle.apply_or_not && (
                   <div className="text-red">
                     <span className="mt-6 block">
                       정원 충족시 [추첨]을 시작합니다.
@@ -282,7 +297,7 @@ const RaffleDetail = (props) => {
 
               {/* failed && 응모 완료자 */}
               {raffle.progress === 'failed' && //
-                raffle.apply_or_not && ( //조건문 잘못된거 같은데; 안고쳐지누
+                raffle.apply_or_not && (
                   <div className="text-red">
                     <span className="mt-6 block">아쉽게도 참여인원 미달로</span>
                     <span className="block">추첨을 진행하지 않습니다.</span>

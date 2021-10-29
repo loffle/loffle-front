@@ -25,7 +25,9 @@ const ImageSwiper = ({ product, category }) => {
     >
       {product.images.map((image) => (
         <SwiperSlide key={image.id}>
-          <img src={image.src} alt="product" />
+          <div style={{ backgroundColor: image.bg }}>
+            <img src={image.src} alt="product" />
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>

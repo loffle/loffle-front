@@ -61,7 +61,7 @@ const apiSettings = {
   getCandidate: (id) => {
     return axios({
       method: 'GET',
-      url: `${PROXY}/raffles/${id}/users.json`,
+      url: `${PROXY}/raffles/${id}/applicants.json`,
     });
   },
   postPost: (category, option) => {

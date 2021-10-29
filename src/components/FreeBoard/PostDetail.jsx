@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import API from '../../API';
 //
-import Loading from '../Loading';
 import PostDetailContent from './PostDetailContent';
 import PostDetailUpdate from './PostDetailUpdate';
 
 const PostDetail = (props) => {
+  const navigate = useNavigate();
   const { postId } = useParams();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [post, setPost] = useState([]);
 
   //수정 토글 버튼
@@ -19,12 +19,18 @@ const PostDetail = (props) => {
 
   useEffect(() => {
     function fetchData() {
-      setLoading(true);
-
       API.getPost('posts', postId)
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) return response.json();
+          if (response.status === 404) {
+            navigate('/error');
+          }
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        })
         .then((result) => setPost(result))
-        .catch((error) => console.log('error', error));
+        .catch((error) => console.log(error));
 
       setLoading(false);
     }
@@ -34,8 +40,7 @@ const PostDetail = (props) => {
 
   return (
     <>
-      {loading && <Loading />}
-      {loading || isUpdateOn ? (
+      {isUpdateOn ? (
         <PostDetailUpdate
           postId={postId}
           post={post}

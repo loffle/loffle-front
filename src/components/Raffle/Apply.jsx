@@ -35,9 +35,10 @@ const Apply = ({
         if (response.ok) return response.json();
         //[issue 해결] response.ok 하면 return을 꼭 해주자!
         else {
-          if (response.status === 400) {
-            throw new Error('소유한 티켓이 없습니다.');
-          }
+          return response.text().then((text) => {
+            throw new Error(text);
+            //ticket 없음 or 응모 실패
+          });
         }
       })
       .then((result) => {
@@ -50,6 +51,7 @@ const Apply = ({
         setRaffle({
           ...raffle,
           apply_or_not: true,
+          apply_count: raffle.apply_count + 1,
         });
         window.history.replaceState(null, '');
         //[issue 해결] location.state 날리기 -> 새로고침시 이전 state 남아있는거 날리기 -> raffle reload

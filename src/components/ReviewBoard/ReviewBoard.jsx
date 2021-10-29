@@ -3,11 +3,11 @@ import { useInfinityScrollFetch } from '../../hooks/useInfinityScrollFetch';
 //
 import ReviewDetail from './ReviewDetail';
 import Search from '../Search';
-import Loading from '../Loading';
 import CreateButton from '../CreateButton';
 import ReviewCreate from './ReviewCreate';
 //
 import search from '../../images/search_btn.svg';
+import Skeleton from './Skeleton';
 
 const ReviewBoard = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -102,6 +102,13 @@ const ReviewBoard = (props) => {
                 </div>
               </header>
 
+              {firstLoading && (
+                <>
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                </>
+              )}
               {reviews.map((review, index) => {
                 if (reviews.length === index + 1) {
                   return (
