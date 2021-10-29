@@ -189,8 +189,8 @@ const ReviewDetail = ({ review }) => {
             className="w-full h-vw object-cover max-h-480"
           />
 
-          {/* related item */}
-          <div className="flex p-4 border-b border-gray-border">
+          {/* related item - hidden 처리*/}
+          <div className="flex p-4 border-b border-gray-border hidden">
             <img
               src={`https://picsum.photos/id/${reviewDetail.id + 100}/64`}
               alt="thumbnail"

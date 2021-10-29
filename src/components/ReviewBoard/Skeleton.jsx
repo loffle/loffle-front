@@ -15,8 +15,8 @@ const Skeleton = (props) => (
     {/* image */}
     <div className="w-full h-vw  bg-gray-border rounded max-h-480" />
 
-    {/* related item */}
-    <div className="flex p-4 border-b border-gray-border">
+    {/* related item - hidden 처리*/}
+    <div className="flex p-4 border-b border-gray-border hidden">
       <div className="w-16 h-16 bg-gray-border rounded-lg" />
       <div className="ml-2">
         <div className="w-36 h-4 pr-2 bg-gray-border rounded"></div>
