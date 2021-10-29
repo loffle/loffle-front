@@ -41,6 +41,7 @@ module.exports = {
       },
       zIndex: {
         60: '60',
+        70: '70',
       },
       boxShadow: {
         btn: '0px 4px 4px rgba(0, 0, 0, 0.25)',

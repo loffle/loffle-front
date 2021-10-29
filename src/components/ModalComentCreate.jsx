@@ -76,7 +76,7 @@ const ModalComentCreate = ({
   };
 
   return (
-    <div className="max-w-480 fixed bottom-4 w-full flex items-center justify-between px-6 z-50">
+    <div className="max-w-480 fixed bottom-4 w-full flex items-center justify-between px-6 z-70">
       <div className="flex justify-between px-3 py-1 w-10/12 h-14 bg-white rounded-2xl shadow-lg">
         <input
           className="w-full outline-none"

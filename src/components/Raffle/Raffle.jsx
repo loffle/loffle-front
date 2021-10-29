@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PROGRESS_LIST } from '../../config';
+import { PROGRESS_LIST, PICK_COLOR } from '../../config';
 import API from '../../API';
 //
 import Timer from './Timer';
@@ -101,15 +101,12 @@ const Raffle = ({ raffle }) => {
           to={{ pathname: `/raffles/${raffle.id}` }}
           state={{ raffle, product }}
           className={
-            // (raffle.apply_or_not
-            //   ? 'bg-gray'
-            //   : 'bg-' + PROGRESS_LIST[raffle.progress].btnColor) +
             'bg-' +
             PROGRESS_LIST[raffle.progress].btnColor +
             ' w-full flex justify-center items-center hover:bg-opacity-80 text-white font-semibold rounded-lg px-4 py-3 my-6 shadow-lg'
           }
           style={{
-            backgroundColor: raffle.progress === 'failed' ? '#A39F9F' : '',
+            backgroundColor: PICK_COLOR(raffle.progress, raffle.apply_or_not),
           }}
         >
           <span className="text-xl">

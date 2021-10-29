@@ -54,7 +54,7 @@ const Ticket = ({
                 duration={0.5}
                 separator=","
               />
-              <span className="text-xl font-bold align-middle"> 개</span>
+              <span className="text-xl font-bold align-middle"> 장</span>
             </span>
           </div>
 
