@@ -6,6 +6,8 @@
 
 🔗 https://loffle.netlify.app/
 
+📌 로플(Loffle): 로또(Lotto) + 래플(Raffle) 의 합성어로 래플 서비스에 로또 추첨 방식을 도입한 웹 서비스
+
 <br>
 
 ## 🎨 Demo
