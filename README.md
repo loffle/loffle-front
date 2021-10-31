@@ -6,11 +6,9 @@
 
 🔗 https://loffle.netlify.app/
 
-📌 로플(Loffle): 로또(Lotto) + 래플(Raffle) 의 합성어로 래플 서비스에 로또 추첨 방식을 도입한 웹 서비스
-
-#
-
-|                                                   시작 페이지                                                   |                                                     로그인                                                      |                                                   응모권 구매                                                   |
+<br>
+## 🎨 Demo
+|                                                   <b>시작 페이지</b>                                                   |                                                     <b>로그인</b>                                                      |                                                   <b>응모권 구매</b>                                                   |
 | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
 | <img src=https://user-images.githubusercontent.com/24728385/139404425-e358076c-2d36-46fc-8e05-08a4756e1a20.gif> | <img src=https://user-images.githubusercontent.com/24728385/139404687-d36457bf-430e-4527-9e49-9dcec26edc5a.gif> | <img src=https://user-images.githubusercontent.com/24728385/139404770-9df88142-af70-4eda-a59a-2efba576d38a.gif> |
 |                                                 <b>응모하기</b>                                                 |                                               <b>게시물 검색</b>                                                |                                               <b>게시물 작성</b>                                                |
@@ -18,18 +16,28 @@
 |                                             <b>당첨 후기 게시판</b>                                             |                                                 <b>공지사항</b>                                                 |                                                   <b>QnA</b>                                                    |
 | <img src=https://user-images.githubusercontent.com/24728385/139405074-181ad906-1f1f-4232-b6cc-a715ad8051b7.gif> | <img src=https://user-images.githubusercontent.com/24728385/139405149-ce19773d-e06e-42b6-b8dd-40fb2c1af41a.gif> | <img src=https://user-images.githubusercontent.com/24728385/139405207-c4870e38-681c-406f-9207-4fd066e96c94.gif> |
 
-#
+<br>
 
 ## 🛠️ Stacks
 
-- HTML5, CSS3, Tailwind CSS - 마크업
-- JavaScript (ES6 +)
+<p style="display:flex;justify-content:start;align-items:center;gap:1em;width:100%;">
+  <img src="https://user-images.githubusercontent.com/24728385/139563435-9775ba00-aad4-412b-855e-de827b01831d.png" alt="react" width=10%>
+  <img src="https://user-images.githubusercontent.com/24728385/139563492-9ed6afd7-7eac-4518-9f5b-87b8d2b274cc.png" alt="tailwind_css" width=10%>
+  <img src="https://user-images.githubusercontent.com/24728385/139563538-bc0b4710-d81a-4d15-9afd-97cce54dfade.png" alt="javascript" width=10%>
+  <img src="https://user-images.githubusercontent.com/24728385/139563714-403f467b-3ac3-4996-898f-95e375702f85.png" alt="eslint" width=10%>
+  <img src="https://user-images.githubusercontent.com/24728385/139563756-21492ec0-a3f4-4334-b4d1-4a563249a6fc.png" alt="prettier" width=10%>
+  <img src="https://cdn.worldvectorlogo.com/logos/webpack-icon.svg" alt="webpack" width=10%>
+  <img src="https://static.cdnlogo.com/logos/f/54/figma.svg" alt="figma" width=10%>
+</p>
+
 - React - 컴포넌트개발 라이브러리
+- Tailwind CSS - 마크업
+- JavaScript (ES6 +)
 - eslint, prettier - 소스 품질관리
 - Webpack - 빌드 자동화 및 최적화
 - Figma - UI 설계/디자인
 
-#
+<br>
 
 ## 💬 Descriptions
 
@@ -37,7 +45,7 @@
 - 커뮤니티, 티켓 구매 및 래플 응모 기능 구현
 - Netlify를 이용하여 배포
 
-#
+<br>
 
 ## 💡 All Features
 
@@ -103,6 +111,6 @@
     - 본인이 몇번째로 응모했는지 확인하는 버튼
   - 응모 상태(대기, 진행, 취소, 실패) 마다 달라지는 theme
 
-#
+<br>
 
 - 📓 Wiki (예정)
