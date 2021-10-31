@@ -7,14 +7,15 @@
 🔗 https://loffle.netlify.app/
 
 <br>
-## 🎨 Demo
-|<b>시작 페이지</b>|<b>로그인</b>|<b>응모권 구매</b>|
-|:-:|:-:|:-:|
-|<img src=https://user-images.githubusercontent.com/24728385/139404425-e358076c-2d36-46fc-8e05-08a4756e1a20.gif>|<img src=https://user-images.githubusercontent.com/24728385/139404687-d36457bf-430e-4527-9e49-9dcec26edc5a.gif>|<img src=https://user-images.githubusercontent.com/24728385/139404770-9df88142-af70-4eda-a59a-2efba576d38a.gif>|
-|<b>응모하기</b>|<b>게시물 검색</b>|<b>게시물 작성</b>|
-|<img src=https://user-images.githubusercontent.com/24728385/139404863-693a0e29-b2b2-4e9e-919a-629513d06af3.gif>|<img src=https://user-images.githubusercontent.com/24728385/139404919-c7834cf1-bde4-47a8-ab99-75fbff04f2ae.gif>|<img src=https://user-images.githubusercontent.com/24728385/139404975-a6371e32-38b8-4e91-9999-05373894230b.gif>|
-|<b>당첨 후기 게시판</b>|<b>공지사항</b>|<b>QnA</b>|
-|<img src=https://user-images.githubusercontent.com/24728385/139405074-181ad906-1f1f-4232-b6cc-a715ad8051b7.gif>|<img src=https://user-images.githubusercontent.com/24728385/139405149-ce19773d-e06e-42b6-b8dd-40fb2c1af41a.gif>|<img src=https://user-images.githubusercontent.com/24728385/139405207-c4870e38-681c-406f-9207-4fd066e96c94.gif>|
+##🎨 Demo
+
+|                                               <b>시작 페이지</b>                                                |                                                  <b>로그인</b>                                                  |                                               <b>응모권 구매</b>                                                |
+| :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+| <img src=https://user-images.githubusercontent.com/24728385/139404425-e358076c-2d36-46fc-8e05-08a4756e1a20.gif> | <img src=https://user-images.githubusercontent.com/24728385/139404687-d36457bf-430e-4527-9e49-9dcec26edc5a.gif> | <img src=https://user-images.githubusercontent.com/24728385/139404770-9df88142-af70-4eda-a59a-2efba576d38a.gif> |
+|                                                 <b>응모하기</b>                                                 |                                               <b>게시물 검색</b>                                                |                                               <b>게시물 작성</b>                                                |
+| <img src=https://user-images.githubusercontent.com/24728385/139404863-693a0e29-b2b2-4e9e-919a-629513d06af3.gif> | <img src=https://user-images.githubusercontent.com/24728385/139404919-c7834cf1-bde4-47a8-ab99-75fbff04f2ae.gif> | <img src=https://user-images.githubusercontent.com/24728385/139404975-a6371e32-38b8-4e91-9999-05373894230b.gif> |
+|                                             <b>당첨 후기 게시판</b>                                             |                                                 <b>공지사항</b>                                                 |                                                   <b>QnA</b>                                                    |
+| <img src=https://user-images.githubusercontent.com/24728385/139405074-181ad906-1f1f-4232-b6cc-a715ad8051b7.gif> | <img src=https://user-images.githubusercontent.com/24728385/139405149-ce19773d-e06e-42b6-b8dd-40fb2c1af41a.gif> | <img src=https://user-images.githubusercontent.com/24728385/139405207-c4870e38-681c-406f-9207-4fd066e96c94.gif> |
 
 <br>
 
