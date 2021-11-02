@@ -35,7 +35,7 @@ const Candidate = ({ handleCandidateModal, raffle, raffleId }) => {
       setPageNumber(
         Math.floor(
           totalCandidates.findIndex(
-            (obj) => obj.username === localStorage.access_nickname
+            (obj) => obj.user === localStorage.access_nickname
           ) / 10
         ) + 1
       );
@@ -88,12 +88,12 @@ const Candidate = ({ handleCandidateModal, raffle, raffleId }) => {
                     </tr>
                   ))}
                 {loading ||
-                  (candidates?.length > 0 &&
-                    candidates.map((user) => (
+                  (candidates?.length > 0 && //console.log(candidates))
+                    candidates.map((candidate) => (
                       <tr
-                        key={user.apply_at}
+                        key={candidate.apply_at}
                         className={
-                          user.username === localStorage.access_nickname &&
+                          candidate.user === localStorage.access_nickname &&
                           'bg-gray-border'
                         }
                       >
@@ -101,7 +101,7 @@ const Candidate = ({ handleCandidateModal, raffle, raffleId }) => {
                           <div className="flex items-center justify-center">
                             <div className="text-sm font-medium">
                               {totalCandidates.findIndex(
-                                (obj) => obj.username === user.username
+                                (obj) => obj.user === candidate.user
                               ) + 1}
                             </div>
                           </div>
@@ -110,7 +110,7 @@ const Candidate = ({ handleCandidateModal, raffle, raffleId }) => {
                           <div className="flex items-center justify-center">
                             <div className="mx-4">
                               <div className="text-sm font-medium">
-                                {user.username}
+                                {candidate.user}
                               </div>
                             </div>
                           </div>
