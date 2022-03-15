@@ -1,12 +1,11 @@
 # 🎱 loffle-front
 
-> In-progress 🔥
-
-로플 프로젝트의 배포 사이트
-
-🔗 https://loffle.netlify.app/
-
 📌 로플(Loffle): 로또(Lotto) + 래플(Raffle) 의 합성어로 래플 서비스에 로또 추첨 방식을 도입한 웹 서비스
+
+🔗 https://loffle.netlify.app/ 
+
+> (ID: test@test.com / PW: test1234) 
+
 
 <br>
 
@@ -45,12 +44,14 @@
 
 ## 💬 Descriptions
 
-- 모바일 환경을 우선으로 구현 (Mobile First)
-- 커뮤니티, 티켓 구매 및 래플 응모 기능 구현
-- 검색 기능 구현 (Debounce를 이용한 api 호출)
-- 로딩시 Skeleton Component를 사용하여 UX 개선
-- Figma를 활용한 전체 페이지 프로토타입 디자인
-- Netlify를 이용하여 배포
+- 모바일 환경을 우선(Mobile First)으로 구현했습니다. 
+- **Intersection Observer**를 사용하여 **Infinite Scroll**을 구현했습니다.
+- **Debounce**를 이용해서 커뮤니티의 제목/내용 **검색 기능을 최적화**했습니다.
+- **회원가입 여부에 따른 로그인/회원가입 프로세스**로 **UX를 개선**했습니다.
+- 로딩시 **Skeleton Component**를 사용하여 **UX를 개선**했습니다.
+- **Git-flow 전략 사용과 커밋 메시지 컨벤션**을 통해서 협업했습니다.
+- **데일리 스크럼, 스프린트**등 **애자일 방법**을 통해서 협업했습니다.
+- Figma를 활용해서 **로고 및 전체 페이지 프로토타입을 직접 디자인**했습니다.
 
 <br>
 
