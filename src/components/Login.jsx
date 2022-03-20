@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import API from "../API";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import API from '../API';
 //
-import Loading from "../components/Loading";
-import Warning from "../Warning";
-import Join from "./Join";
-import Password from "./Password";
+import Loading from '../components/Loading';
+import Warning from '../Warning';
+import Join from './Join';
+import Password from './Password';
 //
-import emailLogo from "../images/login_email.svg";
-import googleLogo from "../images/login_google.svg";
-import facebookLogo from "../images/login_facebook.svg";
+import emailLogo from '../images/login_email.svg';
+import googleLogo from '../images/login_google.svg';
+import facebookLogo from '../images/login_facebook.svg';
 
 const Login = () => {
   window.scrollTo(0, 0);
 
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [emailChecked, setEmailChecked] = useState(false); //이메일 체크 했는지 안했는지
   const [showPasswordInput, setShowPasswordInput] = useState(false);
 
@@ -32,14 +32,14 @@ const Login = () => {
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("email", data.email);
+    formData.append('email', data.email);
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       body: formData,
     };
 
-    API.checkInfo("email", requestOptions)
+    API.checkInfo('email', requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.email_exist === true) {
@@ -47,12 +47,12 @@ const Login = () => {
         }
         setLoading(false);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   };
 
   const alertCanNotUse = () =>
     alert(
-      "기능 준비 중입니다 👀 \n\n 이메일로 로그인 · 회원가입을 진행해주세요"
+      '기능 준비 중입니다 👀 \n\n 이메일로 로그인 · 회원가입을 진행해주세요'
     );
 
   return (
@@ -60,9 +60,9 @@ const Login = () => {
       {loading && <Loading />}
       {loading || emailChecked ? (
         showPasswordInput ? (
-          loading || <Password email={email} />
+          <Password email={email} />
         ) : (
-          loading || <Join email={email} />
+          <Join email={email} />
         ) //email check가 false, 입력한 email 존재
       ) : (
         <section className="flex h-screen items-center pt-10">
@@ -78,7 +78,7 @@ const Login = () => {
                   <label className="block text-gray-darkest">이메일</label>
                   <input
                     name="email"
-                    {...register("email", {
+                    {...register('email', {
                       required: true,
                       pattern:
                         /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
@@ -87,10 +87,10 @@ const Login = () => {
                     className="w-full px-4 py-3 rounded-lg mt-2 border border-gray-border focus:border-primary focus:bg-white focus:outline-none"
                     autoFocus
                   />
-                  {errors.email && errors.email.type === "required" && (
+                  {errors.email && errors.email.type === 'required' && (
                     <Warning>이메일을 입력해주세요.</Warning>
                   )}
-                  {errors.email && errors.email.type === "pattern" && (
+                  {errors.email && errors.email.type === 'pattern' && (
                     <Warning>이메일 형식에 맞지 않습니다.</Warning>
                   )}
                 </div>
@@ -98,7 +98,7 @@ const Login = () => {
                   type="submit"
                   className="w-full flex justify-center bg-primary bg-opacity-90 hover:bg-opacity-80 focus:bg-opacity-100 text-white font-semibold rounded-lg px-4 py-3 mt-6"
                 >
-                  <img src={emailLogo} alt="email-logo" />{" "}
+                  <img src={emailLogo} alt="email-logo" />{' '}
                   <span className="ml-2">이메일로 시작하기</span>
                 </button>
               </form>

@@ -20,7 +20,7 @@ import RaffleDetail from './components/Raffle/RaffleDetail';
 import Index from './components/Index/Index';
 import My from './components/My/My';
 
-const App = (props) => {
+const App = () => {
   return (
     <div className="init-view">
       <Router>
