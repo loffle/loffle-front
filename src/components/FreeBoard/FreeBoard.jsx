@@ -8,7 +8,7 @@ import CreateButton from '../CreateButton';
 import PostCreate from './PostCreate';
 import { useLocation } from 'react-router-dom';
 
-const FreeBoard = (props) => {
+const FreeBoard = () => {
   const location = useLocation();
   const queryData = QueryString.parse(location.search, {
     ignoreQueryPrefix: true,
@@ -29,7 +29,7 @@ const FreeBoard = (props) => {
 
   const [createMode, setCreateMode] = useState(false);
   const handleCreateMode = () => {
-    setCreateMode(!createMode);
+    setCreateMode((prev) => !prev);
   };
 
   return (

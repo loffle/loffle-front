@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PROXY } from '../../config';
 //
@@ -7,7 +8,7 @@ import RaffleHeader from './RaffleHeader';
 import Skeleton from './Skeleton';
 import Raffle from './Raffle';
 
-const RaffleList = (props) => {
+const RaffleList = () => {
   const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [raffles, setRaffles] = useState([]);
@@ -33,64 +34,58 @@ const RaffleList = (props) => {
       setFirstLoading(false);
       setLoading(false);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNumber]);
 
   const loadMore = () => {
-    if (hasMore) {
-      setPageNumber((prev) => prev + 1);
-    }
+    hasMore && setPageNumber((prev) => prev + 1);
   };
 
   return (
     <>
-      {
-        <div className="max-w-480 min-h-screen">
-          <RaffleHeader>
-            <h1 className="text-xl font-bold">응모하기</h1>
-          </RaffleHeader>
+      <div className="max-w-480 min-h-screen">
+        <RaffleHeader>
+          <h1 className="text-xl font-bold">응모하기</h1>
+        </RaffleHeader>
 
-          {firstLoading && (
-            <>
-              <Skeleton />
-              <Skeleton />
-            </>
-          )}
-          {raffles?.map((raffle) => (
-            <Raffle key={raffle.id} raffle={raffle} />
-          ))}
-        </div>
-      }
-      {
-        <div className="px-7">
-          <button
-            onClick={loadMore}
-            className={
-              'w-full flex justify-center items-center hover:bg-opacity-80 bg-white font-semibold rounded-lg py-3 mb-3 shadow-btn border-solid  border-black ' +
-              (hasMore || 'hidden')
-            }
-          >
-            <span className="flex text-xl">
-              더보기{' '}
-              {loading ? (
+        {firstLoading && (
+          <>
+            <Skeleton />
+            <Skeleton />
+          </>
+        )}
+        {raffles?.map((raffle) => (
+          <Raffle key={raffle.id} raffle={raffle} />
+        ))}
+      </div>
+      <div className="px-7">
+        <button
+          onClick={loadMore}
+          className={
+            'w-full flex justify-center items-center hover:bg-opacity-80 bg-white font-semibold rounded-lg py-3 mb-3 shadow-btn border-solid  border-black ' +
+            (hasMore || 'hidden')
+          }
+        >
+          <span className="flex text-xl">
+            더보기{' '}
+            {loading ? (
+              <svg
+                className="ml-1 w-6 h-6 animate-spin"
+                data-darkreader-inline-stroke=""
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            ) : (
+              <div className="ml-1 w-6 h-6">
                 <svg
-                  className="ml-1 w-6 h-6 animate-spin"
-                  data-darkreader-inline-stroke=""
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="ml-1 w-6 h-6"
                   data-darkreader-inline-stroke=""
                   fill="none"
                   stroke="currentColor"
@@ -104,11 +99,11 @@ const RaffleList = (props) => {
                     d="M19 9l-7 7-7-7"
                   />
                 </svg>
-              )}
-            </span>
-          </button>
-        </div>
-      }
+              </div>
+            )}
+          </span>
+        </button>
+      </div>
       <div className="pt-5"></div>
     </>
   );

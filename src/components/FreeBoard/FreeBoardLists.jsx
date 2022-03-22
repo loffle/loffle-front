@@ -17,7 +17,7 @@ const FreeBoardLists = ({
   const [lastSearchTerm, setLastSearchTerm] = useState('');
 
   const handleSearchModal = (e) => {
-    setIsSearchModalOn(!isSearchModalOn);
+    setIsSearchModalOn((prev) => !prev);
   };
 
   const handleSelect = (e) => {

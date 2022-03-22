@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useRef } from 'react';
 import search from '../images/search_btn.svg';
 
 const Search = ({
@@ -10,17 +9,12 @@ const Search = ({
   lastSearchTerm,
   setLastSearchTerm,
 }) => {
-  const initial = useRef(true);
-
   useEffect(() => {
-    if (initial.current) {
-      initial.current = false;
-      return;
-    }
     const timer = setTimeout(() => {
       setPageNumber(1);
       setSearchTerm(lastSearchTerm);
     }, 500);
+
     return () => {
       clearTimeout(timer);
     };
