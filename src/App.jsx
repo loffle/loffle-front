@@ -11,7 +11,6 @@ import ReviewDetail from './components/ReviewBoard/ReviewDetail.jsx';
 import NotFound from './components/NotFound';
 import Login from './components/Login';
 //
-import UserProvider from './context';
 import QuestionBoard from './components/QuestionBoard/QuestionBoard';
 import NoticeBoard from './components/NoticeBoard/NoticeBoard';
 import Join from './components/Join';
@@ -19,12 +18,13 @@ import RaffleList from './components/Raffle/RaffleList';
 import RaffleDetail from './components/Raffle/RaffleDetail';
 import Index from './components/Index/Index';
 import My from './components/My/My';
+import PostProvider from './store/posts';
 
 const App = () => {
   return (
     <div className="init-view">
       <Router>
-        <UserProvider>
+        <PostProvider>
           <Header />
           <Routes>
             <Route path="/" element={<Index />} />
@@ -44,7 +44,7 @@ const App = () => {
             <Route path="/community/notices" element={<NoticeBoard />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
-        </UserProvider>
+        </PostProvider>
       </Router>
     </div>
   );

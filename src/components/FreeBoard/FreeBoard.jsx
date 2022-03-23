@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useState } from 'react';
 import { useFreeBoardFetch } from '../../hooks/useFreeBoardFetch';
 import QueryString from 'qs';
 import NewPagination from '../NewPagination';
@@ -7,6 +9,7 @@ import FreeBoardLists from './FreeBoardLists';
 import CreateButton from '../CreateButton';
 import PostCreate from './PostCreate';
 import { useLocation } from 'react-router-dom';
+import { usePostDispatch } from '../../store/posts';
 
 const FreeBoard = () => {
   const location = useLocation();
@@ -26,6 +29,15 @@ const FreeBoard = () => {
     order,
     searchTerm
   );
+
+  const dispatch = usePostDispatch();
+  const savePosts = () => dispatch({ type: 'SAVE', posts });
+
+  useEffect(() => {
+    if (posts.length > 0) {
+      savePosts();
+    }
+  }, [posts]);
 
   const [createMode, setCreateMode] = useState(false);
   const handleCreateMode = () => {
