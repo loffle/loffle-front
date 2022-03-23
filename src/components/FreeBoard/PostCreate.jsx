@@ -130,7 +130,6 @@ const PostCreate = ({ handleCreateMode }) => {
           </div>
         </form>
       </div>
-      {/* {fileUrl ?? <img src={fileUrl.previewURL} alt="test"></img>} */}
     </>
   );
 };

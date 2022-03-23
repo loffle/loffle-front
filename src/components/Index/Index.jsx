@@ -1,43 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { PROXY } from '../../config';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import API from '../../API';
-import ImageSwiper from '../Raffle/ImageSwiper';
-import Timer from '../Raffle/Timer';
-import Post from '../FreeBoard/Post';
-import Notice from '../NoticeBoard/Notice';
-import PostSkeleton from '../FreeBoard/Skeleton';
-import NoticeSkeleton from '../NoticeBoard/Skeleton';
+import React, { useState, useEffect } from "react";
+import { PROXY } from "../../config";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import API from "../../API";
+import ImageSwiper from "../Raffle/ImageSwiper";
+import Timer from "../Raffle/Timer";
+import Post from "../FreeBoard/Post";
+import Notice from "../NoticeBoard/Notice";
+import PostSkeleton from "../FreeBoard/Skeleton";
+import NoticeSkeleton from "../NoticeBoard/Skeleton";
 //
-import profile from '../../images/profile.svg';
+import profile from "../../images/profile.svg";
 
-const Index = (props) => {
+const Index = () => {
   const [loading, setLoading] = useState(true);
   const [raffle, setRaffle] = useState([]);
   const [posts, setPosts] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [notices, setNotices] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [banner, setBanner] = useState({
+  const [banner] = useState({
     images: [
       {
         id: 1,
-        src:
-          'https://kream-phinf.pstatic.net/MjAyMTA5MTVfMzEg/MDAxNjMxNjk5MjQ0MzQ2.imn67I33yOWlP-IKrrID1xrh8qkU3rye9UGC9ggpiR4g.jo7Bz4b4lNvfXCY-iiTj6t6eb0MgSl5eSwIqHrMJLEog.PNG/a_768e4c4774f6477290f4635b5650117d.png?type=l',
-        bg: '#f6eeed',
+        src: "https://kream-phinf.pstatic.net/MjAyMTA5MTVfMzEg/MDAxNjMxNjk5MjQ0MzQ2.imn67I33yOWlP-IKrrID1xrh8qkU3rye9UGC9ggpiR4g.jo7Bz4b4lNvfXCY-iiTj6t6eb0MgSl5eSwIqHrMJLEog.PNG/a_768e4c4774f6477290f4635b5650117d.png?type=l",
+        bg: "#f6eeed",
       },
       {
         id: 2,
-        src:
-          'https://kream-phinf.pstatic.net/MjAyMTEwMjBfMTU4/MDAxNjM0NzA2ODA1MzM1.I1CMIPMa240-auhgK1tHHu-SMIZXuej_a3LX-4omVsYg.gnHB3CIprqV6FeNmvAFAqqHSzXAkxcN1be_VxYCyuYkg.PNG/a_455bbc729b934cd49eeb251c8dc6df1d.png?type=l',
-        bg: '#f1f1ea',
+        src: "https://kream-phinf.pstatic.net/MjAyMTEwMjBfMTU4/MDAxNjM0NzA2ODA1MzM1.I1CMIPMa240-auhgK1tHHu-SMIZXuej_a3LX-4omVsYg.gnHB3CIprqV6FeNmvAFAqqHSzXAkxcN1be_VxYCyuYkg.PNG/a_455bbc729b934cd49eeb251c8dc6df1d.png?type=l",
+        bg: "#f1f1ea",
       },
       {
         id: 3,
-        src:
-          'https://kream-phinf.pstatic.net/MjAyMTA5MzBfMjEz/MDAxNjMyOTY4NzM2ODc0.-4lS4pQuIFbNKg8m4P29eqrZzY4Lbh1_Jt1bDyI5bWwg.Gp8eOn2Ppnu04pt_sigphago57r4wYDg28O-98lRaUkg.PNG/a_09aec6251f964b5ea8befe117b3569f2.png?type=l',
-        bg: '#ebf0f5',
+        src: "https://kream-phinf.pstatic.net/MjAyMTA5MzBfMjEz/MDAxNjMyOTY4NzM2ODc0.-4lS4pQuIFbNKg8m4P29eqrZzY4Lbh1_Jt1bDyI5bWwg.Gp8eOn2Ppnu04pt_sigphago57r4wYDg28O-98lRaUkg.PNG/a_09aec6251f964b5ea8befe117b3569f2.png?type=l",
+        bg: "#ebf0f5",
       },
     ],
   });
@@ -47,35 +43,35 @@ const Index = (props) => {
     setLoading(true);
 
     axios(`${PROXY}/raffles`, {
-      method: 'GET',
+      method: "GET",
     }).then((response) => {
       let tmp = response.data.results.filter(
-        (value) => value.progress === 'ongoing'
+        (value) => value.progress === "ongoing"
       );
       setRaffle((prev) => tmp);
     });
 
-    API.getCategory('posts')
+    API.getCategory("posts")
       .then((response) => response.json())
       .then((result) => {
         setPosts(result.results.slice(0, 3));
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
 
-    API.getCategory('reviews')
+    API.getCategory("reviews")
       .then((response) => response.json())
       .then((result) => {
         setReviews(() => result.results);
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
 
-    API.getCategory('notices')
+    API.getCategory("notices")
       .then((response) => response.json())
       .then((result) => {
         setNotices(result.results.slice(0, 3));
         setLoading(false);
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -85,7 +81,7 @@ const Index = (props) => {
       <div className="max-w-480 min-h-screen">
         {/* ImageSwiper */}
         <section className="flex items-center justify-center w-full h-vw max-h-480">
-          <ImageSwiper product={banner} category={'index'} />
+          <ImageSwiper product={banner} category={"index"} />
         </section>
 
         {/* 응모 */}
@@ -107,7 +103,7 @@ const Index = (props) => {
         <hr className="border-gray-border px-5 my-11" />
 
         <section className="px-5">
-          <Link to={'/community/posts'}>
+          <Link to={"/community/posts"}>
             <h1 className="text-lg font-bold">FREE BOARD</h1>
             <span className="text-gray text-sm">자유게시판</span>
           </Link>
@@ -127,7 +123,7 @@ const Index = (props) => {
         <hr className="border-gray-border px-5 my-11" />
 
         <section>
-          <Link to={'/community/reviews'}>
+          <Link to={"/community/reviews"}>
             <div className="ml-5">
               <h1 className="text-lg font-bold">REVIEW OF WINNING</h1>
               <span className="text-gray text-sm">당첨 후기 게시판</span>
@@ -156,7 +152,7 @@ const Index = (props) => {
         <hr className="border-gray-border px-5 my-11" />
 
         <section className="px-5">
-          <Link to={'/community/notices'}>
+          <Link to={"/community/notices"}>
             <h1 className="text-lg font-bold">NOTICE</h1>
             <span className="text-gray text-sm">공지사항</span>
           </Link>

@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+/* eslint-disable no-throw-literal */
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import API from '../API';
-
 import Warning from '../Warning';
 
 const Password = ({ email }) => {
@@ -13,7 +13,8 @@ const Password = ({ email }) => {
     handleSubmit,
   } = useForm();
 
-  const navigate = useNavigate(); //Naviagte hook 사용
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -21,11 +22,13 @@ const Password = ({ email }) => {
   }, [pathname]);
 
   const onSubmit = (data) => {
-    var formdata = new FormData();
+    setLoading(true);
+
+    const formdata = new FormData();
     formdata.append('username', email);
     formdata.append('password', data.password);
 
-    var requestOptions = {
+    const requestOptions = {
       method: 'POST',
       body: formdata,
       redirect: 'follow',
@@ -36,23 +39,23 @@ const Password = ({ email }) => {
         if (response.ok) {
           return response.json();
         } else {
-          setError('password', {
-            //react-hook-form
-            type: 'wrongPassword',
-          });
+          throw 'wrongPassword';
         }
       })
       .then((result) => {
-        if (result) {
-          localStorage.setItem('access_token', result.token); //localStorage token 생성
-          localStorage.setItem('access_nickname', result.nickname);
-          localStorage.setItem('access_id', result.id);
-          alert('로그인에 성공하였습니다.');
-          navigate('/');
-          window.location.reload(); //새로고침을 해줘야 localStorage에 있는지 확인함
-        }
+        localStorage.setItem('access_token', result.token);
+        localStorage.setItem('access_nickname', result.nickname);
+        localStorage.setItem('access_id', result.id);
+        alert(`안녕하세요 ${result.nickname}님 😆`);
+        navigate('/');
+        window.location.reload(); //새로고침을 해줘야 localStorage에 있는지 확인함
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) =>
+        setError('password', {
+          type: error,
+        })
+      )
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -89,7 +92,27 @@ const Password = ({ email }) => {
               type="submit"
               className="w-full flex justify-center bg-primary bg-opacity-90 hover:bg-opacity-80 focus:bg-opacity-100 text-white font-semibold rounded-lg px-4 py-3 mt-6"
             >
-              <span className="ml-2">로그인</span>
+              <span className="ml-2">
+                {loading ? (
+                  <div className="ml-1 w-6 h-6 animate-spin">
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  '로그인'
+                )}
+              </span>
             </button>
           </form>
         </div>

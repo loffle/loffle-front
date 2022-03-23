@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Warning from '../Warning';
@@ -36,10 +37,10 @@ const Join = ({ email }) => {
           alert('회원가입이 완료되었습니다. 로그인을 해주세요.');
           window.location.reload();
         } else {
-          return response.json();
+          throw '서버에 이상이 있는 것 같습니다 😵';
         }
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => alert(error));
   };
 
   const onDuplicateCheck = (key, value) => {
@@ -210,23 +211,13 @@ const Join = ({ email }) => {
                   )}
               </div>
               <hr className="my-6 border-gray-border w-full" />
-              {isEmpty(errors) ? ( //error가 empty이면 회원가입 버튼 활성화
-                <button
-                  type="submit"
-                  className="w-full flex justify-center bg-primary bg-opacity-90 hover:bg-opacity-80 focus:bg-opacity-100 text-white font-semibold rounded-lg px-4 py-3 mt-6"
-                >
-                  <span className="">회원가입 하기</span>
-                </button>
-              ) : (
-                //error가 not empty면 회원가입 버튼 비활성화
-                <button
-                  type="submit"
-                  disabled
-                  className="w-full flex justify-center bg-primary bg-opacity-40 hover:bg-opacity-80 focus:bg-opacity-100 text-white font-semibold rounded-lg px-4 py-3 mt-6"
-                >
-                  <span className="">회원가입 하기</span>
-                </button>
-              )}
+              <button
+                type="submit"
+                className="w-full flex justify-center bg-primary bg-opacity-90 hover:bg-opacity-80 focus:bg-opacity-100 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+                disabled={!isEmpty(errors)}
+              >
+                <span className="">회원가입 하기</span>
+              </button>
             </form>
           </div>
         </div>
